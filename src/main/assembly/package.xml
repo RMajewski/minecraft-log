@@ -18,7 +18,7 @@
     <file>
       <source>${project.build.directory}/${project.build.finalName}.jar</source>
       <outputDirectory>/</outputDirectory>
-      <destName>${project.build.finalname}.jar</destName>
+      <destName>${project.build.finalName}.jar</destName>
     </file>
   </files>
 </assembly>
