@@ -4,3 +4,10 @@ description: Logger for Minecraft
 author: René Majewski (TerraGermany)
 website: http://www.rene-majewski.de
 main: de.rene_majewski.minecraft_log.MinecraftLog
+
+commands:
+  minecraftlog:
+    description: Reload the config.
+    usage : /<command> config reload
+    permission: minecraftlog.admin.reload
+    aliases: [ml]
