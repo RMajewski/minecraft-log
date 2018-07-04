@@ -10,7 +10,7 @@
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>README.md</include>
-        <include>LICENSE.md</include>
+        <include>LICENSE.txt</include>
       </includes>
     </fileSet>
   </fileSets>

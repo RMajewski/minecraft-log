@@ -7,9 +7,41 @@
   <version>0.1</version>
   <name>MinecraftLog</name>
   <url>http://maven.apache.org</url>
+
+  <licenses>
+    <license>
+      <name>European Union Public Licence</name>
+      <url>https://joinup.ec.europa.eu/collection/eupl/eupl-text-11-12</url>
+      <distribution>repo</distribution>
+      <comments>With licence proliferation a growing problem, the European Union justifies its licence as the first open source licence to be released by an international governing body.</comments>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>TerraGermany</id>
+      <name>René Majewski</name>
+      <email>rene.majewski@gmx.de</email>
+      <url>https://www.rene-majewski.de</url>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>Europe/Berlin</timezone>
+      <properties>
+        <picUrl>https://plus.google.com/photos/108593264266589461489/albums/profile/6030810040485175234</picUrl>
+      </properties>
+    </developer>
+  </developers>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <scm>
+    <connection>scm:git:https://github.com/RMajewski/minecraft-log.git</connection>
+    <tag>HEAD</tag>
+    <url>https://github.com/RMajewski/minecraft-log</url>
+  </scm>
+
   <build>
     <finalName>${project.artifactId}</finalName>
     <resources>
@@ -33,15 +65,18 @@
           </manifest>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.7.0</version>
         <configuration>
-          <source>1.8</source>
-          <source>1.8</source>
+          <fork>true</fork>
+          <meminitial>1024M</meminitial>
+          <maxmem>1024M</maxmem>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -51,6 +86,7 @@
           </descriptors>
         </configuration>
         <executions>
+
           <execution>
             <id>build</id>
             <phase>package</phase>
@@ -60,6 +96,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
@@ -80,12 +117,13 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
       <scope>system</scope>
       <version>1.12.2</version>
-      <systemPath>${basedir}/lib/bukkit-1.12.2.jar</systemPath>
+      <systemPath>${project.basedir}/lib/bukkit-1.12.2.jar</systemPath>
     </dependency>
   </dependencies>
 </project>
