@@ -1,5 +1,11 @@
 package de.rene_majewski.minecraft_log.data;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,9 +23,18 @@ public class MySql {
   private String _database;
   private String _prefix;
 
+  private Config _config;
+
   private Connection _conn;
 
+  public static final String[] CREATE_TABLE_FILES = {
+    "/sql/player.sql",
+    "/sql/log_command.sql"
+  };
+
   public MySql(Config config) {
+    this._config = config;
+
     this._host = config.getString(Config.DB_CONFIG_HOST);
     this._port = config.getInteger(Config.DB_CONFIG_PORT);
     this._user = config.getString(Config.DB_CONFIG_USER);
@@ -28,6 +43,53 @@ public class MySql {
     this._prefix = config.getString(Config.DB_CONFIG_PREFIX);
 
     openConnection();
+
+    if (hasConnection()) {
+      createTables();
+    }
+  }
+
+  private void createTables() {
+    for (String name : CREATE_TABLE_FILES) {
+      String sql = loadSql(name);
+      this.queryUpdate(sql);
+    }
+  }
+
+  private String loadSql(String name) {
+    String result = new String();
+    BufferedReader br = null;
+    InputStream is = null;
+
+    try {
+      is = getClass().getResourceAsStream(name);
+      br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+      String rl = new String();
+      while((rl = br.readLine()) != null) {
+        result += rl.replaceFirst("`&", "`" + this._config.getString(Config.DB_CONFIG_PREFIX)).trim();
+      }
+    } catch (Exception e) {
+      System.err.println("The file '" + name + "' not loaded.");
+      e.printStackTrace();
+    } finally {
+      if (br != null) {
+        try {
+          br.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+
+      if (is != null) {
+        try {
+          is.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    return result;
   }
 
   public Connection openConnection() {

@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS `&player` (
+  `id` BIGINT(20) AUTO_INCREMENT,
+  `uuid` CHAR(20) NOT NULL,
+  `name` VARCHAR(50) NOT NULL,
+  `registration` TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY(`id`),
+  UNIQUE KEY(`uuid`)
+) CHARACTER SET utf8 COLLATE utf8_unicode_ci;
