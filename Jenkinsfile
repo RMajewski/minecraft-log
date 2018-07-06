@@ -18,11 +18,15 @@ cp /opt/data/lib/bukkit-1.12.2.jar ./lib/bukkit-1.12.2.jar'''
       post {
         always {
           junit 'target/surfire-reports/*.xml'
-
+          findbugs canComputeNew: false, canRunOnFailed: true, defaultEncoding: 'UTF-8', excludePattern: '', healthy: '', includePattern: '', pattern: 'target/findbugsXml.xml', unHealthy: ''
+          pmd canComputeNew: false, defaultEncoding: 'UTF-8', healthy: '', pattern: 'target/pmd.xml', unHealthy: ''
+          checkstyle canComputeNew: false, defaultEncoding: 'UTF-8', healthy: '', pattern: 'target/checkstyle-result.xml', unHealthy: ''
         }
 
       }
       steps {
+        sh '''mkdir lib
+cp /opt/data/lib/bukkit-1.12.2.jar ./lib/bukkit-1.12.2.jar'''
         sh 'mvn test'
       }
     }
