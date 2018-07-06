@@ -4,6 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    environment: []
+    environment:
+      JENKINS_HOME: /opt/jenkins
+    ports:
+      - 4444:4444
     volumes:
       - ./:/opt/data
+      - ./docker/datas/jenkins:/opt/jenkins
+    command: java -jar /opt/jenkins/jenkins.war --httpPort=4444

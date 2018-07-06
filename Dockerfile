@@ -1,7 +1,8 @@
 FROM openjdk:8-jdk
 
 RUN mkdir -p /opt/data
-VOLUME [ "/opt/data" ]
+RUN mkdir -p /opt/jenkins
+VOLUME [ "/opt/data", "/opt/jenkins" ]
 WORKDIR /opt/data
 
 ARG MAVEN_VERSION=3.5.4
@@ -22,6 +23,8 @@ ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 COPY docker/mvn-entrypoint.sh /usr/local/bin/mvn-entrypoint.sh
 RUN chmod +x /usr/local/bin/mvn-entrypoint.sh
 COPY docker/settings-docker.xml /usr/share/maven/ref/
+
+EXPOSE 4444
 
 ENTRYPOINT ["/usr/local/bin/mvn-entrypoint.sh"]
 CMD ["mvn"]
