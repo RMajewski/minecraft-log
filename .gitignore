@@ -5,6 +5,8 @@
 
 lib/
 
+docker/datas/
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
