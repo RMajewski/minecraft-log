@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd"
+    name="MinecraftLog Bukkit Plugin">
+
+  <publishDate position="right" format="dd.mm.YYYY" />
+
+  <version position="right" />
+
+  <body>
+    <head/>
+
+    <links>
+    </links>
+
+    <menu name="Reports" ref="reports" />
+
+    <footer><![CDATA[ALL rights reserved.]]></footer>
+  </body>
+
+  <custom />
+
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-application-skin</artifactId>
+    <version>1.0</version>
+  </skin>
+</project>
