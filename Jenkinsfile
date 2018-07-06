@@ -17,7 +17,7 @@ cp /opt/data/lib/bukkit-1.12.2.jar ./lib/bukkit-1.12.2.jar'''
     stage('test') {
       post {
         always {
-          junit 'target/surfire-reports/*.xml'
+          junit 'target/surefire-reports/*.xml'
           findbugs canComputeNew: false, canRunOnFailed: true, defaultEncoding: 'UTF-8', excludePattern: '', healthy: '', includePattern: '', pattern: 'target/findbugsXml.xml', unHealthy: ''
           pmd canComputeNew: false, defaultEncoding: 'UTF-8', healthy: '', pattern: 'target/pmd.xml', unHealthy: ''
           checkstyle canComputeNew: false, defaultEncoding: 'UTF-8', healthy: '', pattern: 'target/checkstyle-result.xml', unHealthy: ''
