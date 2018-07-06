@@ -4,7 +4,7 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        sh '''md lib
+        sh '''mkdir lib
 cp /opt/data/lib/bukkit-1.12.2.jar ./lib/bukkit-1.12.2.jar'''
         fileExists './lib/bukkit-1.12.2.jar'
         ansiColor(colorMapName: 'xterm') {
