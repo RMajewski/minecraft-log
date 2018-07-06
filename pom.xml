@@ -6,7 +6,8 @@
   <packaging>jar</packaging>
   <version>0.1</version>
   <name>MinecraftLog</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/RMajewski/minecraft-log</url>
+  <description>MinecraftLig is a plugin for CraftBukkit Minecraft server. This logs events in Minecraft to a database.</description>
 
   <licenses>
     <license>
@@ -123,6 +124,15 @@
           </docletArtifact>
           <useStandardDocletOptions>true</useStandardDocletOptions>
           <show>private</show>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugin</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.6</version>
+        <configuration>
+          <locales>de</locales>
         </configuration>
       </plugin>
     </plugins>

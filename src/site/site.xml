@@ -1,28 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/DECORATION/1.8.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd"
-    name="MinecraftLog Bukkit Plugin">
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
 
   <publishDate position="right" format="dd.mm.YYYY" />
 
   <version position="right" />
 
   <body>
-    <head/>
+    <menu name="Übersicht">
+      <item name="Über" href="about.html" />
+      <item name="History" href="cheangelog.html" />
+      <item name="Lizenz" href="license.html" />
+      <item name="License" href="license_en.html" />
+      <item name="Tags" href="taglist.html" />
+      <item name="Team" href="team-list.html" />
+    </menu>
 
-    <links>
-    </links>
+    <menu name="Konfiguration">
+      <item name="Datenbank" href="#" />
+    </menu>
 
-    <menu name="Reports" ref="reports" />
+    <menu name="Reports">
+      <item name="Checkstyle" href="checkstyle.html" />
+      <item name="Dependencies" href="dependencies.html" />
+      <item name="File activity" href="file-activity.html" />
+      <item name="Findbugs" href="findbugs.html" />
+      <item name="Plugins" href="plugins.html" />
+      <item name="Surefire" href="surefire-report.html" />
+    </menu>
 
-    <footer><![CDATA[ALL rights reserved.]]></footer>
+    <footer><![CDATA[Copyright 2018 &copy; by René Majewski]]></footer>
   </body>
-
-  <custom />
-
-  <skin>
-    <groupId>org.apache.maven.skins</groupId>
-    <artifactId>maven-application-skin</artifactId>
-    <version>1.0</version>
-  </skin>
 </project>
