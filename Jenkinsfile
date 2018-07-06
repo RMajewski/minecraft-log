@@ -18,7 +18,7 @@ cp /opt/data/lib/bukkit-1.12.2.jar ./lib/bukkit-1.12.2.jar'''
       post {
         always {
           junit 'target/surefire-reports/*.xml'
-          findbugs canComputeNew: false, canRunOnFailed: true, defaultEncoding: 'UTF-8', excludePattern: '', healthy: '', includePattern: '', pattern: 'target/findbugsXml.xml', unHealthy: ''
+          findbugs canComputeNew: false, defaultEncoding: 'UTF-8', excludePattern: '', healthy: '', includePattern: '', pattern: 'target/findbugsXml.xml', unHealthy: ''
           pmd canComputeNew: false, defaultEncoding: 'UTF-8', healthy: '', pattern: 'target/pmd.xml', unHealthy: ''
           checkstyle canComputeNew: false, defaultEncoding: 'UTF-8', healthy: '', pattern: 'target/checkstyle-result.xml', unHealthy: ''
         }
@@ -27,7 +27,7 @@ cp /opt/data/lib/bukkit-1.12.2.jar ./lib/bukkit-1.12.2.jar'''
       steps {
         sh '''mkdir lib
 cp /opt/data/lib/bukkit-1.12.2.jar ./lib/bukkit-1.12.2.jar'''
-        sh 'mvn test'
+        sh 'mvn site'
       }
     }
   }
