@@ -4,7 +4,7 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        fileExists 'lib/bukkit*.jar'
+        fileExists 'lib/bukkit-1.12.2.jar'
         ansiColor(colorMapName: 'xterm') {
           sh 'mvn -B -DskipTests clean package'
         }
