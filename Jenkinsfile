@@ -4,17 +4,24 @@ pipeline {
     stage('build') {
       agent any
       steps {
-        sh 'mvn -B -DskipTests clean package'
+        fileExists 'lib/bukkit*.jar'
+        ansiColor(colorMapName: 'xterm') {
+          sh 'mvn -B -DskipTests clean package'
+        }
+
+        warnings(useStableBuildAsReference: true, useDeltaValues: true)
       }
     }
-    stage("test") {
-      steps {
-        sh 'mvn test'
-      }
+    stage('test') {
       post {
         always {
           junit 'target/surfire-reports/*.xml'
+
         }
+
+      }
+      steps {
+        sh 'mvn test'
       }
     }
   }
