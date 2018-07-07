@@ -16,6 +16,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import de.rene_majewski.minecraft_log.MinecraftLog;
 import de.rene_majewski.minecraft_log.config.Config;
 
 /**
@@ -25,7 +26,7 @@ import de.rene_majewski.minecraft_log.config.Config;
  * @since 0.1
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Command.class, CommandSender.class, Config.class})
+@PrepareForTest({Command.class, CommandSender.class, MinecraftLog.class, Config.class})
 public class ConfigReloadCommandTest {
   @Mock
   private CommandSender sender;
@@ -36,11 +37,14 @@ public class ConfigReloadCommandTest {
   @Mock
   private Config config;
 
+  @Mock
+  private MinecraftLog plugin;
+
   private ConfigReloadCommand cfc;
 
   @Before
   public void setUp() {
-    cfc = new ConfigReloadCommand(config);
+    cfc = new ConfigReloadCommand(plugin);
   }
 
   /**
@@ -101,10 +105,12 @@ public class ConfigReloadCommandTest {
     String message = "test";
 
     when(config.getString(Config.MESSAGE_NO_PERMISSION)).thenReturn(message);
+    when(plugin.getMyConfig()).thenReturn(config);
 
     assertTrue(cfc.onCommand(sender, command, "minecraftlog", args));
     verify(sender, times(1)).hasPermission(Config.PERMISSION_ADMIN_RELOAD);
     verify(sender, times(1)).sendMessage(ChatColor.RED + message);
+    verify(plugin, times(1)).getMyConfig();
   }
 
   /**
@@ -123,10 +129,12 @@ public class ConfigReloadCommandTest {
     String message = "test";
 
     when(config.getString(Config.MESSAGE_CONFIG_RELOAD)).thenReturn(message);
+    when(plugin.getMyConfig()).thenReturn(config);
 
     assertTrue(cfc.onCommand(sender, command, "minecraftlog", args));
     verify(sender, times(1)).hasPermission(Config.PERMISSION_ADMIN_RELOAD);
     verify(sender, times(1)).sendMessage(message);
     verify(config, times(1)).reload();
+    verify(plugin, times(2)).getMyConfig();
   }
 }

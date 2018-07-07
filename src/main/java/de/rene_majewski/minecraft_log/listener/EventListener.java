@@ -1,10 +1,14 @@
 package de.rene_majewski.minecraft_log.listener;
 
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+
+import de.rene_majewski.minecraft_log.MinecraftLog;
 
 public class EventListener implements Listener {
-  public EventListener(JavaPlugin plugin) {
-    plugin.getServer().getPluginManager().registerEvents(this, plugin);
+  protected MinecraftLog _plugin;
+
+  public EventListener(MinecraftLog plugin) {
+    this._plugin = plugin;
+    this._plugin.getServer().getPluginManager().registerEvents(this, this._plugin);
   }
 }

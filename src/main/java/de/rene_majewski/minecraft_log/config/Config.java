@@ -15,6 +15,9 @@ public final class Config {
   public static final String DB_CONFIG_DATABASE = "minecraftlog.db.database";
   public static final String DB_CONFIG_PREFIX = "minecraftlog.db.prefix";
 
+  public static final String DB_TABLE_PLAYER = "minecraftlog.db.tables.player";
+  public static final String DB_TABLE_LOG_COMMAND = "minecraftlog.db.tables.log_command";
+
   public static final String PERMISSION_ADMIN_RELOAD = "minecraftlog.admin.reload";
 
   public Config(JavaPlugin plugin) {
@@ -54,5 +57,8 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_CONFIG_PASSWORD, "");
     _plugin.getConfig().addDefault(DB_CONFIG_DATABASE, "minecraft");
     _plugin.getConfig().addDefault(DB_CONFIG_PREFIX, "minecraft_log_");
+
+    _plugin.getConfig().addDefault(DB_TABLE_PLAYER, "player");
+    _plugin.getConfig().addDefault(DB_TABLE_LOG_COMMAND, "log_command");
   }
 }

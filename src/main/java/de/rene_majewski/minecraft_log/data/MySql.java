@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.bukkit.entity.Player;
+
 import de.rene_majewski.minecraft_log.config.Config;
 
 public class MySql {
@@ -161,5 +163,62 @@ public class MySql {
     } finally {
       this.closeRessources(null, ps);
     }
+  }
+
+  public int getPlayerId(Player player) {
+    int result = -1;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      if (!this.isPlayerExists(player)) {
+        ps = this.getConnection().prepareStatement("INSERT INTO ? (uuid, name) VALUES (?, ?)");
+        ps.setString(1, this.getTableName(Config.DB_TABLE_PLAYER));
+        ps.setString(2, player.getUniqueId().toString());
+        ps.setString(3, player.getDisplayName());
+        ps.executeUpdate();
+        this.closeRessources(rs, ps);
+      }
+
+      ps = this.getConnection().prepareStatement("SELECT id FROM ? WHERE uuid = ?");
+      ps.setString(1, this.getTableName(Config.DB_TABLE_PLAYER));
+      ps.setString(2, player.getUniqueId().toString());
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
+
+  public boolean isPlayerExists(Player player) {
+    boolean result = false;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this.getConnection().prepareStatement("SELECT id FROM ? WHERE uuid = ?");
+      ps.setString(1, this.getTableName(Config.DB_TABLE_PLAYER));
+      ps.setString(2, player.getUniqueId().toString());
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = true;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
+
+  public String getTableName(String path) {
+    return this._prefix + this._config.getString(path);
   }
 }
