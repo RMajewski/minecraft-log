@@ -5,8 +5,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import de.rene_majewski.minecraft_log.MinecraftLog;
 import de.rene_majewski.minecraft_log.config.Config;

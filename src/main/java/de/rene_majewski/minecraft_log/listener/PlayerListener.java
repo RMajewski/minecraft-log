@@ -1,6 +1,5 @@
 package de.rene_majewski.minecraft_log.listener;
 
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChatEvent;
 
