@@ -23,7 +23,7 @@ public final class MinecraftLog extends JavaPlugin
         // new BlockListener(this);
         // new PlayerListener(this);
 
-        this.getCommand("minecraftlog").setExecutor(new ConfigReloadCommand(_config));
+        this.getCommand("minecraftlog").setExecutor(new ConfigReloadCommand(this));
     }
 
     @Override

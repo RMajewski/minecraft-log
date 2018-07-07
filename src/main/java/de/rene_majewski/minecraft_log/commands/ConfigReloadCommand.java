@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import de.rene_majewski.minecraft_log.MinecraftLog;
 import de.rene_majewski.minecraft_log.config.Config;
 
 /**
@@ -18,17 +19,17 @@ import de.rene_majewski.minecraft_log.config.Config;
  */
 public class ConfigReloadCommand implements CommandExecutor {
   /**
-   * Speichert die Konfiguration-Klasse des Plugins.
+   * Speichert die Plugin-Klasse.
    */
-  private Config _config;
+  private MinecraftLog _plugin;
 
   /**
    * Initialisiert die Klasse.
    * 
    * @param config Konfiguration-Klasse des Plugins.
    */
-  public ConfigReloadCommand(Config config) {
-    this._config = config;
+  public ConfigReloadCommand(MinecraftLog plugin) {
+    this._plugin = plugin;
   }
 
   /**
@@ -56,11 +57,11 @@ public class ConfigReloadCommand implements CommandExecutor {
         if ((args.length >= 1) && (args[0].equalsIgnoreCase("config"))) {
           if ((args.length >= 2) && args[1].equalsIgnoreCase("reload")) {
             if (sender.hasPermission(Config.PERMISSION_ADMIN_RELOAD)) {
-              this._config.reload();
-              sender.sendMessage(this._config.getString(Config.MESSAGE_CONFIG_RELOAD));
+              this._plugin.getMyConfig().reload();
+              sender.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_CONFIG_RELOAD));
               return true;
             } else {
-              sender.sendMessage(ChatColor.RED + this._config.getString(Config.MESSAGE_NO_PERMISSION));
+              sender.sendMessage(ChatColor.RED + this._plugin.getMyConfig().getString(Config.MESSAGE_NO_PERMISSION));
               return true;
             }
           }
