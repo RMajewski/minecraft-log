@@ -127,5 +127,6 @@ public class ConfigReloadCommandTest {
     assertTrue(cfc.onCommand(sender, command, "minecraftlog", args));
     verify(sender, times(1)).hasPermission(Config.PERMISSION_ADMIN_RELOAD);
     verify(sender, times(1)).sendMessage(message);
+    verify(config, times(1)).reload();
   }
 }
