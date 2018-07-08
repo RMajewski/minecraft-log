@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `&player` (
   `id` BIGINT(20) AUTO_INCREMENT,
-  `uuid` CHAR(20) NOT NULL,
+  `uuid` CHAR(40) NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   `registration` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY(`id`),

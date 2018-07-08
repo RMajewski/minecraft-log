@@ -316,17 +316,15 @@ public class MySql {
     ResultSet rs = null;
     try {
       if (!this.isPlayerExists(player)) {
-        ps = this.getConnection().prepareStatement("INSERT INTO ? (uuid, name) VALUES (?, ?)");
-        ps.setString(1, this.getTableName(Config.DB_TABLE_PLAYER));
-        ps.setString(2, player.getUniqueId().toString());
-        ps.setString(3, player.getDisplayName());
+        ps = this.getConnection().prepareStatement("INSERT INTO " + this.getTableName(Config.DB_TABLE_PLAYER) + " (uuid, name) VALUES (?, ?)");
+        ps.setString(1, player.getUniqueId().toString());
+        ps.setString(2, player.getDisplayName());
         ps.executeUpdate();
         this.closeRessources(rs, ps);
       }
 
-      ps = this.getConnection().prepareStatement("SELECT id FROM ? WHERE uuid = ?");
-      ps.setString(1, this.getTableName(Config.DB_TABLE_PLAYER));
-      ps.setString(2, player.getUniqueId().toString());
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_PLAYER) + " WHERE uuid = ?");
+      ps.setString(1, player.getUniqueId().toString());
       rs = ps.executeQuery();
       if (rs.next()) {
         result = rs.getInt("id");
@@ -358,9 +356,8 @@ public class MySql {
     PreparedStatement ps = null;
     ResultSet rs = null;
     try {
-      ps = this.getConnection().prepareStatement("SELECT id FROM ? WHERE uuid = ?");
-      ps.setString(1, this.getTableName(Config.DB_TABLE_PLAYER));
-      ps.setString(2, player.getUniqueId().toString());
+      ps = this.getConnection().prepareStatement("SELECT id,uuid FROM " + this.getTableName(Config.DB_TABLE_PLAYER) + " WHERE uuid = ?;");
+      ps.setString(1, player.getUniqueId().toString());
       rs = ps.executeQuery();
       if (rs.next()) {
         result = true;

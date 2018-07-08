@@ -5,6 +5,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.rene_majewski.minecraft_log.commands.ConfigReloadCommand;
 import de.rene_majewski.minecraft_log.config.Config;
 import de.rene_majewski.minecraft_log.data.MySql;
+import de.rene_majewski.minecraft_log.listener.BlockListener;
+import de.rene_majewski.minecraft_log.listener.PlayerListener;
 
 public final class MinecraftLog extends JavaPlugin 
 {
@@ -20,10 +22,17 @@ public final class MinecraftLog extends JavaPlugin
 
         this._mysql = new MySql(_config);
 
-        // new BlockListener(this);
-        // new PlayerListener(this);
+        this.registerCommands();
+        this.registerEvents();
+    }
 
-        this.getCommand("minecraftlog").setExecutor(new ConfigReloadCommand(this));
+    private void registerEvents() {
+        new BlockListener(this);
+        new PlayerListener(this);
+    }
+
+    private void registerCommands() {
+        this.getCommand("minecraftLog").setExecutor(new ConfigReloadCommand(this));
     }
 
     @Override

@@ -4,7 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import de.rene_majewski.minecraft_log.MinecraftLog;
 import de.rene_majewski.minecraft_log.config.Config;
@@ -25,18 +26,18 @@ public class PlayerListener extends EventListener {
    * 
    * @param event Daten des Events.
    */
-  @EventHandler
-  public void onChatEvent(PlayerChatEvent event) {
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void onChatEvent(AsyncPlayerChatEvent event) {
+    System.out.println("AsyncPlayerChatEvent");
     int id = this._plugin.getMySql().getPlayerId(event.getPlayer());
 
     if (id > 0) {
       PreparedStatement ps = null;
       
       try {
-        ps = this._plugin.getMySql().getConnection().prepareStatement("INSERT INTO ? (player_id, message) VALUES(?, ?)");
-        ps.setString(1, this._plugin.getMySql().getTableName(Config.DB_TABLE_LOG_CHAT));
-        ps.setInt(2, id);
-        ps.setString(3, event.getMessage());
+        ps = this._plugin.getMySql().getConnection().prepareStatement("INSERT INTO " + this._plugin.getMySql().getTableName(Config.DB_TABLE_LOG_CHAT) + " (player_id, message) VALUES(?, ?)");
+        ps.setInt(1, id);
+        ps.setString(2, event.getMessage());
         ps.execute();
       } catch (SQLException e) {
         e.printStackTrace();
