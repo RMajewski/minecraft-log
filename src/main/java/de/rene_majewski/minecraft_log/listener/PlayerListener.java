@@ -20,6 +20,11 @@ public class PlayerListener extends EventListener {
     super(plugin);
   }
 
+  /**
+   * Reagiert auf Chat-Ereignisse.
+   * 
+   * @param event Daten des Events.
+   */
   @EventHandler
   public void onChatEvent(PlayerChatEvent event) {
     int id = this._plugin.getMySql().getPlayerId(event.getPlayer());
