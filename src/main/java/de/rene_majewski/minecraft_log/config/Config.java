@@ -18,6 +18,7 @@ public final class Config {
   public static final String DB_TABLE_PLAYER = "minecraftlog.db.tables.player";
   public static final String DB_TABLE_LOG_COMMAND = "minecraftlog.db.tables.log_command";
   public static final String DB_TABLE_LOG_CHAT = "minecraftlog.db.tables.log_chat";
+  public static final String DB_TABLE_LOG_LOGGIN = "minecraftlog.db.tables.log_loggin";
 
   public static final String PERMISSION_ADMIN_RELOAD = "minecraftlog.admin.reload";
 
@@ -62,5 +63,6 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_PLAYER, "player");
     _plugin.getConfig().addDefault(DB_TABLE_LOG_COMMAND, "log_command");
     _plugin.getConfig().addDefault(DB_TABLE_LOG_CHAT, "log_chat");
+    _plugin.getConfig().addDefault(DB_TABLE_LOG_LOGGIN, "log_loggin");
   }
 }

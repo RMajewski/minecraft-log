@@ -86,7 +86,8 @@ public class MySql {
   public static final String[] CREATE_TABLE_FILES = {
     "/sql/player.sql",
     "/sql/log_command.sql",
-    "/sql/log_chat.sql"
+    "/sql/log_chat.sql",
+    "/sql/log_loggin.sql"
   };
 
   /**
