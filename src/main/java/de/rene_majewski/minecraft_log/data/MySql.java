@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import de.rene_majewski.minecraft_log.config.Config;
@@ -87,7 +88,9 @@ public class MySql {
     "/sql/player.sql",
     "/sql/log_command.sql",
     "/sql/log_chat.sql",
-    "/sql/log_loggin.sql"
+    "/sql/log_loggin.sql",
+    "/sql/world.sql",
+    "/sql/log_world_change.sql"
   };
 
   /**
@@ -384,5 +387,73 @@ public class MySql {
    */
   public String getTableName(String path) {
     return this._prefix + this._config.getString(path);
+  }
+
+  /**
+   * Ermittelt die Datensatz-ID der übergebenen Welt. Wenn der Datensatz zur
+   * Welt noch nicht existiert, wird er angelegt.
+   * 
+   * @param world Welt, deren Datensatz-ID ermittelt werden soll.
+   * 
+   * @return Die Datensatz-ID der Welt. Konnte kein Datensatz ermittelt werden,
+   * so wird <b>0</b> zurückgegeben.
+   */
+  public int getWorldId(World world) {
+    int result = -1;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+      if (!this.isWorldExists(world)) {
+        ps = this.getConnection().prepareStatement("INSERT INTO " + this.getTableName(Config.DB_TABLE_WORLD) + " (name) VALUES (?)");
+        ps.setString(1, world.getName());
+        ps.executeUpdate();
+        this.closeRessources(rs, ps);
+      }
+
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_WORLD) + "where name=?");
+      ps.setString(1, world.getName());
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
+
+  /**
+   * Ermittelt ob ein Datensatz für die Welt existiert oder nicht.
+   * 
+   * @param world Welt, bei der geschaut werden soll, ob schon ein Datensatz
+   * in der Datenbank existiert.
+   * 
+   * @return <code>true</code>, wenn ein Datensatz zur Welt in der Datenbank
+   * existiert. <code>false</code>, wenn noch kein Datensatz exitiert.
+   */
+  public boolean isWorldExists(World world) {
+    boolean result = false;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this.getConnection().prepareStatement("SELECT id, name FROM " + this.getTableName(Config.MESSAGE_CONFIG_RELOAD) + " WHERE name = ?");
+      ps.setString(1, world.getName());
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = true;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
   }
 }

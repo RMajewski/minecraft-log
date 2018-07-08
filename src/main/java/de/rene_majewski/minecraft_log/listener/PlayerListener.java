@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -90,6 +91,35 @@ public class PlayerListener extends EventListener {
         ps.setInt(1, id);
         ps.setInt(2, 0);
         ps.execute();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      } finally {
+        this._plugin.getMySql().closeRessources(null, ps);
+      }
+    }
+  }
+
+  /**
+   * Reagiert auf auf Ereignisse, wenn ein Spieler die Welt ändert.
+   * 
+   * @param event Daten des Ereignisses.
+   */
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
+    int player = this._plugin.getMySql().getPlayerId(event.getPlayer());
+    int world = this._plugin.getMySql().getWorldId(event.getPlayer().getWorld());
+
+    if ((player > 0) && (world > 0)) {
+      PreparedStatement ps = null;
+
+      try {
+        ps = this._plugin.getMySql().getConnection().prepareStatement("INSERT INTO " + this._plugin.getMySql().getTableName(Config.DB_TABLE_LOG_WORLD_CHANGE) + " (player_id, world_id, x, y, z) VALUES (?, ?, ?, ?, ?)");
+        ps.setInt(1, player);
+        ps.setInt(2, world);
+        ps.setDouble(3, event.getPlayer().getLocation().getX());
+        ps.setDouble(4, event.getPlayer().getLocation().getY());
+        ps.setDouble(5, event.getPlayer().getLocation().getZ());
+        ps.executeUpdate();
       } catch (SQLException e) {
         e.printStackTrace();
       } finally {
