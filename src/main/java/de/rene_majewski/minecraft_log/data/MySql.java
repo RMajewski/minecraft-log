@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import de.rene_majewski.minecraft_log.config.Config;
@@ -90,7 +92,9 @@ public class MySql {
     "/sql/log_chat.sql",
     "/sql/log_loggin.sql",
     "/sql/world.sql",
-    "/sql/log_world_change.sql"
+    "/sql/log_world_change.sql",
+    "/sql/block.sql",
+    "/sql/log_block.sql"
   };
 
   /**
@@ -120,6 +124,7 @@ public class MySql {
 
     if (hasConnection()) {
       createTables();
+      allBlocksToDatabase();
     }
   }
 
@@ -184,6 +189,46 @@ public class MySql {
     }
 
     return result;
+  }
+
+  /**
+   * Ermittelt alle Materialien und schreibt die Daten in Datenbank, fall sie noch nicht existieren.
+   */
+  private void allBlocksToDatabase() {
+    for (Material material : Material.class.getEnumConstants()) {
+      this.saveMaterialToDatabase(material);
+    }
+  }
+
+  /**
+   * Speichert das angegebene Material in der Datenbank.
+   * 
+   * @param material Material, dass in der Datenbank gespeichert werden soll.
+   */
+  private void saveMaterialToDatabase(Material material) {
+    PreparedStatement ps = null;
+
+    try {
+      if (!this.isBlockExists(material)) {
+        ps = this.getConnection().prepareStatement("INSERT INTO " + this.getTableName(Config.DB_TABLE_BLOCK) + " (name, max_stack_size, is_block, is_edible, is_record, is_solid, is_transparent, is_flammable, is_burnable, is_occluding, has_gravity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        ps.setString(1, material.name().toLowerCase());
+        ps.setInt(2, material.getMaxStackSize());
+        ps.setBoolean(3, material.isBlock());
+        ps.setBoolean(4, material.isEdible());
+        ps.setBoolean(5, material.isRecord());
+        ps.setBoolean(6, material.isSolid());
+        ps.setBoolean(7, material.isTransparent());
+        ps.setBoolean(8, material.isFlammable());
+        ps.setBoolean(9, material.isBurnable());
+        ps.setBoolean(10, material.isOccluding());
+        ps.setBoolean(11, material.hasGravity());
+        ps.executeUpdate();
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(null, ps);
+    }
   }
 
   /**
@@ -412,7 +457,7 @@ public class MySql {
         this.closeRessources(rs, ps);
       }
 
-      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_WORLD) + "where name=?");
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_WORLD) + " WHERE name=?");
       ps.setString(1, world.getName());
       rs = ps.executeQuery();
       if (rs.next()) {
@@ -442,8 +487,98 @@ public class MySql {
     PreparedStatement ps = null;
     ResultSet rs = null;
     try {
-      ps = this.getConnection().prepareStatement("SELECT id, name FROM " + this.getTableName(Config.MESSAGE_CONFIG_RELOAD) + " WHERE name = ?");
+      ps = this.getConnection().prepareStatement("SELECT id, name FROM " + this.getTableName(Config.DB_TABLE_WORLD) + " WHERE name = ?");
       ps.setString(1, world.getName());
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = true;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
+
+  /**
+   * Ermittelt die Datensatz-ID des übergebenen Blocks. Wenn der Datensatz zum
+   * Block noch nicht existiert, wird er angelegt.
+   * 
+   * @param block Block, dessen Datensatz-ID ermittelt werden soll.
+   * 
+   * @return Die Datensatz-ID des Block. Konnte kein Datensatz ermittelt werden,
+   * so wird <b>-1</b> zurückgegeben.
+   */
+  public int getBlockdId(Block block) {
+    return getBlockdId(block.getType());
+  }
+
+  /**
+   * Ermittelt die Datensatz-ID des übergebenen Materials. Wenn der Datensatz
+   * zum Material noch nicht existiert, wird er angelegt.
+   * 
+   * @param block Material, deren Datensatz-ID ermittelt werden soll.
+   * 
+   * @return Die Datensatz-ID des Materials. Konnte kein Datensatz ermittelt
+   * werden, so wird <b>-1</b> zurückgegeben.
+   */
+  public int getBlockdId(Material material) {
+    int result = -1;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+      saveMaterialToDatabase(material);
+
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_BLOCK) + " WHERE name=?");
+      ps.setString(1, material.name().toLowerCase());
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
+
+  /**
+   * Ermittelt ob ein Datensatz für den Block existiert oder nicht.
+   * 
+   * @param block Block, bei dem geschaut werden soll, ob schon ein Datensatz
+   * in der Datenbank existiert.
+   * 
+   * @return <code>true</code>, wenn ein Datensatz zum Block in der Datenbank
+   * existiert. <code>false</code>, wenn noch kein Datensatz exitiert.
+   */
+  public boolean isBlockExists(Block block) {
+    return isBlockExists(block.getType());
+  }
+
+  /**
+   * Ermittelt ob ein Datensatz für das Material existiert oder nicht.
+   * 
+   * @param material Material, bei dem geschaut werden soll, ob schon ein
+   * Datensatz in der Datenbank existiert.
+   * 
+   * @return <code>true</code>, wenn ein Datensatz zum Material in der
+   * Datenbank existiert. <code>false</code>, wenn noch ken Datensatz
+   * existiert.
+   */
+  public boolean isBlockExists(Material material) {
+    boolean result = false;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_BLOCK) + " WHERE name = ?");
+      ps.setString(1, material.name().toLowerCase());
       rs = ps.executeQuery();
       if (rs.next()) {
         result = true;

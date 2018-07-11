@@ -100,7 +100,7 @@ public class PlayerListener extends EventListener {
   }
 
   /**
-   * Reagiert auf auf Ereignisse, wenn ein Spieler die Welt ändert.
+   * Reagiert auf Ereignisse, wenn ein Spieler die Welt wechselt.
    * 
    * @param event Daten des Ereignisses.
    */
