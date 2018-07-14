@@ -1,5 +1,9 @@
 package de.rene_majewski.minecraft_log;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.rene_majewski.minecraft_log.commands.ConfigReloadCommand;
@@ -39,6 +43,24 @@ public final class MinecraftLog extends JavaPlugin
 
     @Override
     public void onDisable() {
+        if (this._mysql.hasConnection()) {
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            try {
+                ps = this._mysql.getConnection().prepareStatement("SELECT b.id AS player_id FROM(SELECT a.player_id AS id, count(a.player_id) AS cnt FROM minecraft.minecraft_log_log_loggin AS a WHERE a.time > current_date() GROUP BY a.player_id) AS b WHERE MOD(b.cnt,2) <> 0");
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    PlayerListener.logout(rs.getInt("player_id"), this._mysql);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                this._mysql.closeRessources(rs, ps);
+            }
+
+            this._mysql.closeConnection();
+        }
     }
 
     public MySql getMySql() {

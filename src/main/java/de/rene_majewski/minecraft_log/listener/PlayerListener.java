@@ -12,9 +12,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.rene_majewski.minecraft_log.MinecraftLog;
 import de.rene_majewski.minecraft_log.config.Config;
+import de.rene_majewski.minecraft_log.data.MySql;
 
 /**
  * Reagiert auf Spieler-Ereignisse.
+ * 
+ * @author René Majewski
+ * @since 0.1
  */
 public class PlayerListener extends EventListener {
   /**
@@ -84,18 +88,7 @@ public class PlayerListener extends EventListener {
     int id = this._plugin.getMySql().getPlayerId(event.getPlayer());
 
     if (id > 0) {
-      PreparedStatement ps = null;
-
-      try {
-        ps = this._plugin.getMySql().getConnection().prepareStatement("INSERT INTO " + this._plugin.getMySql().getTableName(Config.DB_TABLE_LOG_LOGGIN) + " (player_id, status) VALUES (?, ?)");
-        ps.setInt(1, id);
-        ps.setInt(2, 0);
-        ps.execute();
-      } catch (SQLException e) {
-        e.printStackTrace();
-      } finally {
-        this._plugin.getMySql().closeRessources(null, ps);
-      }
+      PlayerListener.logout(id, this._plugin.getMySql());
     }
   }
 
@@ -125,6 +118,29 @@ public class PlayerListener extends EventListener {
       } finally {
         this._plugin.getMySql().closeRessources(null, ps);
       }
+    }
+  }
+
+  /**
+   * Logt den angegebenen Spieler aus der Datenbank aus.
+   * 
+   * @param id ID des Spielers, der ausgelogt werden soll.
+   * 
+   * @param mysql MySQL-Klasse, über die die Verbindung zur Datenbank
+   * hergestellt wurde.
+   */
+  public static void logout(int id, MySql mysql) {
+    PreparedStatement ps = null;
+
+    try {
+      ps = mysql.getConnection().prepareStatement("INSERT INTO " + mysql.getTableName(Config.DB_TABLE_LOG_LOGGIN) + " (player_id, status) VALUES (?, ?)");
+      ps.setInt(1, id);
+      ps.setInt(2, 0);
+      ps.execute();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      mysql.closeRessources(null, ps);
     }
   }
 }
