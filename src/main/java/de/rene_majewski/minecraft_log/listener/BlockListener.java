@@ -13,6 +13,9 @@ import de.rene_majewski.minecraft_log.config.Config;
 
 /**
  * Reagiert auf Block-Ereignisse.
+ * 
+ * @author René Majewski
+ * @since 0.1
  */
 public class BlockListener extends EventListener {
   /**

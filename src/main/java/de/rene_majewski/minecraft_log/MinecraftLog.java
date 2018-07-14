@@ -6,6 +6,7 @@ import de.rene_majewski.minecraft_log.commands.ConfigReloadCommand;
 import de.rene_majewski.minecraft_log.config.Config;
 import de.rene_majewski.minecraft_log.data.MySql;
 import de.rene_majewski.minecraft_log.listener.BlockListener;
+import de.rene_majewski.minecraft_log.listener.CommandListener;
 import de.rene_majewski.minecraft_log.listener.PlayerListener;
 
 public final class MinecraftLog extends JavaPlugin 
@@ -29,6 +30,7 @@ public final class MinecraftLog extends JavaPlugin
     private void registerEvents() {
         new BlockListener(this);
         new PlayerListener(this);
+        new CommandListener(this);
     }
 
     private void registerCommands() {
