@@ -1,6 +1,6 @@
-# MinecraftLog
+# RM Plugin
 
-MinecraftLig is a plugin for CraftBukkit Minecraft server. This logs events in Minecraft to a database.
+RM Plugin Es wird das Loggen von Ereignissen bereitgestellt. Zudem werden wichtige Funktionen für einen Server bereitgestellt.
 
 ## Build plugin
 
