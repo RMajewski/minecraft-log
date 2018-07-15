@@ -16,7 +16,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
 
 /**
@@ -26,7 +26,7 @@ import de.rene_majewski.rm_plugin.config.Config;
  * @since 0.1
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Command.class, CommandSender.class, MinecraftLog.class, Config.class})
+@PrepareForTest({Command.class, CommandSender.class, RMPlugin.class, Config.class})
 public class ConfigReloadCommandTest {
   @Mock
   private CommandSender sender;
@@ -38,7 +38,7 @@ public class ConfigReloadCommandTest {
   private Config config;
 
   @Mock
-  private MinecraftLog plugin;
+  private RMPlugin plugin;
 
   private ConfigReloadCommand cfc;
 
@@ -70,11 +70,11 @@ public class ConfigReloadCommandTest {
    */
   @Test
   public void testOnCommandWithOneArgument() {
-    when(command.getName()).thenReturn("minecraftlog");
+    when(command.getName()).thenReturn("rmplugin");
     
     String[] args = { "config" };
 
-    assertFalse(cfc.onCommand(sender, command, "minecraftlog", args));
+    assertFalse(cfc.onCommand(sender, command, "rmplugin", args));
   }
 
   /**
@@ -82,11 +82,11 @@ public class ConfigReloadCommandTest {
    */
   @Test
   public void testOnCommandWithNoConfigAsFirstArgument() {
-    when(command.getName()).thenReturn("minecraftlog");
+    when(command.getName()).thenReturn("rmplugin");
 
     String[] args = { "test", "reload" };
 
-    assertFalse(cfc.onCommand(sender, command, "minecraftlog", args));
+    assertFalse(cfc.onCommand(sender, command, "rmplugin", args));
   }
 
   /**
@@ -94,11 +94,11 @@ public class ConfigReloadCommandTest {
    * <i>config</config> und als zweites Argument <i>reload</i> zurückgegeben
    * wird. Außerdem wird getestet, ob die richtige Nachricht an den
    * <code>sender</code> gesendet wird, wenn die Permission
-   * <i>minecraftlog.admin.reload</i> nicht gesetzt ist.
+   * <i>rmplugin.admin.reload</i> nicht gesetzt ist.
    */
   @Test
   public void testOnCommandWithRightArgumentsAndNoPermission() {
-    when(command.getName()).thenReturn("minecraftlog");
+    when(command.getName()).thenReturn("rmplugin");
     when(sender.hasPermission(Config.PERMISSION_ADMIN_RELOAD)).thenReturn(false);
 
     String[] args = { "config", "reload" };
@@ -107,7 +107,7 @@ public class ConfigReloadCommandTest {
     when(config.getString(Config.MESSAGE_NO_PERMISSION)).thenReturn(message);
     when(plugin.getMyConfig()).thenReturn(config);
 
-    assertTrue(cfc.onCommand(sender, command, "minecraftlog", args));
+    assertTrue(cfc.onCommand(sender, command, "rmplugin", args));
     verify(sender, times(1)).hasPermission(Config.PERMISSION_ADMIN_RELOAD);
     verify(sender, times(1)).sendMessage(ChatColor.RED + message);
     verify(plugin, times(1)).getMyConfig();
@@ -118,11 +118,11 @@ public class ConfigReloadCommandTest {
    * <i>config</config> und als zweites Argument <i>reload</i> zurückgegeben
    * wird. Außerdem wird getestet, ob die richtige Nachricht an den
    * <code>sender</code> gesendet wird, wenn die Permission
-   * <i>minecraftlog.admin.reload</i> nicht gesetzt ist.
+   * <i>rmplugin.admin.reload</i> nicht gesetzt ist.
    */
   @Test
   public void testOnCommandWithRightArgumentsAndRightPermission() {
-    when(command.getName()).thenReturn("minecraftlog");
+    when(command.getName()).thenReturn("rmplugin");
     when(sender.hasPermission(Config.PERMISSION_ADMIN_RELOAD)).thenReturn(true);
 
     String[] args = { "config", "reload" };
@@ -131,7 +131,7 @@ public class ConfigReloadCommandTest {
     when(config.getString(Config.MESSAGE_CONFIG_RELOAD)).thenReturn(message);
     when(plugin.getMyConfig()).thenReturn(config);
 
-    assertTrue(cfc.onCommand(sender, command, "minecraftlog", args));
+    assertTrue(cfc.onCommand(sender, command, "rmplugin", args));
     verify(sender, times(1)).hasPermission(Config.PERMISSION_ADMIN_RELOAD);
     verify(sender, times(1)).sendMessage(message);
     verify(config, times(1)).reload();

@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.rene_majewski.rm_plugin</groupId>
-  <artifactId>MinecraftLog</artifactId>
+  <artifactId>RM-Plugin</artifactId>
   <packaging>jar</packaging>
   <version>0.1</version>
-  <name>RM Plugin</name>
+  <name>RM-Plugin</name>
   <url>https://github.com/RMajewski/rm-plugin</url>
   <description>RM Plugin Es wird das Loggen von Ereignissen bereitgestellt. Zudem werden wichtige Funktionen für einen Server bereitgestellt.</description>
 
@@ -40,9 +40,9 @@
   </properties>
 
   <scm>
-    <connection>scm:git:https://github.com/RMajewski/minecraft-log.git</connection>
+    <connection>scm:git:https://github.com/RMajewski/rm-plugin.git</connection>
     <tag>HEAD</tag>
-    <url>https://github.com/RMajewski/minecraft-log</url>
+    <url>https://github.com/RMajewski/rm-plugin</url>
   </scm>
 
   <build>

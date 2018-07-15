@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
 import de.rene_majewski.rm_plugin.data.MySql;
 
@@ -24,7 +24,7 @@ public class PlayerListener extends EventListener {
   /**
    * Initalisiert die Ereignis-Klasse.
    */
-  public PlayerListener(MinecraftLog plugin) {
+  public PlayerListener(RMPlugin plugin) {
     super(plugin);
   }
 

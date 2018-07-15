@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
 
 /**
@@ -19,14 +19,14 @@ public class ConfigReloadCommand implements CommandExecutor {
   /**
    * Speichert die Plugin-Klasse.
    */
-  private MinecraftLog _plugin;
+  private RMPlugin _plugin;
 
   /**
    * Initialisiert die Klasse.
    * 
    * @param config Konfiguration-Klasse des Plugins.
    */
-  public ConfigReloadCommand(MinecraftLog plugin) {
+  public ConfigReloadCommand(RMPlugin plugin) {
     this._plugin = plugin;
   }
 
@@ -51,7 +51,7 @@ public class ConfigReloadCommand implements CommandExecutor {
         player = (Player)sender;
       }
 
-      if (command.getName().equalsIgnoreCase("minecraftlog")) {
+      if (command.getName().equalsIgnoreCase("rmplugin")) {
         if ((args.length >= 1) && (args[0].equalsIgnoreCase("config"))) {
           if ((args.length >= 2) && args[1].equalsIgnoreCase("reload")) {
             if (sender.hasPermission(Config.PERMISSION_ADMIN_RELOAD)) {

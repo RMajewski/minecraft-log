@@ -47,29 +47,29 @@ public class ConfigTest {
 
   @Test
   public void testRightDatabasePath() {
-    assertEquals(Config.DB_CONFIG_HOST, "minecraftlog.db.host");
-    assertEquals(Config.DB_CONFIG_PORT, "minecraftlog.db.port");
-    assertEquals(Config.DB_CONFIG_USER, "minecraftlog.db.user");
-    assertEquals(Config.DB_CONFIG_PASSWORD, "minecraftlog.db.password");
-    assertEquals(Config.DB_CONFIG_DATABASE, "minecraftlog.db.database");
-    assertEquals(Config.DB_CONFIG_PREFIX, "minecraftlog.db.prefix");
+    assertEquals(Config.DB_CONFIG_HOST, "rmplugin.db.host");
+    assertEquals(Config.DB_CONFIG_PORT, "rmplugin.db.port");
+    assertEquals(Config.DB_CONFIG_USER, "rmplugin.db.user");
+    assertEquals(Config.DB_CONFIG_PASSWORD, "rmplugin.db.password");
+    assertEquals(Config.DB_CONFIG_DATABASE, "rmplugin.db.database");
+    assertEquals(Config.DB_CONFIG_PREFIX, "rmplugin.db.prefix");
   }
 
   @Test
   public void testRightDatabaseTablePaths() {
-    assertEquals(Config.DB_TABLE_PLAYER, "minecraftlog.db.tables.player");
-    assertEquals(Config.DB_TABLE_LOG_COMMAND, "minecraftlog.db.tables.log_command");
+    assertEquals(Config.DB_TABLE_PLAYER, "rmplugin.db.tables.player");
+    assertEquals(Config.DB_TABLE_LOG_COMMAND, "rmplugin.db.tables.log_command");
   }
 
   @Test
   public void testRightPermissionPaths() {
-    assertEquals(Config.PERMISSION_ADMIN_RELOAD, "minecraftlog.admin.reload");
+    assertEquals(Config.PERMISSION_ADMIN_RELOAD, "rmplugin.admin.reload");
   }
 
   @Test
   public void testRightMessagePaths() {
-    assertEquals(Config.MESSAGE_NO_PERMISSION, "minecraftlog.messages.no_permission");
-    assertEquals(Config.MESSAGE_CONFIG_RELOAD, "minecraftlog.messages.config_reload");
+    assertEquals(Config.MESSAGE_NO_PERMISSION, "rmplugin.messages.no_permission");
+    assertEquals(Config.MESSAGE_CONFIG_RELOAD, "rmplugin.messages.config_reload");
   }
 
   @Test
@@ -84,7 +84,7 @@ public class ConfigTest {
     verify(fileConfig, times(1)).addDefault(Config.DB_CONFIG_USER, "user");
     verify(fileConfig, times(1)).addDefault(Config.DB_CONFIG_PASSWORD, "");
     verify(fileConfig, times(1)).addDefault(Config.DB_CONFIG_DATABASE, "minecraft");
-    verify(fileConfig, times(1)).addDefault(Config.DB_CONFIG_PREFIX, "minecraft_log_");
+    verify(fileConfig, times(1)).addDefault(Config.DB_CONFIG_PREFIX, "rm_plugin_");
 
     verify(fileConfig, times(1)).addDefault(Config.DB_TABLE_PLAYER, "player");
     verify(fileConfig, times(1)).addDefault(Config.DB_TABLE_LOG_COMMAND, "log_command");
