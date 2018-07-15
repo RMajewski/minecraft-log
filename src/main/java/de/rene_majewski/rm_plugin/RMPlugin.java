@@ -13,7 +13,7 @@ import de.rene_majewski.rm_plugin.listener.BlockListener;
 import de.rene_majewski.rm_plugin.listener.CommandListener;
 import de.rene_majewski.rm_plugin.listener.PlayerListener;
 
-public final class MinecraftLog extends JavaPlugin 
+public final class RMPlugin extends JavaPlugin 
 {
     private Config _config;
 
@@ -38,7 +38,7 @@ public final class MinecraftLog extends JavaPlugin
     }
 
     private void registerCommands() {
-        this.getCommand("minecraftLog").setExecutor(new ConfigReloadCommand(this));
+        this.getCommand("rmplugin").setExecutor(new ConfigReloadCommand(this));
     }
 
     @Override

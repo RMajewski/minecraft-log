@@ -8,7 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
 
 /**
@@ -21,7 +21,7 @@ public class BlockListener extends EventListener {
   /**
    * Initialisiert den Ereignis-Klasse.
    */
-  public BlockListener(MinecraftLog plugin) {
+  public BlockListener(RMPlugin plugin) {
     super(plugin);
   }
 

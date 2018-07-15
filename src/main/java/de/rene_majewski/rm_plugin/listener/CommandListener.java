@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
 
 /**
@@ -21,7 +21,7 @@ public class CommandListener extends EventListener {
   /**
    * Initialisiert den Ereignis-Klasse.
    */
-  public CommandListener(MinecraftLog plugin) {
+  public CommandListener(RMPlugin plugin) {
     super(plugin);
   }
 

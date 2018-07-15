@@ -209,7 +209,7 @@ public class MySql {
     PreparedStatement ps = null;
 
     try {
-      if (!this.isBlockExists(material)) {
+      if (!this.isBlockExists(material) && this.hasConnection()) {
         ps = this.getConnection().prepareStatement("INSERT INTO " + this.getTableName(Config.DB_TABLE_BLOCK) + " (name, max_stack_size, is_block, is_edible, is_record, is_solid, is_transparent, is_flammable, is_burnable, is_occluding, has_gravity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         ps.setString(1, material.name().toLowerCase());
         ps.setInt(2, material.getMaxStackSize());

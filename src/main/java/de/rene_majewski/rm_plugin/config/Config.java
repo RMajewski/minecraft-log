@@ -5,33 +5,33 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class Config {
   private JavaPlugin _plugin;
 
-  public static final String MESSAGE_NO_PERMISSION = "minecraftlog.messages.no_permission";
-  public static final String MESSAGE_CONFIG_RELOAD = "minecraftlog.messages.config_reload";
+  public static final String MESSAGE_NO_PERMISSION = "rmplugin.messages.no_permission";
+  public static final String MESSAGE_CONFIG_RELOAD = "rmplugin.messages.config_reload";
 
-  public static final String DB_CONFIG_HOST = "minecraftlog.db.host";
-  public static final String DB_CONFIG_PORT = "minecraftlog.db.port";
-  public static final String DB_CONFIG_USER = "minecraftlog.db.user";
-  public static final String DB_CONFIG_PASSWORD = "minecraftlog.db.password";
-  public static final String DB_CONFIG_DATABASE = "minecraftlog.db.database";
-  public static final String DB_CONFIG_PREFIX = "minecraftlog.db.prefix";
+  public static final String DB_CONFIG_HOST = "rmplugin.db.host";
+  public static final String DB_CONFIG_PORT = "rmplugin.db.port";
+  public static final String DB_CONFIG_USER = "rmplugin.db.user";
+  public static final String DB_CONFIG_PASSWORD = "rmplugin.db.password";
+  public static final String DB_CONFIG_DATABASE = "rmplugin.db.database";
+  public static final String DB_CONFIG_PREFIX = "rmplugin.db.prefix";
 
-  public static final String DB_TABLE_PLAYER = "minecraftlog.db.tables.player";
-  public static final String DB_TABLE_WORLD = "minecraftlog.db.tables.world";
-  public static final String DB_TABLE_BLOCK = "minecraftlog.db.tables.block";
-  public static final String DB_TABLE_LOG_COMMAND = "minecraftlog.db.tables.log_command";
-  public static final String DB_TABLE_LOG_CHAT = "minecraftlog.db.tables.log_chat";
-  public static final String DB_TABLE_LOG_LOGGIN = "minecraftlog.db.tables.log_loggin";
-  public static final String DB_TABLE_LOG_WORLD_CHANGE = "minecraftlog.db.tables.log_world_change";
-  public static final String DB_TABLE_LOG_BLOCK = "minecraftlog.db.tables.log_block";
+  public static final String DB_TABLE_PLAYER = "rmplugin.db.tables.player";
+  public static final String DB_TABLE_WORLD = "rmplugin.db.tables.world";
+  public static final String DB_TABLE_BLOCK = "rmplugin.db.tables.block";
+  public static final String DB_TABLE_LOG_COMMAND = "rmplugin.db.tables.log_command";
+  public static final String DB_TABLE_LOG_CHAT = "rmplugin.db.tables.log_chat";
+  public static final String DB_TABLE_LOG_LOGGIN = "rmplugin.db.tables.log_loggin";
+  public static final String DB_TABLE_LOG_WORLD_CHANGE = "rmplugin.db.tables.log_world_change";
+  public static final String DB_TABLE_LOG_BLOCK = "rmplugin.db.tables.log_block";
 
-  public static final String PERMISSION_ADMIN_RELOAD = "minecraftlog.admin.reload";
+  public static final String PERMISSION_ADMIN_RELOAD = "rmplugin.admin.reload";
 
   public Config(JavaPlugin plugin) {
     this._plugin = plugin;
 
     this.setDefaults();
 
-    _plugin.getConfig().options().header("MinecraftLog by TerraGermany");
+    _plugin.getConfig().options().header("RM-Plugin by TerraGermany");
 
     _plugin.getConfig().options().copyDefaults(true);
     save();
@@ -62,7 +62,7 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_CONFIG_USER, "user");
     _plugin.getConfig().addDefault(DB_CONFIG_PASSWORD, "");
     _plugin.getConfig().addDefault(DB_CONFIG_DATABASE, "minecraft");
-    _plugin.getConfig().addDefault(DB_CONFIG_PREFIX, "minecraft_log_");
+    _plugin.getConfig().addDefault(DB_CONFIG_PREFIX, "rm_plugin_");
 
     _plugin.getConfig().addDefault(DB_TABLE_PLAYER, "player");
     _plugin.getConfig().addDefault(DB_TABLE_WORLD, "world");

@@ -1,13 +1,13 @@
-name: MinecraftLog
+name: RM-Plugin
 version: 0.1
-description: Logger for Minecraft
+description: A plugin thats logs and include some commands and functions for my Minecraft server.
 author: René Majewski (TerraGermany)
 website: http://www.rene-majewski.de
-main: de.rene_majewski.rm_plugin.MinecraftLog
+main: de.rene_majewski.rm_plugin.RMPlugin
 
 commands:
-  minecraftlog:
+  rmplugin:
     description: Reload the config.
     usage : /<command> config reload
-    permission: minecraftlog.admin.reload
-    aliases: [ml]
+    permission: rmplugin.admin.reload
+    aliases: [rml]
