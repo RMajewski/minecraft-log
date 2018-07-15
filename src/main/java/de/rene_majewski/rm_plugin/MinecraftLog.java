@@ -1,4 +1,4 @@
-package de.rene_majewski.minecraft_log;
+package de.rene_majewski.rm_plugin;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.rene_majewski.minecraft_log.commands.ConfigReloadCommand;
-import de.rene_majewski.minecraft_log.config.Config;
-import de.rene_majewski.minecraft_log.data.MySql;
-import de.rene_majewski.minecraft_log.listener.BlockListener;
-import de.rene_majewski.minecraft_log.listener.CommandListener;
-import de.rene_majewski.minecraft_log.listener.PlayerListener;
+import de.rene_majewski.rm_plugin.commands.ConfigReloadCommand;
+import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.data.MySql;
+import de.rene_majewski.rm_plugin.listener.BlockListener;
+import de.rene_majewski.rm_plugin.listener.CommandListener;
+import de.rene_majewski.rm_plugin.listener.PlayerListener;
 
 public final class MinecraftLog extends JavaPlugin 
 {

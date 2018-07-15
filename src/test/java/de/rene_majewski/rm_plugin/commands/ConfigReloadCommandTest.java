@@ -1,4 +1,4 @@
-package de.rene_majewski.minecraft_log.commands;
+package de.rene_majewski.rm_plugin.commands;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -16,8 +16,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import de.rene_majewski.minecraft_log.MinecraftLog;
-import de.rene_majewski.minecraft_log.config.Config;
+import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.config.Config;
 
 /**
  * Testet die Klasse ConfigReloadCommand.

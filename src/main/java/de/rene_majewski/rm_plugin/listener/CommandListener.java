@@ -1,4 +1,4 @@
-package de.rene_majewski.minecraft_log.listener;
+package de.rene_majewski.rm_plugin.listener;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -8,8 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import de.rene_majewski.minecraft_log.MinecraftLog;
-import de.rene_majewski.minecraft_log.config.Config;
+import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.config.Config;
 
 /**
 * Reagiert auf die Eingabe von Befehlen und logt diese mit.

@@ -3,7 +3,7 @@ version: 0.1
 description: Logger for Minecraft
 author: René Majewski (TerraGermany)
 website: http://www.rene-majewski.de
-main: de.rene_majewski.minecraft_log.MinecraftLog
+main: de.rene_majewski.rm_plugin.MinecraftLog
 
 commands:
   minecraftlog:

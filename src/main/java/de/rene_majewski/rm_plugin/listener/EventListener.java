@@ -1,8 +1,8 @@
-package de.rene_majewski.minecraft_log.listener;
+package de.rene_majewski.rm_plugin.listener;
 
 import org.bukkit.event.Listener;
 
-import de.rene_majewski.minecraft_log.MinecraftLog;
+import de.rene_majewski.rm_plugin.MinecraftLog;
 
 public class EventListener implements Listener {
   protected MinecraftLog _plugin;

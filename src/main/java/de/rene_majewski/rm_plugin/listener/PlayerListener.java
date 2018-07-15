@@ -1,4 +1,4 @@
-package de.rene_majewski.minecraft_log.listener;
+package de.rene_majewski.rm_plugin.listener;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,9 +10,9 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import de.rene_majewski.minecraft_log.MinecraftLog;
-import de.rene_majewski.minecraft_log.config.Config;
-import de.rene_majewski.minecraft_log.data.MySql;
+import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.data.MySql;
 
 /**
  * Reagiert auf Spieler-Ereignisse.

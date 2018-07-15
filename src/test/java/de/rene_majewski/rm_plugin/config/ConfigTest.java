@@ -1,4 +1,4 @@
-package de.rene_majewski.minecraft_log.config;
+package de.rene_majewski.rm_plugin.config;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;

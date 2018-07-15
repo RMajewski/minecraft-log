@@ -1,4 +1,4 @@
-package de.rene_majewski.minecraft_log.commands;
+package de.rene_majewski.rm_plugin.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -6,8 +6,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.rene_majewski.minecraft_log.MinecraftLog;
-import de.rene_majewski.minecraft_log.config.Config;
+import de.rene_majewski.rm_plugin.MinecraftLog;
+import de.rene_majewski.rm_plugin.config.Config;
 
 /**
  * Liest die Konfiguration für das Plugin neu ein.

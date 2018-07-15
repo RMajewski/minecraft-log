@@ -1,4 +1,4 @@
-package de.rene_majewski.minecraft_log.data;
+package de.rene_majewski.rm_plugin.data;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import de.rene_majewski.minecraft_log.config.Config;
+import de.rene_majewski.rm_plugin.config.Config;
 
 /**
  * Stellt eine Verbindung zum MySQL-Server her.
