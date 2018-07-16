@@ -94,7 +94,11 @@ public class MySql {
     "/sql/world.sql",
     "/sql/log_world_change.sql",
     "/sql/block.sql",
-    "/sql/log_block.sql"
+    "/sql/log_block.sql",
+    "/sql/group.sql",
+    "/sql/group_parent.sql",
+    "/sql/group_permissions.sql",
+    "/sql/permission.sql"
   };
 
   /**
