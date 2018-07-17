@@ -88,7 +88,7 @@ public final class RMPlugin extends JavaPlugin
         ResultSet rs = null;
 
       try {
-        ps = this._mysql.getConnection().prepareStatement("SELECT b.id AS player_id FROM(SELECT a.player_id AS id, count(a.player_id) AS cnt FROM minecraft.minecraft_log_log_loggin AS a WHERE a.time > current_date() GROUP BY a.player_id) AS b WHERE MOD(b.cnt,2) <> 0");
+        ps = this._mysql.getConnection().prepareStatement("SELECT b.id AS player_id FROM(SELECT a.player_id AS id, count(a.player_id) AS cnt FROM " + this._mysql.getTableName(Config.DB_TABLE_LOG_LOGGIN) + " AS a WHERE a.time > current_date() GROUP BY a.player_id) AS b WHERE MOD(b.cnt,2) <> 0");
         rs = ps.executeQuery();
         while (rs.next()) {
           PlayerListener.logout(rs.getInt("player_id"), this._mysql);

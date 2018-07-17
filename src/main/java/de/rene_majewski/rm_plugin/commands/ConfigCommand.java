@@ -7,23 +7,72 @@ import org.bukkit.command.CommandSender;
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
 
-class ConfigCommand {
-  public static boolean config(CommandSender sender, Command command, String[] args, RMPlugin plugin) {
+/**
+ * Befehle zum Neuladen und Speichern der Konfiguration.
+ * 
+ * @author René Majewski
+ * 
+ * @since 0.1
+ */
+class ConfigCommand extends CommandClass {
+
+  /**
+   * Initialisiert die Klasse.
+   * 
+   * @param plugin Objekt zur Plugin-Main-Klasse.
+   * 
+   * @since 0.2
+   */
+  public ConfigCommand(RMPlugin plugin) {
+    super(plugin);
+  }
+
+  /**
+   * Reagiert auf die Befehle {@code /rmplugin config reload} und
+   * {@code /rmplugin config save}.
+   * 
+   * @since 0.1
+   */
+  public boolean config(CommandSender sender, Command command, String[] args, RMPlugin plugin) {
     if ((args.length >= 2) && args[1].equalsIgnoreCase("reload")) {
-      return reaload(sender, plugin);
+      reaload(sender);
+      return true;
     }
 
     return false;
   }
 
-  private static boolean reaload(CommandSender sender, RMPlugin plugin) {
+  /**
+   * Lädt die Konfiguration neu.
+   * 
+   * Zuerst wird überprüft, ob der Spieler die Berechtigung
+   * {@link Config#PERMISSION_ADMIN_RELOAD} hat. Ist dies der Fall so wird die
+   * Konfiguration neugeladen. Hat der sender die Berechtigung nicht, so wird
+   * dem sender {@link #} gesandt.
+   * 
+   * @param sender Objekt, was den Hilfetext angefordert hat.
+   * 
+   * @since 0.1
+   */
+  private void reaload(CommandSender sender) {
     if (sender.hasPermission(Config.PERMISSION_ADMIN_RELOAD)) {
-      plugin.getMyConfig().reload();
-      sender.sendMessage(plugin.getMyConfig().getString(Config.MESSAGE_CONFIG_RELOAD));
-      return true;
+      this._plugin.getMyConfig().reload();
+      sender.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_CONFIG_RELOAD));
     } else {
-      sender.sendMessage(ChatColor.RED + plugin.getMyConfig().getString(Config.MESSAGE_NO_PERMISSION));
-      return true;
+      this.sendNoPermission(sender);
     }
+  }
+
+  /**
+   * Sendet den Hilfetext für diesen Befehl zum Sender.
+   * 
+   * @param sender Objekt, das den Hilfetext empfangen soll.
+   * 
+   * @since 0.2
+   */
+  @Override
+  public void sendHelpMessage(CommandSender sender) {
+    sender.sendMessage(this.createCommandHelpMessage("config reload", "Lädt die Konfiguration für das RM-Plugin neu."));
+    sender.sendMessage(this.createCommandHelpMessage("config reload", "Speichert die Konfiguration des RM-Plugin ab."));
   }
 }

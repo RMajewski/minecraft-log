@@ -8,6 +8,4 @@ main: de.rene_majewski.rm_plugin.RMPlugin
 commands:
   rmplugin:
     description: Reload the config.
-    usage : /<command> config reload
-    permission: rmplugin.admin.reload
-    aliases: [rml]
+    usage : /<command>

@@ -15,19 +15,25 @@ import de.rene_majewski.rm_plugin.config.Config;
  * @author René Majewski
  * @since 0.1
  */
-public class RMPluginCommand implements CommandExecutor {
+public class RMPluginCommand extends CommandClass  implements CommandExecutor {
   /**
-   * Speichert die Plugin-Klasse.
+   * Speichert das Objekt für {@link ConfigCommand}.
+   * 
+   * @since 0.2
    */
-  private RMPlugin _plugin;
+  private ConfigCommand _configCommand;
 
   /**
    * Initialisiert die Klasse.
    * 
    * @param config Konfiguration-Klasse des Plugins.
+   * 
+   * @since 0.1
    */
   public RMPluginCommand(RMPlugin plugin) {
-    this._plugin = plugin;
+    super(plugin);
+
+    this._configCommand = new ConfigCommand(this._plugin);
   }
 
   /**
@@ -43,21 +49,49 @@ public class RMPluginCommand implements CommandExecutor {
    * 
    * @return <code>true</code>, wenn der Befehl ausgeführt werden konnte.
    * <code>false</code>, wenn der Befehl nicht ausgeführt werden konnte.
+   * 
+   * @since 0.1
    */
   public boolean onCommand(CommandSender sender, Command command, java.lang.String label, java.lang.String[] args) {
-    if (args.length != 0) {
-      Player player = null;
-      if (sender instanceof Player) {
-        player = (Player)sender;
-      }
+    Player player = null;
+    if (sender instanceof Player) {
+      player = (Player)sender;
+      return true;
+    }
 
-      if (command.getName().equalsIgnoreCase("rmplugin")) {
-        if ((args.length >= 1) && (args[0].equalsIgnoreCase("config"))) {
-          return ConfigCommand.config(sender, command, args, this._plugin);
+    if (command.getName().equalsIgnoreCase("rmplugin")) {
+      if (args.length >= 1) {
+        if (args[0].equalsIgnoreCase("help")) {
+          sendHelpMessage(sender);
+          return true;
+        } else if (args[0].equalsIgnoreCase("config")) {
+          return this._configCommand.config(sender, command, args, this._plugin);
         }
+      } else {
+        sendHelpMessage(sender);
+        return true;
       }
     }
 
     return false;
+  }
+
+  /**
+   * Sendet den allgemeinen Hilfetext zum Sender.
+   * 
+   * @param sender Objekt, zu dem der Hilfetext gesendet werden soll.
+   * 
+   * @since 0.1
+   */
+  public void sendHelpMessage(CommandSender sender) {
+    if (sender.hasPermission(Config.PERMISSION_COMMAND_HELP)) {
+      sender.sendMessage(ChatColor.RED + "Bitte verwende das Kommando wie folgt:");
+
+      this._configCommand.sendHelpMessage(sender);
+
+      sender.sendMessage(createCommandHelpMessage("help", "Zeigt diesen Hilfetext an."));
+    } else {
+      this.sendNoPermission(sender);
+    }
   }
 }
