@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.rene_majewski.rm_plugin.commands.ConfigReloadCommand;
+import de.rene_majewski.rm_plugin.commands.RMPluginCommand;
 import de.rene_majewski.rm_plugin.config.Config;
 import de.rene_majewski.rm_plugin.data.MySql;
 import de.rene_majewski.rm_plugin.listener.BlockListener;
@@ -73,7 +73,7 @@ public final class RMPlugin extends JavaPlugin
    * @since 0.1
    */
   private void registerCommands() {
-    this.getCommand("rmplugin").setExecutor(new ConfigReloadCommand(this));
+    this.getCommand("rmplugin").setExecutor(new RMPluginCommand(this));
   }
 
   /**

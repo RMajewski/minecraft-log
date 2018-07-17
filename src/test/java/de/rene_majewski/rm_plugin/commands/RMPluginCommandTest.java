@@ -1,18 +1,18 @@
 package de.rene_majewski.rm_plugin.commands;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.ChatColor;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -27,7 +27,7 @@ import de.rene_majewski.rm_plugin.config.Config;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Command.class, CommandSender.class, RMPlugin.class, Config.class})
-public class ConfigReloadCommandTest {
+public class RMPluginCommandTest {
   @Mock
   private CommandSender sender;
   
@@ -40,11 +40,11 @@ public class ConfigReloadCommandTest {
   @Mock
   private RMPlugin plugin;
 
-  private ConfigReloadCommand cfc;
+  private RMPluginCommand cfc;
 
   @Before
   public void setUp() {
-    cfc = new ConfigReloadCommand(plugin);
+    cfc = new RMPluginCommand(plugin);
   }
 
   /**

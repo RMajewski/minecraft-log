@@ -15,7 +15,7 @@ import de.rene_majewski.rm_plugin.config.Config;
  * @author René Majewski
  * @since 0.1
  */
-public class ConfigReloadCommand implements CommandExecutor {
+public class RMPluginCommand implements CommandExecutor {
   /**
    * Speichert die Plugin-Klasse.
    */
@@ -26,7 +26,7 @@ public class ConfigReloadCommand implements CommandExecutor {
    * 
    * @param config Konfiguration-Klasse des Plugins.
    */
-  public ConfigReloadCommand(RMPlugin plugin) {
+  public RMPluginCommand(RMPlugin plugin) {
     this._plugin = plugin;
   }
 
@@ -53,16 +53,7 @@ public class ConfigReloadCommand implements CommandExecutor {
 
       if (command.getName().equalsIgnoreCase("rmplugin")) {
         if ((args.length >= 1) && (args[0].equalsIgnoreCase("config"))) {
-          if ((args.length >= 2) && args[1].equalsIgnoreCase("reload")) {
-            if (sender.hasPermission(Config.PERMISSION_ADMIN_RELOAD)) {
-              this._plugin.getMyConfig().reload();
-              sender.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_CONFIG_RELOAD));
-              return true;
-            } else {
-              sender.sendMessage(ChatColor.RED + this._plugin.getMyConfig().getString(Config.MESSAGE_NO_PERMISSION));
-              return true;
-            }
-          }
+          return ConfigCommand.config(sender, command, args, this._plugin);
         }
       }
     }

@@ -1,6 +1,5 @@
 package de.rene_majewski.rm_plugin.permissions;
 
-import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -8,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
-import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.permissions.commands.PermissionCommand;
 
 /**
  * Organisiert die einzelnen Permissions.
@@ -23,6 +22,11 @@ public class PermissionManager {
    * @since 0.2
    */
   private RMPlugin _plugin;
+
+  /**
+   * Speichert die Befehls-Klasse.
+   */
+  private PermissionCommand _command;
 
   /**
    * Speichert die einzelnen Spieler-Berechtigungen.
@@ -44,6 +48,28 @@ public class PermissionManager {
     this._plugin = plugin;
 
     this._playerPermissions = new HashMap<UUID,PermissionAttachment>();
+
+    this._command = new PermissionCommand(this);
+    this.registerListeners();
+  }
+
+  /**
+   * Initialisiert die einzelnen Listeners und registriert sie.
+   * 
+   * @since 0.2
+   */
+  private void registerListeners() {
+
+  }
+
+  /**
+   * Ermittelt die einzelnen Permissions für den Spieler.
+   * 
+   * @param uniqueId UUID des Spielers, dessen Permissions ermittelt werden soll.
+   */
+  private void permissionsSetter(UUID uniqueId) {
+    PermissionAttachment attachment = this._playerPermissions.get(uniqueId);
+
   }
 
   /**
@@ -60,13 +86,11 @@ public class PermissionManager {
   }
 
   /**
-   * Ermittelt die einzelnen Permissions für den Spieler.
+   * Gibt die Befehls-Klasse zurück.
    * 
-   * @param uniqueId UUID des Spielers, dessen Permissions ermittelt werden soll.
+   * @return PermissionCommand Befehls-Klasse.
    */
-  private void permissionsSetter(UUID uniqueId) {
-    PermissionAttachment attachment = this._playerPermissions.get(uniqueId);
-
+  public PermissionCommand getPermissionCommand() {
+    return this._command;
   }
-
 }
