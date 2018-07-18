@@ -49,7 +49,7 @@ public class PermissionManager {
 
     this._playerPermissions = new HashMap<UUID,PermissionAttachment>();
 
-    this._command = new PermissionCommand(this);
+    this._command = new PermissionCommand(this._plugin);
     this.registerListeners();
   }
 

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.permissions.commands.PermissionCommand;
 
 /**
  * Liest die Konfiguration für das Plugin neu ein.
@@ -24,6 +25,13 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
   private ConfigCommand _configCommand;
 
   /**
+   * Speichert das Objekt für {@link PermissionCommand}.
+   * 
+   * @since 0.2
+   */
+  private PermissionCommand _permissionCommand;
+
+  /**
    * Initialisiert die Klasse.
    * 
    * @param config Konfiguration-Klasse des Plugins.
@@ -34,6 +42,7 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
     super(plugin);
 
     this._configCommand = new ConfigCommand(this._plugin);
+    this._permissionCommand = new PermissionCommand(this._plugin);
   }
 
   /**
@@ -66,6 +75,8 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
           return true;
         } else if (args[0].equalsIgnoreCase("config")) {
           return this._configCommand.config(sender, command, args, this._plugin);
+        } else if (args[0].equalsIgnoreCase("permission")) {
+          return this._permissionCommand.permission(sender, command, label, args);
         }
       } else {
         sendHelpMessage(sender);
@@ -89,7 +100,9 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
 
       this._configCommand.sendHelpMessage(sender);
 
-      sender.sendMessage(createCommandHelpMessage("help", "Zeigt diesen Hilfetext an."));
+      sender.sendMessage(this.createCommandHelpMessage("help", "Zeigt diesen Hilfetext an."));
+
+      this._permissionCommand.sendHelpMessage(sender);
     } else {
       this.sendNoPermission(sender);
     }

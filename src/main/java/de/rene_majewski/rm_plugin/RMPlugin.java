@@ -12,6 +12,7 @@ import de.rene_majewski.rm_plugin.data.MySql;
 import de.rene_majewski.rm_plugin.listener.BlockListener;
 import de.rene_majewski.rm_plugin.listener.CommandListener;
 import de.rene_majewski.rm_plugin.listener.PlayerListener;
+import de.rene_majewski.rm_plugin.permissions.PermissionManager;
 
 /**
  * Die Hauptklasse des RM-Plugins.
@@ -35,7 +36,10 @@ public final class RMPlugin extends JavaPlugin
    */
   private MySql _mysql;
 
-  private boolean _enablePermission;
+  /**
+   * Speichert den Permission-Manager.
+   */
+  private PermissionManager _permissions;
 
   /**
    * Wird aufgerufen, wenn das Plugin initialisiert wird.
@@ -46,11 +50,10 @@ public final class RMPlugin extends JavaPlugin
   public void onEnable() {
     super.onEnable();
 
-    this._enablePermission = false;
-
     _config = new Config(this);
 
     this._mysql = new MySql(_config);
+    this._permissions = new PermissionManager(this);
 
     this.registerCommands();
     this.registerEvents();
@@ -119,5 +122,16 @@ public final class RMPlugin extends JavaPlugin
    */
   public Config getMyConfig() {
     return this._config;
+  }
+
+  /**
+   * Gibt den Zugriff zum Permissions-Manager zurück.
+   * 
+   * @return Objekt der Klasse {@link PermissionManager}.
+   * 
+   * @since 0.2
+   */
+  public PermissionManager getPermissionManager() {
+    return this._permissions;
   }
 }

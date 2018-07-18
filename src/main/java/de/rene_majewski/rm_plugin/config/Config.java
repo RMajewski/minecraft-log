@@ -253,7 +253,7 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_LOG_WORLD_CHANGE, "log_world_change");
     _plugin.getConfig().addDefault(DB_TABLE_LOG_BLOCK, "log_block");
 
-    _plugin.getConfig().addDefault(COLOR_HELP_TEXT, ChatColor.DARK_GRAY);
-    _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, ChatColor.BOLD);
+    _plugin.getConfig().addDefault(COLOR_HELP_TEXT, "§7");
+    _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, "§6");
   }
 }

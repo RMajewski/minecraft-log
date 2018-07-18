@@ -4,7 +4,7 @@
   <groupId>de.rene_majewski.rm_plugin</groupId>
   <artifactId>RM-Plugin</artifactId>
   <packaging>jar</packaging>
-  <version>0.1</version>
+  <version>0.2</version>
   <name>RM-Plugin</name>
   <url>https://github.com/RMajewski/rm-plugin</url>
   <description>RM Plugin Es wird das Loggen von Ereignissen bereitgestellt. Zudem werden wichtige Funktionen für einen Server bereitgestellt.</description>

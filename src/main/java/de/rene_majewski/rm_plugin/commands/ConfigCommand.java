@@ -1,6 +1,5 @@
 package de.rene_majewski.rm_plugin.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -14,7 +13,7 @@ import de.rene_majewski.rm_plugin.config.Config;
  * 
  * @since 0.1
  */
-class ConfigCommand extends CommandClass {
+public class ConfigCommand extends CommandClass {
 
   /**
    * Initialisiert die Klasse.
@@ -72,7 +71,8 @@ class ConfigCommand extends CommandClass {
    */
   @Override
   public void sendHelpMessage(CommandSender sender) {
+    sender.sendMessage(this.createCommandHelpMessage("config help", "Zeigt den Hilfetext für die Konfigurations-Befehle an."));
     sender.sendMessage(this.createCommandHelpMessage("config reload", "Lädt die Konfiguration für das RM-Plugin neu."));
-    sender.sendMessage(this.createCommandHelpMessage("config reload", "Speichert die Konfiguration des RM-Plugin ab."));
+    sender.sendMessage(this.createCommandHelpMessage("config save", "Speichert die Konfiguration des RM-Plugin ab."));
   }
 }
