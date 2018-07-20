@@ -34,6 +34,20 @@ public final class Config {
   public static final String MESSAGE_CONFIG_RELOAD = "rmplugin.messages.config_reload";
 
   /**
+   * Gibt den Pfad zur Nachricht für die Überschrift der Hilfe an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_HELP_COMMAND = "rmplugin.messages.help.command";
+
+  /**
+   * Gibt den Pfad zur Hilfe-Nachricht an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_HELP_HELP = "rmplugin.messages.help.help";
+
+  /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
    * 
    * @since 0.1
@@ -134,6 +148,13 @@ public final class Config {
    */
   public static final String DB_TABLE_LOG_BLOCK = "rmplugin.db.tables.log_block";
 
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die Gruppen an.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_PERMISSION_GROUP = "rmplugin.db.tables.permission_group";
+
 
   /**
    * Gib den Namen der Permission zum Neuladen der Konfiguration an.
@@ -158,13 +179,34 @@ public final class Config {
    */
   public static final String COLOR_HELP_COMMAND = "rmplugin.color.help.command";
 
-
   /**
    * Gibt den Namen zur Einstellung der Farbe zum normalen Hilfe-Text an.
    * 
    * @since 0.2
    */
   public static final String COLOR_HELP_TEXT = "rmplugin.color.help.text";
+
+  /**
+   * Gibt den Namen zur Einstellung der Farbe zur Überschrift der Permissions an.
+   * 
+   * @since 0.2
+   */
+  public static final String COLOR_PERMISSION_HEADER = "rmplugin.color.permission.header";
+
+  /**
+   * Gibt den Namen zur Einstellung der Farbe für einzelne Permissions an.
+   * 
+   * @since 0.2
+   */
+  public static final String COLOR_PERMISSION_VALUE = "rmplugin.color.permission.value";
+
+  /**
+   * Gibt den Namen zur Einstellung der Farbe für normalen Text innerhalb der
+   * Permissions an.
+   * 
+   * @since 0.2
+   */
+  public static final String COLOR_PERMISSION_TEXT = "rmplugin.color.permission.text";
 
 
   /**
@@ -236,6 +278,8 @@ public final class Config {
   private void setDefaults() {
     _plugin.getConfig().addDefault(MESSAGE_NO_PERMISSION, "Du hast keine Berechtigung für diesen Befehl.");
     _plugin.getConfig().addDefault(MESSAGE_CONFIG_RELOAD, "Du Konfiguration wurde erfolgreich neu geladen");
+    _plugin.getConfig().addDefault(MESSAGE_HELP_HELP, "Bitte verwende den Befehl wie folgt:");
+    _plugin.getConfig().addDefault(MESSAGE_HELP_COMMAND, "Zeigt diesen Hilfetext an.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
@@ -252,8 +296,12 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_LOG_LOGGIN, "log_loggin");
     _plugin.getConfig().addDefault(DB_TABLE_LOG_WORLD_CHANGE, "log_world_change");
     _plugin.getConfig().addDefault(DB_TABLE_LOG_BLOCK, "log_block");
+    _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_GROUP, "group");
 
     _plugin.getConfig().addDefault(COLOR_HELP_TEXT, "§7");
     _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, "§6");
+    _plugin.getConfig().addDefault(COLOR_PERMISSION_HEADER, "§1");
+    _plugin.getConfig().addDefault(COLOR_PERMISSION_VALUE, "§b");
+    _plugin.getConfig().addDefault(COLOR_PERMISSION_TEXT, "§7");
   }
 }

@@ -7,5 +7,5 @@ main: de.rene_majewski.rm_plugin.RMPlugin
 
 commands:
   rmplugin:
-    description: Reload the config.
+    description: Synonym für die verschiedenen Befehle RM-Plugins.
     usage : /<command>

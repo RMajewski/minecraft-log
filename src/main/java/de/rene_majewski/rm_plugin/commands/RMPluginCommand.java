@@ -65,7 +65,6 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
     Player player = null;
     if (sender instanceof Player) {
       player = (Player)sender;
-      return true;
     }
 
     if (command.getName().equalsIgnoreCase("rmplugin")) {
@@ -96,11 +95,11 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
    */
   public void sendHelpMessage(CommandSender sender) {
     if (sender.hasPermission(Config.PERMISSION_COMMAND_HELP)) {
-      sender.sendMessage(ChatColor.RED + "Bitte verwende das Kommando wie folgt:");
+      this.sendMessage(ChatColor.RED + this._plugin.getMyConfig().getString(Config.MESSAGE_HELP_HELP), sender);
 
       this._configCommand.sendHelpMessage(sender);
 
-      sender.sendMessage(this.createCommandHelpMessage("help", "Zeigt diesen Hilfetext an."));
+      this.sendMessage(this.createCommandHelpMessage("help", this._plugin.getMyConfig().getString(Config.MESSAGE_HELP_HELP)), sender);
 
       this._permissionCommand.sendHelpMessage(sender);
     } else {

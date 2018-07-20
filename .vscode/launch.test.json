@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "MinecraftLog",
+                "projectName": "MinecraftLog",
+                "workingDirectory": "/home/rene/minecraft/rm-plugin",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "MinecraftLog",
+                "projectName": "MinecraftLog",
+                "workingDirectory": "/home/rene/minecraft/rm-plugin",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

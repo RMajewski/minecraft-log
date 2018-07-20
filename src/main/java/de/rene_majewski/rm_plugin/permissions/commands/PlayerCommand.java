@@ -27,7 +27,7 @@ class PlayerCommand extends CommandClass {
    */
   @Override
   public void sendHelpMessage(CommandSender sender) {
-    sender.sendMessage(this.createCommandHelpMessage("permission player help", "Hilfetext für den Befehl für die Spieler-Berechtigungen."));
+    this.sendMessage(this.createCommandHelpMessage("permission player help", "Hilfetext für den Befehl für die Spieler-Berechtigungen."), sender);
   }
 
   /**

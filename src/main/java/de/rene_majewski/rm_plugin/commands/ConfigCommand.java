@@ -35,10 +35,11 @@ public class ConfigCommand extends CommandClass {
   public boolean config(CommandSender sender, Command command, String[] args, RMPlugin plugin) {
     if ((args.length >= 2) && args[1].equalsIgnoreCase("reload")) {
       reaload(sender);
-      return true;
+    } else {
+      this.sendHelpMessage(sender);
     }
 
-    return false;
+    return true;
   }
 
   /**
@@ -71,8 +72,8 @@ public class ConfigCommand extends CommandClass {
    */
   @Override
   public void sendHelpMessage(CommandSender sender) {
-    sender.sendMessage(this.createCommandHelpMessage("config help", "Zeigt den Hilfetext für die Konfigurations-Befehle an."));
-    sender.sendMessage(this.createCommandHelpMessage("config reload", "Lädt die Konfiguration für das RM-Plugin neu."));
-    sender.sendMessage(this.createCommandHelpMessage("config save", "Speichert die Konfiguration des RM-Plugin ab."));
+    this.sendMessage(this.createCommandHelpMessage("config help", "Zeigt den Hilfetext für die Konfigurations-Befehle an."), sender);
+    this.sendMessage(this.createCommandHelpMessage("config reload", "Lädt die Konfiguration für das RM-Plugin neu."), sender);
+    this.sendMessage(this.createCommandHelpMessage("config save", "Speichert die Konfiguration des RM-Plugin ab."), sender);
   }
 }

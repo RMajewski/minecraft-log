@@ -80,7 +80,7 @@ public final class PermissionCommand extends CommandClass {
   @Override
   public void sendHelpMessage(CommandSender sender) {
     this._groupCommand.sendHelpMessage(sender);
-    sender.sendMessage(this.createCommandHelpMessage("permission help", "Zeigt den Hilfetext für die Permissions-Befehle an."));
+    this.sendMessage(this.createCommandHelpMessage("permission help", "Zeigt den Hilfetext für die Permissions-Befehle an."), sender);
     this._playerCommand.sendHelpMessage(sender);
   }
 }

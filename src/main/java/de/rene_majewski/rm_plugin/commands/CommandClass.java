@@ -1,6 +1,7 @@
 package de.rene_majewski.rm_plugin.commands;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
@@ -72,6 +73,60 @@ public abstract class CommandClass {
    * @since 0.2
    */
   public void sendNoPermission(CommandSender sender) {
-    sender.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_NO_PERMISSION));
+    if (sender instanceof Player) {
+      ((Player)sender).sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_NO_PERMISSION));
+    } else {
+      sender.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_NO_PERMISSION));
+    }
+  }
+
+  /**
+   * Sendet die übergebene Nachricht an den Sender.
+   * 
+   * Es wird die Nachricht in Teilnachrichten anhand von Zeilenumbrüchen
+   * aufgeteilt. Die Teilnachrichten werden dann an den Sender gesendet.
+   * 
+   * @param buffer Nachricht, die gesendet werden soll.
+   * 
+   * @param sender Objekt, an das die Nachrichten gesendet werden sollen.
+   * 
+   * @since 0.2
+   */
+  public void sendMessage(StringBuffer buffer, CommandSender sender) {
+    if ((buffer != null) || (sender != null)) {
+      return;
+    }
+
+    if (buffer.indexOf("\n") != -1) {
+      int index = 0;
+      int end = 0;
+      while ((end = buffer.indexOf("\n", index)) != -1) {
+        String message = buffer.substring(index, end);
+        this.sendMessage(message, sender);
+        index = end + 1;
+      }
+    } else {
+      this.sendMessage(buffer.toString(), sender);
+    }
+  }
+
+  /**
+   * Sender die Übergebene Nachricht an den Sender.
+   * 
+   * Es wird unterschiedenen ob die Nachricht einen Spieler oder an die
+   * Konsole gesendet werden soll.
+   * 
+   * @param text Nachricht, die verschickt werden soll.
+   * 
+   * @param sender Objekt, an das die Nachricht geschickt werden soll.
+   * 
+   * @since 0.2
+   */
+  public void sendMessage(String text, CommandSender sender) {
+    if (sender instanceof Player) {
+      ((Player)sender).sendMessage(text);
+    } else {
+      sender.sendMessage(text);
+    }
   }
 }

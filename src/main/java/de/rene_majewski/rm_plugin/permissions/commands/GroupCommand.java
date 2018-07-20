@@ -1,10 +1,15 @@
 package de.rene_majewski.rm_plugin.permissions.commands;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.commands.CommandClass;
+import de.rene_majewski.rm_plugin.config.Config;
 
 /**
  * Reagiert auf die Gruppen-Befehle.
@@ -35,7 +40,7 @@ class GroupCommand extends CommandClass {
    */
   @Override
   public void sendHelpMessage(CommandSender sender) {
-    sender.sendMessage(this.createCommandHelpMessage("permission group help", "Hilfetext für den Befehl für die Gruppen-Berechtigungen."));   
+    this.sendMessage(this.createCommandHelpMessage("permission group help", "Hilfetext für den Befehl für die Gruppen-Berechtigungen."), sender);   
   }
 
   /**
@@ -55,6 +60,65 @@ class GroupCommand extends CommandClass {
    * @since 0.2
    */
   public boolean onGroupCommand(CommandSender sender, Command command, java.lang.String label, java.lang.String[] args) {
-    return false;
+    if (args.length > 2) {
+      if (args[2].equalsIgnoreCase("list")) {
+        this.list(sender);
+        return true;
+      } else if (args[2].equalsIgnoreCase("new")) {
+        return true;
+      } else if (args[2].equalsIgnoreCase("delete")) {
+        return true;
+      } else if (args[2].equalsIgnoreCase("add")) {
+        return true;
+      } else if (args[2].equalsIgnoreCase("remove")) {
+        return true;
+      } else if (args[2].equalsIgnoreCase("help")) {
+        this.sendHelpMessage(sender);
+        return true;
+      } else {
+
+      }
+    }
+
+    this.sendHelpMessage(sender);
+    return true;
+  }
+
+  /**
+   * Zeigt die Liste mit allen Gruppen an.
+   * 
+   * @param sender Objekt, dass den Befehl gesendet hat.
+   * 
+   * @since 0.2
+   */
+  private void list(CommandSender sender) {
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement("SELECT name FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP) + " ORDER BY name");
+      rs = ps.executeQuery();
+
+      StringBuffer sb = new StringBuffer();
+      sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_HEADER));
+      sb.append("Liste aller Gruppen");
+      sb.append("\n");
+      sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_TEXT));
+      sb.append("-------------------\n");
+
+      while (rs.next()) {
+        sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_TEXT));
+        sb.append("-");
+        sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_VALUE));
+        sb.append(rs.getString(1));
+        sb.append("\n");
+      }
+
+      sender.sendMessage(sb.toString());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this._plugin.getMySql().closeRessources(rs, ps);
+    }
   }
 }
