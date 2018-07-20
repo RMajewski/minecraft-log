@@ -55,6 +55,28 @@ public final class Config {
   public static final String MESSAGE_HELP_HELP = "rmplugin.messages.help.help";
 
   /**
+   * Gibt den Pfad zur Nachricht für die Nachricht "Gruppe erzeugt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_CREATE = "rmplugin.messages.permission.group.create";
+
+  /**
+   * Gibt den Pfad zur Nachricht für die Nachricht "Gruppe nicht erzeugt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_CREATE_NO = "rmplugin.messages.permission.group.create_no";
+
+  /**
+   * Gibt den Pfad zur Nachrciht für die Nachricht "Fehler ist aufgetreten".
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR = "rmplugin.messages.error";
+
+
+  /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
    * 
    * @since 0.1
@@ -295,6 +317,10 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_CONFIG_SAVE, "Die Konfiguration wurde erfolgreich gespeichert.");
     _plugin.getConfig().addDefault(MESSAGE_HELP_HELP, "Bitte verwende den Befehl wie folgt:");
     _plugin.getConfig().addDefault(MESSAGE_HELP_COMMAND, "Zeigt diesen Hilfetext an.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR, "Es ist ein Fehler aufgetreten.");
+
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE, "Die Gruppe '?' wurde erfolgreichreich erzeugt.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnt nicht erzeugt werden.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);

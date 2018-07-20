@@ -65,6 +65,7 @@ class GroupCommand extends CommandClass {
         this.list(sender);
         return true;
       } else if (args[2].equalsIgnoreCase("new")) {
+        this.createGroup(args[3], sender);
         return true;
       } else if (args[2].equalsIgnoreCase("delete")) {
         return true;
@@ -85,6 +86,36 @@ class GroupCommand extends CommandClass {
   }
 
   /**
+   * Erstellt eine neue Gruppe.
+   * 
+   * @param name Name der neuen Gruppe.
+   * 
+   * @param sender Sender, der die Gruppe erzeugt.
+   * 
+   * @since 0.2
+   */
+  private void createGroup(String name, CommandSender sender) {
+    if (name != null && !name.isEmpty()) {
+      PreparedStatement ps = null;
+      try {
+        ps = this._plugin.getMySql().getConnection().prepareStatement("INSERT INTO " + this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP) + "(name) VALUES (?)");
+        ps.setString(1, name);
+        if (ps.executeUpdate() > 0) {
+          this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_CREATE).replace("?", name), sender);
+        } else {
+          this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_CREATE_NO).replace("?", name), sender);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), sender);
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_CREATE_NO).replace("?", name), sender);
+      } finally {
+        this._plugin.getMySql().closeRessources(null, ps);
+      }
+    }
+  }
+
+/**
    * Zeigt die Liste mit allen Gruppen an.
    * 
    * @param sender Objekt, dass den Befehl gesendet hat.
