@@ -33,8 +33,14 @@ public class ConfigCommand extends CommandClass {
    * @since 0.1
    */
   public boolean config(CommandSender sender, Command command, String[] args, RMPlugin plugin) {
-    if ((args.length >= 2) && args[1].equalsIgnoreCase("reload")) {
-      reaload(sender);
+    if (args.length == 2) {
+      if (args[1].equalsIgnoreCase("reload")) {
+        reaload(sender);
+      } else if (args[1].equalsIgnoreCase("save")) {
+        save(sender);
+      } else {
+        this.sendHelpMessage(sender);
+      }
     } else {
       this.sendHelpMessage(sender);
     }
@@ -48,7 +54,7 @@ public class ConfigCommand extends CommandClass {
    * Zuerst wird überprüft, ob der Spieler die Berechtigung
    * {@link Config#PERMISSION_ADMIN_RELOAD} hat. Ist dies der Fall so wird die
    * Konfiguration neugeladen. Hat der sender die Berechtigung nicht, so wird
-   * dem sender {@link #} gesandt.
+   * dem sender {@link Config#MESSAGE_NO_PERMISSION} gesandt.
    * 
    * @param sender Objekt, was den Hilfetext angefordert hat.
    * 
@@ -57,7 +63,24 @@ public class ConfigCommand extends CommandClass {
   private void reaload(CommandSender sender) {
     if (sender.hasPermission(Config.PERMISSION_ADMIN_RELOAD)) {
       this._plugin.getMyConfig().reload();
-      sender.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_CONFIG_RELOAD));
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_CONFIG_RELOAD), sender);
+    } else {
+      this.sendNoPermission(sender);
+    }
+  }
+
+  /**
+   * Speichert die Konfiguration.
+   * 
+   * zuerst wird überprüft, ob der Spieler die Berechtigung
+   * {@link Config#PERMISSION_ADMIN_SAVE} hat. Ist dies der Fall, so wird die
+   * Konfiguration gespeichert. hat der Sender die Berechtigung nicht, so wird
+   * dem Sender {@link Config#MESSAGE_NO_PERMISSION} gesandt.
+   */
+  private void save(CommandSender sender) {
+    if (sender.hasPermission(Config.PERMISSION_ADMIN_SAVE)) {
+      this._plugin.getMyConfig().save();
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_CONFIG_SAVE), sender);
     } else {
       this.sendNoPermission(sender);
     }

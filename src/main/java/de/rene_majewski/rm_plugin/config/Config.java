@@ -31,7 +31,14 @@ public final class Config {
    * 
    * @since 0.1
    */
-  public static final String MESSAGE_CONFIG_RELOAD = "rmplugin.messages.config_reload";
+  public static final String MESSAGE_CONFIG_RELOAD = "rmplugin.messages.config.reload";
+
+  /**
+   * Gibt den Pfad zur Nachricht für "Konfiguration gespeichert" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_CONFIG_SAVE = "rmplugin.messages.config.save";
 
   /**
    * Gibt den Pfad zur Nachricht für die Überschrift der Hilfe an.
@@ -164,6 +171,13 @@ public final class Config {
   public static final String PERMISSION_ADMIN_RELOAD = "rmplugin.admin.reload";
 
   /**
+   * Gibt den Namen der Permission zum Speichern der Konfiguration an.
+   * 
+   * @since 0.2
+   */
+  public static final String PERMISSION_ADMIN_SAVE = "rmplugin.admin.save";
+
+  /**
    * Gibt den Namen der Permission zum Anzeigen des Hilfetextes an.
    * 
    * @since 0.2
@@ -277,7 +291,8 @@ public final class Config {
    */
   private void setDefaults() {
     _plugin.getConfig().addDefault(MESSAGE_NO_PERMISSION, "Du hast keine Berechtigung für diesen Befehl.");
-    _plugin.getConfig().addDefault(MESSAGE_CONFIG_RELOAD, "Du Konfiguration wurde erfolgreich neu geladen");
+    _plugin.getConfig().addDefault(MESSAGE_CONFIG_RELOAD, "Die Konfiguration wurde erfolgreich neu geladen.");
+    _plugin.getConfig().addDefault(MESSAGE_CONFIG_SAVE, "Die Konfiguration wurde erfolgreich gespeichert.");
     _plugin.getConfig().addDefault(MESSAGE_HELP_HELP, "Bitte verwende den Befehl wie folgt:");
     _plugin.getConfig().addDefault(MESSAGE_HELP_COMMAND, "Zeigt diesen Hilfetext an.");
 
