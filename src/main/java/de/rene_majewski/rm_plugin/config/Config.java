@@ -24,7 +24,7 @@ public final class Config {
    * 
    * @since 0.1
    */
-  public static final String MESSAGE_NO_PERMISSION = "rmplugin.messages.no_permission";
+  public static final String MESSAGE_NO_PERMISSION = "rmplugin.messages.error.no_permission";
 
   /**
    * Gibt den Pfad zur Nachricht für "Konfiguration neu geladen" an.
@@ -69,12 +69,32 @@ public final class Config {
   public static final String MESSAGE_PERMISSION_GROUP_CREATE_NO = "rmplugin.messages.permission.group.create_no";
 
   /**
+   * Gibt den Pfad zur Nachricht für die Nachricht "Gruppe gelöscht" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_DELETE = "rmplugin.messages.permission.group.delete";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Gruppe konnte nicht gelöscht werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_DELETE_NO = "rmplugin.messages.permission.group.delete_no";
+
+  /**
    * Gibt den Pfad zur Nachrciht für die Nachricht "Fehler ist aufgetreten".
    * 
    * @since 0.2
    */
-  public static final String MESSAGE_ERROR = "rmplugin.messages.error";
+  public static final String MESSAGE_ERROR = "rmplugin.messages.errors.error";
 
+  /**
+   * Gibt den Pfad zur Nachricht "Gruppe angeben".
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_NO_GROUP = "rmplugin.messages.errors.no_group";
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -200,6 +220,13 @@ public final class Config {
   public static final String PERMISSION_ADMIN_SAVE = "rmplugin.admin.save";
 
   /**
+   * Gibt den Namen der Permission zum Anzeigen der Debug-Nachrichten an.
+   * 
+   * @since 0.2
+   */
+  public static final String PERMISSION_ADMIN_DEBUG = "rmplugin.admin.debug";
+
+  /**
    * Gibt den Namen der Permission zum Anzeigen des Hilfetextes an.
    * 
    * @since 0.2
@@ -221,6 +248,20 @@ public final class Config {
    * @since 0.2
    */
   public static final String COLOR_HELP_TEXT = "rmplugin.color.help.text";
+
+  /**
+   * Gibt den Namen zur Einstellung der Farbe für Fehler-Meldungen an.
+   * 
+   * @since 0.2
+   */
+  public static final String COLOR_ERROR_MESSAGE = "rmplugin.color.error.message";
+
+  /**
+   * Gibt den Namen zur Einstellung der Farbe für Fehler-Text an.
+   * 
+   * @since 0.2
+   */
+  public static final String COLOR_ERROR_TEXT = "rmplugin.color.error.text";
 
   /**
    * Gibt den Namen zur Einstellung der Farbe zur Überschrift der Permissions an.
@@ -318,9 +359,12 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_HELP_HELP, "Bitte verwende den Befehl wie folgt:");
     _plugin.getConfig().addDefault(MESSAGE_HELP_COMMAND, "Zeigt diesen Hilfetext an.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR, "Es ist ein Fehler aufgetreten.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_GROUP, "Du musst einen Gruppen-Namen angegeben.");
 
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE, "Die Gruppe '?' wurde erfolgreichreich erzeugt.");
-    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnt nicht erzeugt werden.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnte nicht erzeugt werden.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_DELETE, "Die Gruppe '?' wurde gelöscht.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_DELETE_NO, "Die Gruppe '?' konnte nicht gelöscht werden.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
@@ -344,5 +388,7 @@ public final class Config {
     _plugin.getConfig().addDefault(COLOR_PERMISSION_HEADER, "§1");
     _plugin.getConfig().addDefault(COLOR_PERMISSION_VALUE, "§b");
     _plugin.getConfig().addDefault(COLOR_PERMISSION_TEXT, "§7");
+    _plugin.getConfig().addDefault(COLOR_ERROR_TEXT, "§c");
+    _plugin.getConfig().addDefault(COLOR_ERROR_MESSAGE, "§4§l");
   }
 }

@@ -68,6 +68,7 @@ class GroupCommand extends CommandClass {
         this.createGroup(args[3], sender);
         return true;
       } else if (args[2].equalsIgnoreCase("delete")) {
+        this.deleteGroup(args[3], sender);
         return true;
       } else if (args[2].equalsIgnoreCase("add")) {
         return true;
@@ -86,6 +87,34 @@ class GroupCommand extends CommandClass {
   }
 
   /**
+   * Löscht die angegebene Gruppe.
+   * 
+   * @param name Name der Gruppe, die gelöscht werden soll.
+   * 
+   * @param sender Sender, der die Gruppe löscht.
+   * 
+   * @since 0.2
+   */
+  private void deleteGroup(String name, CommandSender sender) {
+    if (name != null && !name.isEmpty()) {
+      PreparedStatement ps = null;
+      try {
+        ps = this._plugin.getMySql().getConnection().prepareStatement("DELETE FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP) + " WHERE name=?");
+        ps.setString(1, name);
+        if (ps.executeUpdate() > 0) {
+          this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_DELETE).replace("?", name), sender);
+        } else {
+          this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_DELETE_NO).replace("?", name), sender);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } else {
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_GROUP), sender);
+    }
+  }
+
+/**
    * Erstellt eine neue Gruppe.
    * 
    * @param name Name der neuen Gruppe.
@@ -106,12 +135,12 @@ class GroupCommand extends CommandClass {
           this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_CREATE_NO).replace("?", name), sender);
         }
       } catch (SQLException e) {
-        e.printStackTrace();
-        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), sender);
-        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_CREATE_NO).replace("?", name), sender);
+        this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_CREATE_NO).replace("?", name));
       } finally {
         this._plugin.getMySql().closeRessources(null, ps);
       }
+    } else {
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_GROUP), sender);
     }
   }
 

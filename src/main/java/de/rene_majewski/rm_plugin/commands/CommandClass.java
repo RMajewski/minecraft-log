@@ -1,5 +1,6 @@
 package de.rene_majewski.rm_plugin.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -127,6 +128,32 @@ public abstract class CommandClass {
       ((Player)sender).sendMessage(text);
     } else {
       sender.sendMessage(text);
+    }
+  }
+
+  /**
+   * Sendet eine Fehler-Message.
+   * 
+   * @param sender Sender, an dem die Fehler-Nachricht geschickt werden soll.
+   * 
+   * @param error Fehler, der aufgetreten ist.
+   * 
+   * @param message Zusätzliche Nachricht, die an den Sender geschickt werden
+   * soll.
+   * 
+   * @since 0.2
+   */
+  public void sendErrorMessage(CommandSender sender, Exception error, String message) {
+    error.printStackTrace();
+    String color = this._plugin.getMyConfig().getString(Config.COLOR_ERROR_TEXT);
+    this.sendMessage(color + this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR) + ChatColor.RESET, sender);
+
+    if (sender.hasPermission(Config.PERMISSION_ADMIN_DEBUG)) {
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.COLOR_ERROR_MESSAGE) + error.getMessage() + ChatColor.RESET, sender);
+    }
+
+    if (message != null && !message.isEmpty()) {
+      this.sendMessage(color + message + ChatColor.RESET, sender);
     }
   }
 }
