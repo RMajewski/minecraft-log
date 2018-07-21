@@ -83,6 +83,35 @@ public final class Config {
   public static final String MESSAGE_PERMISSION_GROUP_DELETE_NO = "rmplugin.messages.permission.group.delete_no";
 
   /**
+   * Gibt den Pfad zur Nachricht "Vater-Gruppe wurde gesetzt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_ADD_PARENT = "rmplugin.messages.permission.group.add.parent";
+  
+  /**
+   * Gibt den Pfad zur Nchricht "Vater-Gruppe konnte nicht gesetzt werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_ADD_PARENT_NO = "rmplugin.messages.permission.group.add.parent_no";
+
+  /**
+   * Gibt den Pfad zur Fehler-Nachricht für "add parent Fehler mit Parameter"
+   * an. 
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT = "rmplugin.messages.error.permission.group.add.parent";
+
+  /**
+   * Gibt den Pfad zur Fehler-Nachricht für "Gruppe nicht gefunden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND = "rmplugin.messages.error.permission.group.not_found";
+
+  /**
    * Gibt den Pfad zur Nachrciht für die Nachricht "Fehler ist aufgetreten".
    * 
    * @since 0.2
@@ -203,6 +232,13 @@ public final class Config {
    * @since 0.2
    */
   public static final String DB_TABLE_PERMISSION_GROUP = "rmplugin.db.tables.permission_group";
+
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die Gruppen-Vererbungen an.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_PERMISSION_GROUP_PARENT = "rmplugin.db.tables.permission_group_parent";
 
 
   /**
@@ -360,11 +396,16 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_HELP_COMMAND, "Zeigt diesen Hilfetext an.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR, "Es ist ein Fehler aufgetreten.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_GROUP, "Du musst einen Gruppen-Namen angegeben.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT, "Falsche Anzahl an Parameter.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND, "Die Gruppe '?' konnte nicht gefunden werden.");
 
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE, "Die Gruppe '?' wurde erfolgreichreich erzeugt.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnte nicht erzeugt werden.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_DELETE, "Die Gruppe '?' wurde gelöscht.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_DELETE_NO, "Die Gruppe '?' konnte nicht gelöscht werden.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PARENT, "Der Gruppe '?' wurde die Vater-Gruppe '?' hinzugefügt.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PARENT_NO, "Der Gruppe '?' konnt die Vater-Gruppe '?' nicht hinzugefügt.");
+
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
@@ -382,6 +423,7 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_LOG_WORLD_CHANGE, "log_world_change");
     _plugin.getConfig().addDefault(DB_TABLE_LOG_BLOCK, "log_block");
     _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_GROUP, "group");
+    _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_GROUP_PARENT, "group_parent");
 
     _plugin.getConfig().addDefault(COLOR_HELP_TEXT, "§7");
     _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, "§6");

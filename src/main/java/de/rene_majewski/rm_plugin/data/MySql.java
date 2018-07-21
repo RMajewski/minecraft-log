@@ -595,4 +595,34 @@ public class MySql {
 
     return result;
   }
+
+  /**
+   * Ermittelt die ID der angegeben Gruppe.
+   * 
+   * @param name Name der Gruppe, deren ID ermittelt werden soll.
+   * 
+   * @return Konnte die Gruppe ermittelt, dann deren ID. Wenn nicht {@code -1}.
+   * 
+   * @since 0.2
+   */
+  public int getGroupId(String name) {
+    int result = -1;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_PERMISSION_GROUP) + " WHERE name = ?");
+      ps.setString(1, name);
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt(1);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
 }
