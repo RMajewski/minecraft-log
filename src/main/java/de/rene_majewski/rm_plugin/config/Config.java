@@ -137,6 +137,27 @@ public final class Config {
   public static final String MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION_NO = "rmplugin.messages.permission.group.remove.permission_no";
 
   /**
+   * Gibt den Pfad zur Nachricht "Vater-Gruppen konnten nicht ausgelesen werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_PERMISSION_SHOW_PARENTS = "rmplugin.messages.permission.group.show.parents";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Kinder-Gruppen konnten nicht ausgelesen werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_PERMISSION_SHOW_CHILDS = "rmplugin.messages.permission.group.show.childs";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Permissions konnten nicht ausgelesen werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_PERMISSION_SHOW_PERMISSIONS = "rmplugin.messages.permission.group.show.permissions";
+
+  /**
    * Gibt den Pfad zur Fehler-Nachricht für "add parent Fehler mit Parameter"
    * an. 
    * 
@@ -477,6 +498,9 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_REMOVE_PARENT, "Falsche Anzahl an Parameter.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND, "Die Gruppe '?' konnte nicht gefunden werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_PERMISSION_FOUND, "Die Permission '?' konnte nicht gefunden werden.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_PARENTS, "Von der Gruppe '?' konnten nicht die Vater-Gruppen ausgelesen werden.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_CHILDS, "Von der Gruppe '?' konnten nicht die Kinder-Gruppen ausgelesen werden.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_PERMISSIONS, "Von der Gruppe '?' konnten die Permissions nicht ausgelesen werden.");
 
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE, "Die Gruppe '?' wurde erfolgreichreich erzeugt.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnte nicht erzeugt werden.");

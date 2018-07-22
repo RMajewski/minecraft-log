@@ -98,6 +98,9 @@ public abstract class CommandClass {
       return;
     }
 
+    this.sendMessage(buffer.toString(), sender);
+    System.out.println("Test");
+
     if (buffer.indexOf("\n") != -1) {
       int index = 0;
       int end = 0;

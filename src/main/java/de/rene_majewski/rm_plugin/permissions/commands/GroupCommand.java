@@ -3,6 +3,11 @@ package de.rene_majewski.rm_plugin.permissions.commands;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,6 +15,7 @@ import org.bukkit.command.CommandSender;
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.commands.CommandClass;
 import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.data.MySql;
 import de.rene_majewski.rm_plugin.permissions.PermissionManager;
 
 /**
@@ -85,7 +91,9 @@ class GroupCommand extends CommandClass {
         this.sendHelpMessage(sender);
         return true;
       } else {
-
+        if (show(args[2], sender)) {
+          return true;
+        }
       }
     }
 
@@ -434,5 +442,158 @@ class GroupCommand extends CommandClass {
     } finally {
       this._plugin.getMySql().closeRessources(rs, ps);
     }
+  }
+
+  /**
+   * Überprüft ob der Gruppen-Name existiert. Wenn dies der Fall ist, so werden
+   * die einzelnen Einstellungen der Gruppe angezeigt.
+   * 
+   * @param name Name der Gruppe, die angezeigt werden soll.
+   * 
+   * @param sender Sender, der diesen Befehl gesendet hat.
+   * 
+   * @return {@code true}, wenn die Gruppe existiert. Existiert sie nicht, dann
+   * {@code false}.
+   * 
+   * @since 0.2
+   */
+  private boolean show(String name, CommandSender sender) {
+    int group = this._plugin.getMySql().getGroupId(name);
+
+    if (group > -1) {
+      StringBuffer sb = new StringBuffer();
+
+      // Name ausgeben
+      sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_TEXT));
+      sb.append("Name: ");
+      sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_VALUE));
+      sb.append(name);
+      sb.append("\n");
+
+      // Vater-Gruppen ausgeben
+      Set<Integer> groups = new HashSet<Integer>();
+
+      sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_HEADER));
+      sb.append("Vater-Gruppen");
+      sb.append("\n");
+      sb.append("-------------");
+      sb.append("\n");
+
+      PreparedStatement ps = null;
+      ResultSet rs = null;
+      try {
+        ps = this._plugin.getMySql().getConnection().prepareStatement(
+          "SELECT g.name, g.id FROM " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP) +
+          " as g, " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP_PARENT) +
+          " as p WHERE g.id = p.parent_id AND p.child_id = ?"
+        );
+        ps.setInt(1, group);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+          sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_TEXT));
+          sb.append("- ");
+          sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_VALUE));
+          sb.append(rs.getString(1));
+          sb.append("\n");
+
+          groups.add(Integer.valueOf(rs.getInt(2)));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+        this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_SHOW_PARENTS).replace("?", name));
+      } finally {
+        this._plugin.getMySql().closeRessources(rs, ps);
+      }
+
+      // Kind-Gruppen
+      sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_HEADER));
+      sb.append("\nKinder-Gruppen");
+      sb.append("\n");
+      sb.append("--------------");
+      sb.append("\n");
+
+      try {
+        ps = this._plugin.getMySql().getConnection().prepareStatement(
+          "SELECT g.name, g.id FROM " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP) +
+          " as g, " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP_PARENT) +
+          " as p WHERE g.id = p.child_id AND p.parent_id = ?"
+        );
+        ps.setInt(1, group);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+          sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_TEXT));
+          sb.append("- ");
+          sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_VALUE));
+          sb.append(rs.getString(1));
+          sb.append("\n");
+
+          groups.add(Integer.valueOf(rs.getInt(2)));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+        this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_SHOW_CHILDS).replace("?", name));
+      } finally {
+        this._plugin.getMySql().closeRessources(rs, ps);
+      }
+
+      // Permissions
+      sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_HEADER));
+      sb.append("\nPermissions");
+      sb.append("\n");
+      sb.append("-----------");
+      sb.append("\n");
+
+      try {
+        ps = this._plugin.getMySql().getConnection().prepareStatement(
+          "SELECT p.name, a.negate FROM " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP) +
+          " as g, " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION) +
+          " as p, " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_ALLOCATE) +
+          " as a WHERE a.group_id = g.id AND p.id = a.permission_id AND a.clazz = ? AND g.id IN(?) ORDER BY g.name"
+        );
+
+        List<Integer> list = new ArrayList<Integer>(groups);
+        StringBuffer tmp = new StringBuffer();
+        boolean first = true;
+        for (Integer i : list) {
+          if (first) {
+            first = false;
+          } else {
+            tmp.append(",");
+          }
+          tmp.append(i);
+        }
+
+        ps.setInt(1, PermissionManager.CLAZZ_GROUP);
+        ps.setString(2, tmp.toString());
+        rs = ps.executeQuery();
+        while (rs.next()) {
+          sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_TEXT));
+
+          if (rs.getBoolean(2)) {
+            sb.append("-");
+          }
+
+          sb.append(rs.getString(1));
+          sb.append("\n");
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+        this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_SHOW_PERMISSIONS).replace("?", name));
+      } finally {
+        this._plugin.getMySql().closeRessources(rs, ps);
+      }
+
+      // Nachrichten senden
+      this.sendMessage(sb.toString(), sender);
+      return true;
+    }
+    return false;
   }
 }
