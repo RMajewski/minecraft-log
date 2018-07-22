@@ -97,6 +97,20 @@ public final class Config {
   public static final String MESSAGE_PERMISSION_GROUP_ADD_PARENT_NO = "rmplugin.messages.permission.group.add.parent_no";
 
   /**
+   * Gibt den Pfad zur Nachricht "Vater Gruppe wurde entfernt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_REMOVE_PARENT = "rmplugin.messages.permission.group.remove.parent";
+
+  /**
+   * Gibt den Pfad zur Nachrciht "Vater-Gruppe konnte nicht entfernt werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_REMOVE_PARENT_NO = "rmplugin.messages.permission.group.remove.parent_no";
+
+  /**
    * Gibt den Pfad zur Nachricht "Permission wurde gesetzt" an.
    * 
    * @since 0.2
@@ -115,6 +129,13 @@ public final class Config {
    * @since 0.2
    */
   public static final String MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT = "rmplugin.messages.error.permission.group.add.parent";
+
+  /**
+   * Gibt den Pfad zur Fehler-Nachricht für "remove parent Fehler mit Parameter"
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_PERMISSION_GROUP_REMOVE_PARENT = "rmplugin.messages.error.permission.group.remove.parent";
 
   /**
    * Gibt den Pfad zu Fehler-Nachricht für "add permission Fehler mit Parameter"
@@ -439,6 +460,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_ERROR, "Es ist ein Fehler aufgetreten.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_GROUP, "Du musst einen Gruppen-Namen angegeben.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT, "Falsche Anzahl an Parameter.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_REMOVE_PARENT, "Falsche Anzahl an Parameter.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND, "Die Gruppe '?' konnte nicht gefunden werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_PERMISSION_FOUND, "Die Permission '?' konnte nicht gefunden werden.");
 
@@ -450,6 +472,8 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PARENT_NO, "Der Gruppe '?' konnte die Vater-Gruppe '?' nicht hinzugefügt.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PERMISSION, "Der Gruppe '?' wurde die Permission '?' hinzugefügt.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PERMISSION_NO, "Der Gruppe '?' konnte die Permission '?' nicht hinzugefügt werden.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PARENT, "Bei der Gruppe '?' wurde die Vater-Gruppe '?' gelöscht.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PARENT_NO, "Bei der Gruppe '?' konnte die Vater-Gruppe '?' nicht gelöscht werden.");
 
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
