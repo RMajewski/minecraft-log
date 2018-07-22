@@ -625,4 +625,83 @@ public class MySql {
 
     return result;
   }
+
+  /**
+   * Ermittelt die ID der angegeben Permission. Wurde keine ID in der Datenbank
+   * gefunden, so wird die Permission angelegt.
+   * 
+   * @param permission Name der Permission, deren ID ermittelt werden soll.
+   * 
+   * @return ID der Permission.
+   */
+  public int getPermissionId(String permission) {
+    int result = -1;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    String tmp = permission;
+    if (tmp.startsWith("-")) {
+      tmp = tmp.substring(1);
+    }
+
+    try {
+      if (!this.isPermissionExists(tmp)) {
+        ps = this.getConnection().prepareStatement("INSERT INTO " + this.getTableName(Config.DB_TABLE_PERMISSION) + " (name) VALUES (?)");
+        ps.setString(1, tmp);
+        ps.executeUpdate();
+        this.closeRessources(rs, ps);
+      }
+
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_PERMISSION) + " WHERE name=?");
+      ps.setString(1, tmp);
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
+
+  /**
+   * Überprüft, ob die angegebene Permission existiert.
+   * 
+   * @param name Permission, wo geschaut werden soll, ob sie in der Datenbank
+   * schon existiert.
+   * 
+   * @return <code>true</code>, wenn die Permission in der Datenbank existiert.
+   * <code>false</code>, wenn noch ken Datensatz existiert.
+   * 
+   * @since 0.2
+   */
+  public boolean isPermissionExists(String name) {
+    boolean result = false;
+
+    String tmp = name;
+    if (tmp.startsWith("-")) {
+      tmp = tmp.substring(1);
+    }
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_PERMISSION) + " WHERE name = ?");
+      ps.setString(1, name);
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = true;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
 }

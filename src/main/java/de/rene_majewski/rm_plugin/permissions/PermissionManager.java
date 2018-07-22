@@ -17,6 +17,20 @@ import de.rene_majewski.rm_plugin.permissions.commands.PermissionCommand;
  */
 public class PermissionManager {
   /**
+   * Gibt den Wert für eine Spieler-Permission an.
+   * 
+   * @since 0.2
+   */
+  public static final int CLAZZ_PLAYER = 1;
+
+  /**
+   * Gibt den Wert für eine Gruppen-Permission an.
+   * 
+   * @since 0.2
+   */
+  public static final int CLAZZ_GROUP = 2;
+
+  /**
    * Speichert die Main-Klasse des Plugins.
    * 
    * @since 0.2

@@ -97,6 +97,18 @@ public final class Config {
   public static final String MESSAGE_PERMISSION_GROUP_ADD_PARENT_NO = "rmplugin.messages.permission.group.add.parent_no";
 
   /**
+   * Gibt den Pfad zur Nachricht "Permission wurde gesetzt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_ADD_PERMISSION = "rmplugin.messages.permission.group.add.permission";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Permission wurde nicht gesetzt" an.
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_ADD_PERMISSION_NO = "rmplugin.messages.permission.group.add.permission_no";
+
+  /**
    * Gibt den Pfad zur Fehler-Nachricht für "add parent Fehler mit Parameter"
    * an. 
    * 
@@ -105,11 +117,26 @@ public final class Config {
   public static final String MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT = "rmplugin.messages.error.permission.group.add.parent";
 
   /**
+   * Gibt den Pfad zu Fehler-Nachricht für "add permission Fehler mit Parameter"
+   * an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_PERMISSION_GROUP_ADD_PERMISSION = "rmplugin.messages.error.permission.group.add.permission";
+
+  /**
    * Gibt den Pfad zur Fehler-Nachricht für "Gruppe nicht gefunden" an.
    * 
    * @since 0.2
    */
   public static final String MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND = "rmplugin.messages.error.permission.group.not_found";
+
+  /**
+   * Gibt den Pfad zur Fehler-Nachrciht für "Permission nicht gefunden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_NO_PERMISSION_FOUND = "rmplugin.messages.error.permission.not_found";
 
   /**
    * Gibt den Pfad zur Nachrciht für die Nachricht "Fehler ist aufgetreten".
@@ -226,6 +253,14 @@ public final class Config {
    */
   public static final String DB_TABLE_LOG_BLOCK = "rmplugin.db.tables.log_block";
 
+
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die Permissions an.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_PERMISSION = "rmplugin.db.tables.permission";
+
   /**
    * Gibt den Pfad zur Einstellung der Tabelle für die Gruppen an.
    * 
@@ -239,6 +274,13 @@ public final class Config {
    * @since 0.2
    */
   public static final String DB_TABLE_PERMISSION_GROUP_PARENT = "rmplugin.db.tables.permission_group_parent";
+
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die erteilten Permissions.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_PERMISSION_ALLOCATE = "rmplugin.db.tables.permmision_allocate";
 
 
   /**
@@ -398,13 +440,16 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_GROUP, "Du musst einen Gruppen-Namen angegeben.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT, "Falsche Anzahl an Parameter.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND, "Die Gruppe '?' konnte nicht gefunden werden.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_PERMISSION_FOUND, "Die Permission '?' konnte nicht gefunden werden.");
 
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE, "Die Gruppe '?' wurde erfolgreichreich erzeugt.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnte nicht erzeugt werden.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_DELETE, "Die Gruppe '?' wurde gelöscht.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_DELETE_NO, "Die Gruppe '?' konnte nicht gelöscht werden.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PARENT, "Der Gruppe '?' wurde die Vater-Gruppe '?' hinzugefügt.");
-    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PARENT_NO, "Der Gruppe '?' konnt die Vater-Gruppe '?' nicht hinzugefügt.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PARENT_NO, "Der Gruppe '?' konnte die Vater-Gruppe '?' nicht hinzugefügt.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PERMISSION, "Der Gruppe '?' wurde die Permission '?' hinzugefügt.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PERMISSION_NO, "Der Gruppe '?' konnte die Permission '?' nicht hinzugefügt werden.");
 
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
@@ -422,8 +467,10 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_LOG_LOGGIN, "log_loggin");
     _plugin.getConfig().addDefault(DB_TABLE_LOG_WORLD_CHANGE, "log_world_change");
     _plugin.getConfig().addDefault(DB_TABLE_LOG_BLOCK, "log_block");
+    _plugin.getConfig().addDefault(DB_TABLE_PERMISSION, "permission");
     _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_GROUP, "group");
     _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_GROUP_PARENT, "group_parent");
+    _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_ALLOCATE, "permission_allocate");
 
     _plugin.getConfig().addDefault(COLOR_HELP_TEXT, "§7");
     _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, "§6");

@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.commands.CommandClass;
 import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.permissions.PermissionManager;
 
 /**
  * Reagiert auf die Gruppen-Befehle.
@@ -169,6 +170,14 @@ class GroupCommand extends CommandClass {
       }
 
       addParent(arg1, arg2, sender);
+    } else if (command.equalsIgnoreCase("permission") || (command.equalsIgnoreCase("perm"))) {
+      if (arg1 == null || arg1.isEmpty() || arg2 == null || arg2.isEmpty()) {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_GROUP_ADD_PERMISSION), sender);
+        this.sendMessage(this.createCommandHelpMessage("permission group permission [Group name] [Permission name]", "Fügt einer Grupp eine Permission hinzu."), sender);
+        return;
+      }
+
+      addPermission(arg1, arg2, sender);
     }
   }
 
@@ -207,6 +216,56 @@ class GroupCommand extends CommandClass {
       }
     } catch (SQLException e) {
       this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_ADD_PARENT_NO).replaceFirst("(\\?)", child).replace("?", parent));
+    } finally {
+      this._plugin.getMySql().closeRessources(null, ps);
+    }
+  }
+
+  /**
+   * Fügt eine Permission der Gruppe hinzu.
+   * 
+   * @param group Gruppe, der die Permission hinzugefügt werden soll.
+   * 
+   * @param permission Permission, die der Gruppe hinzugefügt werden soll.
+   * 
+   * @param sender Sender, der diesen Befehl gesendet.
+   * 
+   * @since 0.2
+   */
+  private void addPermission(String group, String permission, CommandSender sender) {
+    PreparedStatement ps = null;
+    int group1 = this._plugin.getMySql().getGroupId(group);
+
+    if (group1 == -1) {
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND).replace("?", group), sender);
+      return;
+    }
+
+    int perm = this._plugin.getMySql().getPermissionId(permission);
+    if (perm == -1) {
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_PERMISSION_FOUND).replace("?", permission), sender);
+      return;
+    }
+
+    boolean negate = false;
+    if (permission.startsWith("-")) {
+      negate = true;
+      permission = permission.substring(1);
+    }
+
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement("INSERT INTO " + this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_ALLOCATE) + "(group_id,permission_id,clazz,negate) VALUES(?,?,?,?)");
+      ps.setInt(1, Integer.valueOf(group1));
+      ps.setInt(2, Integer.valueOf(perm));
+      ps.setInt(3, PermissionManager.CLAZZ_GROUP);
+      ps.setBoolean(4, negate);
+      if (ps.executeUpdate() > 0) {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_ADD_PERMISSION).replaceFirst("(\\?)", group).replace("?", permission), sender);
+      } else {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_ADD_PERMISSION_NO).replaceFirst("(\\?)", group).replace("?", permission), sender);
+      }
+    } catch (SQLException e) {
+      this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_ADD_PERMISSION_NO).replaceFirst("(\\?)", group).replace("?", permission));
     } finally {
       this._plugin.getMySql().closeRessources(null, ps);
     }
