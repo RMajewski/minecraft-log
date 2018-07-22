@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -472,6 +473,7 @@ class GroupCommand extends CommandClass {
 
       // Vater-Gruppen ausgeben
       Set<Integer> groups = new HashSet<Integer>();
+      groups.add(group);
 
       sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_HEADER));
       sb.append("Vater-Gruppen");
@@ -497,8 +499,6 @@ class GroupCommand extends CommandClass {
           sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_VALUE));
           sb.append(rs.getString(1));
           sb.append("\n");
-
-          groups.add(Integer.valueOf(rs.getInt(2)));
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -516,7 +516,7 @@ class GroupCommand extends CommandClass {
 
       try {
         ps = this._plugin.getMySql().getConnection().prepareStatement(
-          "SELECT g.name, g.id FROM " +
+          "SELECT g.name, p.child_id FROM " +
           this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP) +
           " as g, " +
           this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP_PARENT) +
@@ -550,12 +550,10 @@ class GroupCommand extends CommandClass {
       try {
         ps = this._plugin.getMySql().getConnection().prepareStatement(
           "SELECT p.name, a.negate FROM " +
-          this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_GROUP) +
-          " as g, " +
           this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION) +
           " as p, " +
           this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_ALLOCATE) +
-          " as a WHERE a.group_id = g.id AND p.id = a.permission_id AND a.clazz = ? AND g.id IN(?) ORDER BY g.name"
+          " as a WHERE a.group_id IN(?) AND p.id = a.permission_id AND a.clazz = ? ORDER BY p.name"
         );
 
         List<Integer> list = new ArrayList<Integer>(groups);
@@ -569,11 +567,13 @@ class GroupCommand extends CommandClass {
           }
           tmp.append(i);
         }
+        Logger.getLogger("Rm-Plugin").info(tmp.toString());
 
-        ps.setInt(1, PermissionManager.CLAZZ_GROUP);
-        ps.setString(2, tmp.toString());
+        ps.setInt(2, PermissionManager.CLAZZ_GROUP);
+        ps.setString(1, tmp.toString());
         rs = ps.executeQuery();
         while (rs.next()) {
+          Logger.getLogger("Rm-Plugin").info("Test");
           sb.append(this._plugin.getMyConfig().getString(Config.COLOR_PERMISSION_TEXT));
 
           if (rs.getBoolean(2)) {
