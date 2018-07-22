@@ -168,7 +168,7 @@ class GroupCommand extends CommandClass {
     if (command.equalsIgnoreCase("parent")) {
       if (arg1 == null || arg1.isEmpty() || arg2 == null || arg2.isEmpty()) {
         this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT), sender);
-        this.sendMessage(this.createCommandHelpMessage("permission group add [Group name] [Parent Group name]", "Fügt einer Grupp einen Vater-Gruppe hinzu."), sender);
+        this.sendMessage(this.createCommandHelpMessage("permission group add parent [Group name] [Parent Group name]", "Fügt einer Grupp einen Vater-Gruppe hinzu."), sender);
         return;
       }
 
@@ -176,7 +176,7 @@ class GroupCommand extends CommandClass {
     } else if (command.equalsIgnoreCase("permission") || (command.equalsIgnoreCase("perm"))) {
       if (arg1 == null || arg1.isEmpty() || arg2 == null || arg2.isEmpty()) {
         this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_GROUP_ADD_PERMISSION), sender);
-        this.sendMessage(this.createCommandHelpMessage("permission group permission [Group name] [Permission name]", "Fügt einer Grupp eine Permission hinzu."), sender);
+        this.sendMessage(this.createCommandHelpMessage("permission group add permission [Group name] [Permission name]", "Fügt einer Grupp eine Permission hinzu."), sender);
         return;
       }
 
@@ -201,11 +201,19 @@ class GroupCommand extends CommandClass {
     if (command.equalsIgnoreCase("parent")) {
       if (arg1 == null || arg1.isEmpty() || arg2 == null || arg2.isEmpty()) {
         this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_GROUP_REMOVE_PARENT), sender);
-        this.sendMessage(this.createCommandHelpMessage("permission group remove [Group name] [Parent Group name]", "Löscht bei einer Vater-Gruppe die Kind-Gruppe."), sender);
+        this.sendMessage(this.createCommandHelpMessage("permission group remove parent [Group name] [Parent Group name]", "Löscht bei einer Vater-Gruppe die Kind-Gruppe."), sender);
         return;
       }
 
       removeParent(arg1, arg2, sender);
+    } else if (command.equalsIgnoreCase("permission") || command.equalsIgnoreCase("perm")) {
+      if (arg1 == null || arg1.isEmpty() || arg2 == null || arg2.isEmpty()) {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_GROUP_ADD_PERMISSION), sender);
+        this.sendMessage(this.createCommandHelpMessage("permission group remove permission [Group name] [Permission name]", "Fügt einer Grupp eine Permission hinzu."), sender);
+        return;
+      }
+
+      removePermission(arg1, arg2, sender);
     }
   }
 
@@ -338,6 +346,53 @@ class GroupCommand extends CommandClass {
       }
     } catch (SQLException e) {
       this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_ADD_PERMISSION_NO).replaceFirst("(\\?)", group).replace("?", permission));
+    } finally {
+      this._plugin.getMySql().closeRessources(null, ps);
+    }
+  }
+
+  /**
+   * Löscht die Permission einer Grupper.
+   * 
+   * @param group Gruppe, bei der die Permission gelöscht werden soll.
+   * 
+   * @param permission Permission, die der Gruppe entzogen werden soll.
+   * 
+   * @sender Sender, der diesen Befehl gesendet hat.
+   * 
+   * @since 0.2
+   */
+  private void removePermission(String group, String permission, CommandSender sender) {
+    PreparedStatement ps = null;
+    int group1 = this._plugin.getMySql().getGroupId(group);
+
+    if (group1 == -1) {
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND).replace("?", group), sender);
+      return;
+    }
+
+    int perm = this._plugin.getMySql().getPermissionId(permission);
+    if (perm == -1) {
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_PERMISSION_FOUND).replace("?", permission), sender);
+      return;
+    }
+
+    if (permission.startsWith("-")) {
+      permission = permission.substring(1);
+    }
+
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement("DELETE FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_PERMISSION_ALLOCATE) + " WHERE group_id=? AND permission_id=? AND clazz=?");
+      ps.setInt(1, Integer.valueOf(group1));
+      ps.setInt(2, Integer.valueOf(perm));
+      ps.setInt(3, PermissionManager.CLAZZ_GROUP);
+      if (ps.executeUpdate() > 0) {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION).replaceFirst("(\\?)", group).replace("?", permission), sender);
+      } else {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION_NO).replaceFirst("(\\?)", group).replace("?", permission), sender);
+      }
+    } catch (SQLException e) {
+      this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION_NO).replaceFirst("(\\?)", group).replace("?", permission));
     } finally {
       this._plugin.getMySql().closeRessources(null, ps);
     }

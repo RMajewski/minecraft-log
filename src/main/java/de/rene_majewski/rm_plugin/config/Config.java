@@ -119,8 +119,22 @@ public final class Config {
 
   /**
    * Gibt den Pfad zur Nachricht "Permission wurde nicht gesetzt" an.
+   * 
+   * @since 0.2
    */
   public static final String MESSAGE_PERMISSION_GROUP_ADD_PERMISSION_NO = "rmplugin.messages.permission.group.add.permission_no";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Permission wurde entfernt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION = "rmplugin.messages.permission.group.remove.permission";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Permission konnte nicht entfernt werden" an.
+   */
+  public static final String MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION_NO = "rmplugin.messages.permission.group.remove.permission_no";
 
   /**
    * Gibt den Pfad zur Fehler-Nachricht für "add parent Fehler mit Parameter"
@@ -474,6 +488,8 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_ADD_PERMISSION_NO, "Der Gruppe '?' konnte die Permission '?' nicht hinzugefügt werden.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PARENT, "Bei der Gruppe '?' wurde die Vater-Gruppe '?' gelöscht.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PARENT_NO, "Bei der Gruppe '?' konnte die Vater-Gruppe '?' nicht gelöscht werden.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION, "Der Gruppe '?' wurde die Permission '?' entzogen.");
+    _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION_NO, "Der Gruppe '?' konnte die Permission '?' nicht entzogen werden.");
 
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
