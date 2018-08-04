@@ -209,6 +209,20 @@ public final class Config {
   public static final String MESSAGE_ERROR_NO_GROUP = "rmplugin.messages.errors.no_group";
 
   /**
+   * Gibt den Pfad zur Nachricht "Kein Double-Wert" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_NO_DOUBLE = "rmplugin.messages.errors.no_double";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Spieler existiert" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_NO_PLAYER = "rmplugin.messages.errors.no_player";
+
+  /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
    * 
    * @since 0.1
@@ -367,6 +381,37 @@ public final class Config {
    */
   public static final String PERMISSION_COMMAND_HELP = "rmplugin.help";
 
+  /**
+   * Gibt den Namen der Permission zum Anzeigen der eigenen Economy-Balance an.
+   * 
+   * @since 0.2
+   */
+  public static final String ECONOMY_COMMAND_BALANCE = "rmplugin.economy.balance";
+
+  /**
+   * Gibt den Namen der Permission zum Setzen der Economy-Balance für einen
+   * Spieler an.
+   * 
+   * @since 0.2
+   */
+  public static final String ECONOMY_COMMAND_BALANCE_SET = "rmplugin.economy.balance.set";
+
+  /**
+   * Gibt den Namen der Permission zum Hinzufügen eines Betrages zu einem
+   * Spieler an.
+   * 
+   * @since 0.2
+   */
+  public static final String ECONOMY_COMMAND_BALANCE_ADD = "rmplugin.economy.balance.add";
+
+  /**
+   * Gibt den Namen der Permission zum Entfernen einer Economy-Balance eines
+   * Spielers an.
+   * 
+   * @since 0.2
+   */
+  public static final String ECONOMY_COMMAND_BALANCE_REMOVE = "rmplugin.economy.balance.remove";
+
 
   /**
    * Gibt den Namen zur Einstellung der Farbe zum hervorben einen Befehls in
@@ -493,6 +538,8 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_HELP_HELP, "Bitte verwende den Befehl wie folgt:");
     _plugin.getConfig().addDefault(MESSAGE_HELP_COMMAND, "Zeigt diesen Hilfetext an.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR, "Es ist ein Fehler aufgetreten.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_DOUBLE, "Du muss beim ?. Argument einen gültigen Double-Wert angeben.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_PLAYER, "Der Spieler '?' existiert nicht auf diesen Server");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_GROUP, "Du musst einen Gruppen-Namen angegeben.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT, "Falsche Anzahl an Parameter.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_REMOVE_PARENT, "Falsche Anzahl an Parameter.");

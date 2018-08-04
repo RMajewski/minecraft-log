@@ -159,4 +159,30 @@ public abstract class CommandClass {
       this.sendMessage(color + message + ChatColor.RESET, sender);
     }
   }
+
+  /**
+   * Ermittelt aus dem übergebenen Text einen Double-Wert. Wurde kein
+   * Double-Wert angegeben, so wird an den Sender eine Nachricht
+   * geschickt.
+   * 
+   * @param text Text, der zu einen Double-Wert geparst werden soll.
+   * 
+   * @param sender Objekt, dass den Text geschickt hat.
+   * 
+   * @param count An welcher Stelle der Argumente der Double-Wert steht.
+   * 
+   * @return Der Double-Wert, der in text steht. Ist ein Fehler aufgetreten, so
+   * wird {@code 0} zurück gegeben.
+   */
+  protected double getDoubleFromString(String text, CommandSender sender, int count) {
+    double result = 0;
+
+    try {
+      result = Double.parseDouble(text);
+    } catch (Exception e) {
+      this.sendErrorMessage(sender, e, Config.MESSAGE_ERROR_NO_DOUBLE.replace("?", String.valueOf(count)));
+    }
+
+    return result;
+  }
 }

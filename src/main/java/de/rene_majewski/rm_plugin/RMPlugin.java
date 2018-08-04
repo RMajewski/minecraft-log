@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.rene_majewski.rm_plugin.commands.RMPluginCommand;
 import de.rene_majewski.rm_plugin.config.Config;
 import de.rene_majewski.rm_plugin.data.MySql;
+import de.rene_majewski.rm_plugin.economy.EconomyManager;
 import de.rene_majewski.rm_plugin.listener.BlockListener;
 import de.rene_majewski.rm_plugin.listener.CommandListener;
 import de.rene_majewski.rm_plugin.listener.PlayerListener;
@@ -42,6 +43,11 @@ public final class RMPlugin extends JavaPlugin
   private PermissionManager _permissions;
 
   /**
+   * Speichert das Sub-Plugin Economy.
+   */
+  private EconomyManager _economy;
+
+  /**
    * Wird aufgerufen, wenn das Plugin initialisiert wird.
    * 
    * @since 0.1
@@ -54,6 +60,7 @@ public final class RMPlugin extends JavaPlugin
 
     this._mysql = new MySql(_config);
     this._permissions = new PermissionManager(this);
+    this._economy = new EconomyManager(this);
 
     this.registerCommands();
     this.registerEvents();
@@ -133,5 +140,16 @@ public final class RMPlugin extends JavaPlugin
    */
   public PermissionManager getPermissionManager() {
     return this._permissions;
+  }
+
+  /**
+   * Gibt den Zugriff zum Economy-Manager zurück.
+   * 
+   * @return Objekt der Klasse {@link Economy-Manager}.
+   * 
+   * @since 0.2
+   */
+  public EconomyManager getEconomyManager() {
+    return this._economy;
   }
 }

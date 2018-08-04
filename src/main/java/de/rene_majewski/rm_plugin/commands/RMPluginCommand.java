@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.economy.commands.EconomyCommand;
 import de.rene_majewski.rm_plugin.permissions.commands.PermissionCommand;
 
 /**
@@ -32,6 +33,13 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
   private PermissionCommand _permissionCommand;
 
   /**
+   * Speichert das Objekt für {@link EconomyCommand}.
+   * 
+   * @since 0.2
+   */
+  private EconomyCommand _economyCommand;
+
+  /**
    * Initialisiert die Klasse.
    * 
    * @param config Konfiguration-Klasse des Plugins.
@@ -43,6 +51,7 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
 
     this._configCommand = new ConfigCommand(this._plugin);
     this._permissionCommand = new PermissionCommand(this._plugin);
+    this._economyCommand = new EconomyCommand(this._plugin);
   }
 
   /**
@@ -76,6 +85,8 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
           return this._configCommand.config(sender, command, args, this._plugin);
         } else if (args[0].equalsIgnoreCase("permission")) {
           return this._permissionCommand.permission(sender, command, label, args);
+        } else if (args[0].equalsIgnoreCase("balance")) {
+          return this._economyCommand.economyCommand(sender, command, label, args);
         }
       } else {
         sendHelpMessage(sender);

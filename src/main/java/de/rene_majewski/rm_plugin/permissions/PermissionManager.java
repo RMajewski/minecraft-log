@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
+import de.rene_majewski.rm_plugin.Unity;
 import de.rene_majewski.rm_plugin.permissions.commands.PermissionCommand;
 
 /**
@@ -15,7 +16,7 @@ import de.rene_majewski.rm_plugin.permissions.commands.PermissionCommand;
  * @since 0.2
  * @author René Majewski
  */
-public class PermissionManager {
+public class PermissionManager extends Unity {
   /**
    * Gibt den Wert für eine Spieler-Permission an.
    * 
@@ -29,13 +30,6 @@ public class PermissionManager {
    * @since 0.2
    */
   public static final int CLAZZ_GROUP = 2;
-
-  /**
-   * Speichert die Main-Klasse des Plugins.
-   * 
-   * @since 0.2
-   */
-  private RMPlugin _plugin;
 
   /**
    * Speichert die Befehls-Klasse.
@@ -52,14 +46,12 @@ public class PermissionManager {
   /**
    * Initialisiert die Klasse.
    * 
-   * @param config Konfiguration des Objektes.
+   * @param plugin Instanz der Main-Plugin-Klasse.
    * 
    * @since 0.2
    */
   public PermissionManager(RMPlugin plugin) {
-    super();
-
-    this._plugin = plugin;
+    super(plugin);
 
     this._playerPermissions = new HashMap<UUID,PermissionAttachment>();
 
@@ -72,7 +64,8 @@ public class PermissionManager {
    * 
    * @since 0.2
    */
-  private void registerListeners() {
+  @Override
+  protected void registerListeners() {
 
   }
 
