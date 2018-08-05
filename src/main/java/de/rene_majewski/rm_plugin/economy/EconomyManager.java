@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.Unity;
+import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.economy.listener.EconomyPlayerListener;
 
 /**
  * Basis-Klasse für das Wirtschaftssystem.
@@ -33,7 +35,7 @@ public class EconomyManager extends Unity {
    */
   @Override
   protected void registerListeners() {
-
+    new EconomyPlayerListener(this._plugin);
   }
 
   /**
@@ -69,5 +71,17 @@ public class EconomyManager extends Unity {
    */
   public boolean hasBalance(String uuid) {
     return this._balance.containsKey(uuid);
+  }
+
+  /**
+   * Überprüft, ob der Spieler schon in der Datenbank existiert. Ist dies nicht
+   * der Fall, wird der Spieler angelegt und ihm den Standard-Betrag überwiesen.
+   * 
+   * @param uuid UUID des Spieler, der überprüft werden soll.
+   */
+  public void playerJoin(String uuid) {
+    if (!hasBalance(uuid)) {
+      this.setBalance(uuid, this._plugin.getMyConfig().getDouble(Config.ECONOMY_STANDARD_BALANCE));
+    }
   }
 }

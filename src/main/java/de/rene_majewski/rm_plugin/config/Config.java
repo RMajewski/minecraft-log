@@ -464,6 +464,14 @@ public final class Config {
    */
   public static final String COLOR_PERMISSION_TEXT = "rmplugin.color.permission.text";
 
+  /**
+   * Gibt den Namen zur Einstellung des Betrages, den ein neuer Spieler
+   * erhält.
+   * 
+   * @since 0.2
+   */
+  public static final String ECONOMY_STANDARD_BALANCE = "rmplugin.economy.standard_balance";
+
 
   /**
    * Initialisiert die Konfiguration.
@@ -529,6 +537,20 @@ public final class Config {
   }
 
   /**
+   * Liest einen Double-Wert aus der Konfiguration.
+   * 
+   * @param path Pfad zum Double-Wert, der aus der Konfiguration gelesen werden
+   * soll.
+   * 
+   * @return Aus der Konfiguration ermittelter Double-Wert.
+   * 
+   * @since 0.2
+   */
+  public double getDouble(String path) {
+    return this._plugin.getConfig().getDouble(path);
+  }
+
+  /**
    * Setzt die Default-Werte zu den einzelnen Pfaden.
    */
   private void setDefaults() {
@@ -590,5 +612,7 @@ public final class Config {
     _plugin.getConfig().addDefault(COLOR_PERMISSION_TEXT, "§7");
     _plugin.getConfig().addDefault(COLOR_ERROR_TEXT, "§c");
     _plugin.getConfig().addDefault(COLOR_ERROR_MESSAGE, "§4§l");
+
+    _plugin.getConfig().addDefault(ECONOMY_STANDARD_BALANCE, 10.0);
   }
 }

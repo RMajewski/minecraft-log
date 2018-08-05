@@ -19,6 +19,7 @@ public abstract class Unity {
    */
   public Unity(RMPlugin plugin) {
     this._plugin = plugin;
+    this.registerListeners();
   }
   /**
    * Initialisiert die einzelnen Listeners und registriert sie.

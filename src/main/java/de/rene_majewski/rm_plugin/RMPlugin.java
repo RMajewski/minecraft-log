@@ -3,6 +3,8 @@ package de.rene_majewski.rm_plugin;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,12 +40,23 @@ public final class RMPlugin extends JavaPlugin
   private MySql _mysql;
 
   /**
+   * Speichert den Logger.
+   * 
+   * @since 0.2
+   */
+  private Logger _logger;
+
+  /**
    * Speichert den Permission-Manager.
+   * 
+   * @since 0.2
    */
   private PermissionManager _permissions;
 
   /**
    * Speichert das Sub-Plugin Economy.
+   * 
+   * @since 0.2
    */
   private EconomyManager _economy;
 
@@ -55,6 +68,8 @@ public final class RMPlugin extends JavaPlugin
   @Override
   public void onEnable() {
     super.onEnable();
+
+    this._logger = getLogger();
 
     _config = new Config(this);
 
@@ -151,5 +166,16 @@ public final class RMPlugin extends JavaPlugin
    */
   public EconomyManager getEconomyManager() {
     return this._economy;
+  }
+
+  /**
+   * Gibt eine Message über den Logger aus.
+   * 
+   * @param message Nachricht, die über den Logger ausgegeben werden soll.
+   * 
+   * @since 0.2
+   */
+  public void logMessage(String message, Level level) {
+    this._logger.log(level, message);
   }
 }
