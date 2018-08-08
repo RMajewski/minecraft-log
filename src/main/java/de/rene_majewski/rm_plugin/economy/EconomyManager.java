@@ -1,10 +1,14 @@
 package de.rene_majewski.rm_plugin.economy;
 
-import java.util.HashMap;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.Unity;
 import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.economy.datas.EconomyStatement;
 import de.rene_majewski.rm_plugin.economy.listener.EconomyPlayerListener;
 
 /**
@@ -15,19 +19,12 @@ import de.rene_majewski.rm_plugin.economy.listener.EconomyPlayerListener;
  */
 public class EconomyManager extends Unity {
   /**
-   * Speichert zu jeden Spieler den dazugehörigen Betrag.
-   */
-  private HashMap<String, Double> _balance;
-
-  /**
    * Initialisiert diese Klasse.
    * 
    * @param plugin Instanz der Main-Plugin-Klasse.
    */
   public EconomyManager(RMPlugin plugin) {
     super(plugin);
-
-    this._balance = new HashMap<String, Double>();
   }
 
   /**
@@ -45,8 +42,30 @@ public class EconomyManager extends Unity {
    * 
    * @param amount Neuer Betrag, den der Spieler zur Verfügung hat.
    */
-  public void setBalance(String uuid, double amount) {
-    this._balance.put(uuid, amount);
+  public void setBalance(String uuid, double amount, int status) {
+    PreparedStatement ps = null;
+    int player_id = this._plugin.getMySql().getPlayerId(this._plugin.getPlayerFromUuid(uuid));
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement("INSERT INTO " + this._plugin.getMySql().getTableName(Config.DB_TABLE_BALANCE) + "(player_id, balance) VALUES(?,?)");
+      ps.setInt(1, player_id);
+      ps.setDouble(2, amount);
+      ps.executeUpdate();
+      this._plugin.getMySql().closeRessources(null, ps);
+
+      switch (status) {
+        case EconomyStatement.REGISTRATION:
+          ps = this._plugin.getMySql().getConnection().prepareStatement("INSERT INTO " + this._plugin.getMySql().getTableName(Config.DB_TABLE_BALANCE_STATEMENT) + "(player_id, amount, status) VALUES(?, ?, ?)");
+          ps.setInt(1, player_id);
+          ps.setDouble(2, amount);
+          ps.setInt(3, status);
+          ps.executeUpdate();
+          break;
+      }
+    } catch(SQLException e) {
+      this._plugin.sendErrorMessage(this._plugin.getPlayerFromUuid(uuid), this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+    } finally {
+      this._plugin.getMySql().closeRessources(null, ps);
+    }
   }
 
   /**
@@ -57,7 +76,22 @@ public class EconomyManager extends Unity {
    * @return Geld-Betrag des übergebenen Spielers.
    */
   public double getBalance(String uuid) {
-    return this._balance.get(uuid);
+    double result = 0.0;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement("SELECT balance FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_BALANCE)  +" WHERE player_id = ?");
+      ps.setInt(1, this._plugin.getMySql().getPlayerId(this._plugin.getPlayerFromUuid(uuid)));
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = rs.getDouble("balance");
+      }
+    } catch (SQLException e) {
+      this._plugin.sendErrorMessage(this._plugin.getPlayerFromUuid(uuid), this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+    } finally {
+      this._plugin.getMySql().closeRessources(rs, ps);
+    }
+    return result;
   }
 
   /**
@@ -70,7 +104,23 @@ public class EconomyManager extends Unity {
    * {@code false}, wenn noch kein Betrag zu dem Spieler existiert.
    */
   public boolean hasBalance(String uuid) {
-    return this._balance.containsKey(uuid);
+    boolean result = false;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement("SELECT player_id FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_BALANCE) + " WHERE player_id = ?");
+      ps.setInt(1, this._plugin.getMySql().getPlayerId(this._plugin.getPlayerFromUuid(uuid)));
+      rs = ps.executeQuery();
+      result = rs.next();
+    } catch (SQLException e) {
+      this._plugin.sendErrorMessage(this._plugin.getPlayerFromUuid(uuid), this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+    } finally {
+      this._plugin.getMySql().closeRessources(rs, ps);
+    }
+
+    return result;
   }
 
   /**
@@ -81,7 +131,7 @@ public class EconomyManager extends Unity {
    */
   public void playerJoin(String uuid) {
     if (!hasBalance(uuid)) {
-      this.setBalance(uuid, this._plugin.getMyConfig().getDouble(Config.ECONOMY_STANDARD_BALANCE));
+      this.setBalance(uuid, this._plugin.getMyConfig().getDouble(Config.ECONOMY_STANDARD_BALANCE), EconomyStatement.REGISTRATION);
     }
   }
 }

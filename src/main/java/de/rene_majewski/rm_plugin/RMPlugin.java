@@ -3,9 +3,13 @@ package de.rene_majewski.rm_plugin;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.rene_majewski.rm_plugin.commands.RMPluginCommand;
@@ -177,5 +181,60 @@ public final class RMPlugin extends JavaPlugin
    */
   public void logMessage(String message, Level level) {
     this._logger.log(level, message);
+  }
+
+  /**
+   * Sendet eine Fehlernachricht zum angegeben Objekt und gibt es über den
+   * Logger aus.
+   * 
+   * @param to Objekt, dass die Nachricht erhalten soll.
+   * 
+   * @param message Nachricht, die gesendet werden solll.
+   * 
+   * @param error Fehler, der aufgetreten ist.
+   * 
+   * @since 0.2
+   */
+  public void sendErrorMessage(Player to, String message, Exception error) {
+    error.printStackTrace();
+    String color = this.getMyConfig().getString(Config.COLOR_ERROR_TEXT);
+    this.sendMessage(to, color + this.getMyConfig().getString(Config.MESSAGE_ERROR) + ChatColor.RESET);
+
+    if (to.hasPermission(Config.PERMISSION_ADMIN_DEBUG)) {
+      this.sendMessage(to, this.getMyConfig().getString(Config.COLOR_ERROR_MESSAGE) + error.getMessage() + ChatColor.RESET);
+    }
+
+    this.logMessage(error.toString(), Level.WARNING);
+
+    if (message != null && !message.isEmpty()) {
+      this.sendMessage(to, color + message + ChatColor.RESET);
+    }
+  }
+
+  /**
+   * Sendet die Nachricht zum Spieler.
+   * 
+   * @param to Spieler, an den die Nachricht gesendet werden soll.
+   * 
+   * @param message Nachricht, die dem Spieler gesendet werden soll.
+   * 
+   * @since 0.2
+   */
+  public void sendMessage(Player to, String message) {
+    to.sendMessage(message);
+  }
+
+  /**
+   * Ermittelt das Spieler-Objekt aus der UUID.
+   * 
+   * @param uuid UUID dessen Spieler-Objekt ermittelt werden soll.
+   * 
+   * @return {@link Player}-Objekt, wenn der der Spieler existiert.
+   * {@code null}, wenn der Spieler nicht existiert.
+   * 
+   * @since 0.2
+   */
+  public Player getPlayerFromUuid(String uuid) {
+    return this.getServer().getPlayer(UUID.fromString(uuid));
   }
 }

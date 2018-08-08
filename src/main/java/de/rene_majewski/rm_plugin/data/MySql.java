@@ -98,7 +98,9 @@ public class MySql {
     "/sql/group.sql",
     "/sql/group_parent.sql",
     "/sql/group_permissions.sql",
-    "/sql/permission.sql"
+    "/sql/permission.sql",
+    "/sql/balance.sql",
+    "/sql/balance_statement.sql"
   };
 
   /**

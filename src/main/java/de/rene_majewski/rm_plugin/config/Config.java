@@ -352,6 +352,20 @@ public final class Config {
    */
   public static final String DB_TABLE_PERMISSION_ALLOCATE = "rmplugin.db.tables.permmision_allocate";
 
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die Geld-Beträge der Spieler.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_BALANCE = "rmplugin.db.tables.balance";
+
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die Kontoauszüge an.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_BALANCE_STATEMENT = "rmplugin.db.tables.balance_statement";
+
 
   /**
    * Gib den Namen der Permission zum Neuladen der Konfiguration an.
@@ -604,6 +618,8 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_GROUP, "group");
     _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_GROUP_PARENT, "group_parent");
     _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_ALLOCATE, "permission_allocate");
+    _plugin.getConfig().addDefault(DB_TABLE_BALANCE, "balance");
+    _plugin.getConfig().addDefault(DB_TABLE_BALANCE_STATEMENT, "balance_statement");
 
     _plugin.getConfig().addDefault(COLOR_HELP_TEXT, "§7");
     _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, "§6");

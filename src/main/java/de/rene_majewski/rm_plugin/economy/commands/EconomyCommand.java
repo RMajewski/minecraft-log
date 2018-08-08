@@ -53,7 +53,7 @@ public class EconomyCommand extends CommandClass {
           String uuid = args[2];
           if (this._plugin.getEconomyManager().hasBalance(uuid)) {
             double balance = this._plugin.getEconomyManager().getBalance(uuid) + this.getDoubleFromString(args[3], sender, 4);
-            this._plugin.getEconomyManager().setBalance(uuid, balance);
+            // this._plugin.getEconomyManager().setBalance(uuid, balance);
             return true;
           } else {
             this.sendMessage(this._plugin.getConfig().getString(Config.MESSAGE_ERROR_NO_PLAYER).replace("?", uuid), sender);
