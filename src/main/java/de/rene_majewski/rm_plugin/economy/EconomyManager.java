@@ -3,7 +3,6 @@ package de.rene_majewski.rm_plugin.economy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.Unity;
@@ -41,8 +40,13 @@ public class EconomyManager extends Unity {
    * @param uuid UUID des Spielers, dessen Geld-Betrag neu gesetzt werden soll.
    * 
    * @param amount Neuer Betrag, den der Spieler zur Verfügung hat.
+   * 
+   * @return Gibt {@code true} zurück, wenn der Betrag des Spielers gesetzt
+   * werden konnte. Konnte der Betrag nicht gesetzt werden bzw. trat ein Fehler
+   * auf, so wird {@code false} zurück gegeben.
    */
-  public void setBalance(String uuid, double amount, int status) {
+  public boolean setBalance(String uuid, double amount, int status) {
+    boolean result = true;
     PreparedStatement ps = null;
     int player_id = this._plugin.getMySql().getPlayerId(this._plugin.getPlayerFromUuid(uuid));
     try {
@@ -63,9 +67,12 @@ public class EconomyManager extends Unity {
       }
     } catch(SQLException e) {
       this._plugin.sendErrorMessage(this._plugin.getPlayerFromUuid(uuid), this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+      result = false;
     } finally {
       this._plugin.getMySql().closeRessources(null, ps);
     }
+
+    return result;
   }
 
   /**
@@ -131,7 +138,16 @@ public class EconomyManager extends Unity {
    */
   public void playerJoin(String uuid) {
     if (!hasBalance(uuid)) {
-      this.setBalance(uuid, this._plugin.getMyConfig().getDouble(Config.ECONOMY_STANDARD_BALANCE), EconomyStatement.REGISTRATION);
+      double balance = this._plugin.getMyConfig().getDouble(Config.ECONOMY_STANDARD_BALANCE);
+
+      if (this.setBalance(uuid, balance, EconomyStatement.REGISTRATION)) {
+        String tmp = this._plugin.getMyConfig().getString(Config.MESSAGE_ECONOMY_START);
+        tmp = tmp.replaceFirst("\\?", String.valueOf(balance));
+        tmp = tmp.replace("?", this._plugin.getMyConfig().getString(Config.ECONOMY_CURRENCY));
+        this._plugin.sendMessage(uuid, tmp);
+      } else {
+        this._plugin.sendErrorMessage(uuid, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_ECONOMY_NO_STANDARD_BALANCE), null);
+      }
     }
   }
 }

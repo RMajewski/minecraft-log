@@ -196,19 +196,38 @@ public final class RMPlugin extends JavaPlugin
    * @since 0.2
    */
   public void sendErrorMessage(Player to, String message, Exception error) {
-    error.printStackTrace();
     String color = this.getMyConfig().getString(Config.COLOR_ERROR_TEXT);
     this.sendMessage(to, color + this.getMyConfig().getString(Config.MESSAGE_ERROR) + ChatColor.RESET);
 
-    if (to.hasPermission(Config.PERMISSION_ADMIN_DEBUG)) {
-      this.sendMessage(to, this.getMyConfig().getString(Config.COLOR_ERROR_MESSAGE) + error.getMessage() + ChatColor.RESET);
-    }
+    if (error != null) {
+      error.printStackTrace();
+      
+      if (to.hasPermission(Config.PERMISSION_ADMIN_DEBUG) && (error != null)) {
+        this.sendMessage(to, this.getMyConfig().getString(Config.COLOR_ERROR_MESSAGE) + error.getMessage() + ChatColor.RESET);
+      }
 
-    this.logMessage(error.toString(), Level.WARNING);
+      this.logMessage(error.toString(), Level.WARNING);
+    }
 
     if (message != null && !message.isEmpty()) {
       this.sendMessage(to, color + message + ChatColor.RESET);
     }
+  }
+
+  /**
+   * Sendet eine Fehlernachricht zum angegeben Objekt und gibt es über den
+   * Logger aus.
+   * 
+   * @param uuid UUID des Objektes, dass die Fehlernachricht erhaltne soll.
+   * 
+   * @param message Nachricht, die gesendet werden soll.
+   * 
+   * @param error Fehler, der aufgetreten ist.
+   * 
+   * @since 0.2
+   */
+  public void sendErrorMessage(String uuid, String message, Exception error) {
+    this.sendErrorMessage(this.getPlayerFromUuid(uuid), message, error);
   }
 
   /**
@@ -222,6 +241,19 @@ public final class RMPlugin extends JavaPlugin
    */
   public void sendMessage(Player to, String message) {
     to.sendMessage(message);
+  }
+
+  /**
+   * Sendet die Nachricht zum angegeben Spieler.
+   * 
+   * @param uuid UUID des Spielers, an den die Nachricht gesendet werden soll.
+   * 
+   * @param message Nachricht, die dem Spieler gesendet werden soll.
+   * 
+   * @since 0.2
+   */
+  public void sendMessage(String uuid, String message) {
+    this.sendMessage(this.getPlayerFromUuid(uuid), message);
   }
 
   /**

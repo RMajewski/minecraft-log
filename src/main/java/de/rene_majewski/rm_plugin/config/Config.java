@@ -195,6 +195,13 @@ public final class Config {
   public static final String MESSAGE_ERROR_NO_PERMISSION_FOUND = "rmplugin.messages.error.permission.not_found";
 
   /**
+   * Gibt den Pfad zur Fehler-nachricht für "kein Begrüßungs-Geld" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_ECONOMY_NO_STANDARD_BALANCE = "rmplugin.messages.error.economy.no_standard_balance";
+
+  /**
    * Gibt den Pfad zur Nachrciht für die Nachricht "Fehler ist aufgetreten".
    * 
    * @since 0.2
@@ -221,6 +228,13 @@ public final class Config {
    * @since 0.2
    */
   public static final String MESSAGE_ERROR_NO_PLAYER = "rmplugin.messages.errors.no_player";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Spieler hat für 1. Login 10 € bekommen."
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ECONOMY_START = "rmplugin.messages.economy.start";
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -486,6 +500,13 @@ public final class Config {
    */
   public static final String ECONOMY_STANDARD_BALANCE = "rmplugin.economy.standard_balance";
 
+  /**
+   * Gibt den Namen zur Einstellung der Währung an.
+   * 
+   * @since 0.2
+   */
+  public static final String ECONOMY_CURRENCY = "rmplugin.economy.currency";
+
 
   /**
    * Initialisiert die Konfiguration.
@@ -584,6 +605,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_PARENTS, "Von der Gruppe '?' konnten nicht die Vater-Gruppen ausgelesen werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_CHILDS, "Von der Gruppe '?' konnten nicht die Kinder-Gruppen ausgelesen werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_PERMISSIONS, "Von der Gruppe '?' konnten die Permissions nicht ausgelesen werden.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_ECONOMY_NO_STANDARD_BALANCE, "Leider konnte dir das Begrüßungs-Geld nicht überwiesen werden. Bitte wende dich an einen Administrator.");
 
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE, "Die Gruppe '?' wurde erfolgreichreich erzeugt.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnte nicht erzeugt werden.");
@@ -597,6 +619,8 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PARENT_NO, "Bei der Gruppe '?' konnte die Vater-Gruppe '?' nicht gelöscht werden.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION, "Der Gruppe '?' wurde die Permission '?' entzogen.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION_NO, "Der Gruppe '?' konnte die Permission '?' nicht entzogen werden.");
+
+    _plugin.getConfig().addDefault(MESSAGE_ECONOMY_START, "Du hast zur Begrüßung ? ? bekommen.");
 
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
@@ -630,5 +654,6 @@ public final class Config {
     _plugin.getConfig().addDefault(COLOR_ERROR_MESSAGE, "§4§l");
 
     _plugin.getConfig().addDefault(ECONOMY_STANDARD_BALANCE, 10.0);
+    _plugin.getConfig().addDefault(ECONOMY_CURRENCY, "€");
   }
 }
