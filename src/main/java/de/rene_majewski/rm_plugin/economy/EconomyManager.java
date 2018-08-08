@@ -8,6 +8,7 @@ import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.Unity;
 import de.rene_majewski.rm_plugin.config.Config;
 import de.rene_majewski.rm_plugin.economy.datas.EconomyStatement;
+import de.rene_majewski.rm_plugin.economy.listener.ChestListeners;
 import de.rene_majewski.rm_plugin.economy.listener.EconomyPlayerListener;
 
 /**
@@ -32,6 +33,7 @@ public class EconomyManager extends Unity {
   @Override
   protected void registerListeners() {
     new EconomyPlayerListener(this._plugin);
+    new ChestListeners(this._plugin);
   }
 
   /**

@@ -1,13 +1,12 @@
 package de.rene_majewski.rm_plugin.economy.listener;
 
-import java.util.logging.Level;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.economy.EconomyManager;
 import de.rene_majewski.rm_plugin.listener.EventListener;
 
 /**
