@@ -237,6 +237,13 @@ public final class Config {
   public static final String MESSAGE_ECONOMY_START = "rmplugin.messages.economy.start";
 
   /**
+   * Gibt den Pfad zur Nachricht "Du besitzt aktuellen Geldbetrag" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ECONOMY_OWN_MONEY = "rmplugin.messages.economy.own_money";
+
+  /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
    * 
    * @since 0.1
@@ -621,6 +628,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_REMOVE_PERMISSION_NO, "Der Gruppe '?' konnte die Permission '?' nicht entzogen werden.");
 
     _plugin.getConfig().addDefault(MESSAGE_ECONOMY_START, "Du hast zur Begrüßung ? ? bekommen.");
+    _plugin.getConfig().addDefault(MESSAGE_ECONOMY_OWN_MONEY, "Du besitzt aktuell §l?§r ?.");
 
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");

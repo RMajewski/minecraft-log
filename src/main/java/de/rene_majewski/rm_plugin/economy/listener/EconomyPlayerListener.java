@@ -7,6 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
+import de.rene_majewski.rm_plugin.config.Config;
 import de.rene_majewski.rm_plugin.listener.EventListener;
 
 /**
@@ -21,8 +22,6 @@ public class EconomyPlayerListener extends EventListener {
    */
   public EconomyPlayerListener(RMPlugin plugin) {
     super(plugin);
-
-    plugin.logMessage("EconomyPlayerListener wurde initialisiert.", Level.INFO);
   }
 
   /**
@@ -36,6 +35,9 @@ public class EconomyPlayerListener extends EventListener {
   public void onPlayerJoin(PlayerJoinEvent event) {
     this._plugin.getEconomyManager().playerJoin(event.getPlayer().getUniqueId().toString());
 
-    event.getPlayer().sendMessage("Dein Betrag: " + String.valueOf(this._plugin.getEconomyManager().getBalance(event.getPlayer().getUniqueId().toString())));
+    String tmp = this._plugin.getMyConfig().getString(Config.MESSAGE_ECONOMY_OWN_MONEY);
+    tmp = tmp.replaceFirst("\\?", String.valueOf(this._plugin.getEconomyManager().getBalance(event.getPlayer().getUniqueId().toString())));
+    tmp = tmp.replace("?", this._plugin.getMyConfig().getString(Config.ECONOMY_CURRENCY));
+    event.getPlayer().sendMessage(tmp);
   }
 }
