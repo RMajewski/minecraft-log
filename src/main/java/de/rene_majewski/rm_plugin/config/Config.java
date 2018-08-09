@@ -514,6 +514,14 @@ public final class Config {
    */
   public static final String ECONOMY_CURRENCY = "rmplugin.economy.currency";
 
+  /**
+   * Gibt den Namen zur Einstellungen des Namens, der auf einen  Chest-Sign
+   * angegeben werden muss.
+   * 
+   * @since 0.2
+   */
+  public static final String ECONOMY_SHOP_SIGN_NAME = "rmplugin.economy.shop.sign_name";
+
 
   /**
    * Initialisiert die Konfiguration.
@@ -663,5 +671,6 @@ public final class Config {
 
     _plugin.getConfig().addDefault(ECONOMY_STANDARD_BALANCE, 10.0);
     _plugin.getConfig().addDefault(ECONOMY_CURRENCY, "€");
+    _plugin.getConfig().addDefault(ECONOMY_SHOP_SIGN_NAME, "Shop");
   }
 }
