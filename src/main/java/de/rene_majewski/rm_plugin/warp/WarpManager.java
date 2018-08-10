@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.Unity;
 import de.rene_majewski.rm_plugin.config.Config;
-import de.rene_majewski.rm_plugin.warp.listeners.WarpSignListener;
+import de.rene_majewski.rm_plugin.warp.listeners.WarpPlayerListener;
 
 /**
  * Organisiert die einzelnen Warps.
@@ -38,7 +38,7 @@ public class WarpManager extends Unity {
    * @since 0.2
    */
   protected void registerListeners() {
-    new WarpSignListener(this._plugin);
+    new WarpPlayerListener(this._plugin);
   }
 
   /**
@@ -83,8 +83,8 @@ public class WarpManager extends Unity {
         ps.setInt(4, player.getLocation().getBlockX());
         ps.setInt(5, player.getLocation().getBlockY());
         ps.setInt(6, player.getLocation().getBlockZ());
-        ps.setFloat(7, player.getLocation().getPitch());
-        ps.setFloat(8, player.getLocation().getYaw());
+        ps.setFloat(7, player.getLocation().getYaw());
+        ps.setFloat(8, player.getLocation().getPitch());
 
         if (ps.executeUpdate() > 0) {
           this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SET_WARP).replace("?", name));
