@@ -219,6 +219,46 @@ public class WarpManager extends Unity {
     }
   }
 
+  public void show(Player player, String name) {
+    if (hasWarp(player, name)) {
+      PreparedStatement ps = null;
+      ResultSet rs = null;
+      
+      try {
+        ps = this._plugin.getMySql().getConnection().prepareStatement(
+          "SELECT h.name AS name, h.created, h.x, h.y, h.z, h.yaw, h.pitch, w.name AS world, p.name AS player FROM " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_WARP) + " AS h INNER JOIN " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_WORLD) + " AS w ON (w.id = h.world_id) INNER JOIN " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_PLAYER) + " AS p ON (p.id = h.player_id) WHERE h.name = ?");
+        ps.setString(1, name);
+
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+          this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SHOW)
+            .replaceFirst("\\?", rs.getString("name"))
+            .replaceFirst("\\?", rs.getString("player"))
+            .replaceFirst("\\?", rs.getString("world"))
+            .replaceFirst("\\?", String.valueOf(rs.getInt("x")))
+            .replaceFirst("\\?", String.valueOf(rs.getInt("y")))
+            .replaceFirst("\\?", String.valueOf(rs.getInt("z")))
+            .replaceFirst("\\?", String.valueOf(rs.getFloat("yaw")))
+            .replaceFirst("\\?", String.valueOf(rs.getFloat("pitch")))
+            .replaceFirst("\\?", rs.getString("created"))
+          );
+        } else {
+          this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SET_WARP_NOT));
+        }  
+      } catch (SQLException e) {
+        this._plugin.sendErrorMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+      } finally {
+        this._plugin.getMySql().closeRessources(rs, ps);
+      }
+    } else {
+      this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SET_WARP_EXISTS).replace("?", name));
+    }
+  }
+
   /**
    * Überprüft, ob der angegebene Warp-Punkt schon existiert.
    * 

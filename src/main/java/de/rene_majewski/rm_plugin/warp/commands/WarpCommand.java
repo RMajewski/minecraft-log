@@ -170,7 +170,7 @@ public class WarpCommand extends CommandClass {
    */
   private void show(Player player, String name) {
     if (player.hasPermission(Config.PERMISSION_WARP_SHOW)) {
-
+      this._plugin.getWarpManager().show(player, name);
     } else {
       this.sendNoPermission(player);
     }

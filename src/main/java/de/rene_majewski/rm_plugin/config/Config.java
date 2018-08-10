@@ -377,6 +377,13 @@ public final class Config {
    */
   public static final String MESSAGE_WARP_LIST_NOT = "rmplugin.warp.list_not";
 
+  /**
+   * Gibt den Pfad zur Nachricht "Warp-Punkt-Informationen" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_SHOW = "rmplugin.warp.show";
+
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -843,6 +850,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_WARP_TELEPORT, "Du wurdest zum Warp-Punkt '?' teleportiert.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_LIST, "Es existieren folgende Warp-Punkt: ?");
     _plugin.getConfig().addDefault(MESSAGE_WARP_LIST_NOT, "Es existieren keine Warp-Punkte.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_SHOW, "Zum Warp-Punkt '?' sind folgende Informationen gespeichert:\nErzeugt durch: ?\nWelt: ?\nKoordinaten (X, Y, Z, Yaw, Pitch): ?, ?, ?, ?, ?\nErzeugt am: ?");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
