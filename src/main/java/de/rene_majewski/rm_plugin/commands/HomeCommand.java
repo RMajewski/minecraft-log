@@ -149,7 +149,26 @@ public class HomeCommand extends CommandClass {
    * @since 0.2
    */
   private void delHome(Player player, String name) {
+    if (!isHomeCreated(name, player)) {
+      this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_HOME_NOT_HOME).replace("?", name));
+      return;
+    }
 
+    PreparedStatement ps = null;
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement("DELETE FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_HOME) + " WHERE name = ? AND player_id = ?");
+      ps.setString(1, name);
+      ps.setInt(2, this._plugin.getMySql().getPlayerId(player));
+      if (ps.executeUpdate() > 0) {
+        this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_HOME_DELETE_HOME).replace("?", name));
+      } else {
+        this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_DELETE_HOME).replace("?", name));
+      }
+    } catch (SQLException e) {
+      this._plugin.sendErrorMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+    } finally {
+      this._plugin.getMySql().closeRessources(null, ps);
+    }
   }
 
   /**

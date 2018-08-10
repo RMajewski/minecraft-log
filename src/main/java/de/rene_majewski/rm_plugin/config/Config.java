@@ -252,6 +252,13 @@ public final class Config {
   public static final String MESSAGE_ERROR_SET_HOME = "rmplugin.messages.errors.set_home";
 
   /**
+   * Gibt den Pfad zur Nachricht "Home nicht gelöscht" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_DELETE_HOME = "rmplugin.messages.errors.delete_home";
+
+  /**
    * Gibt den Pfad zur Nachricht "Spieler hat für 1. Login 10 € bekommen."
    * 
    * @since 0.2
@@ -278,7 +285,21 @@ public final class Config {
    * @since 0.2
    */
   public static final String MESSAGE_HOME_HOME_EXISTS = "rmplugin.messages.home.home_exiists";
-  
+
+  /**
+   * Gibt den Pfad zur Nachricht "Home existiert nicht" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_HOME_NOT_HOME = "rmplugin.message.home.not_home";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Home wurde gelöscht" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_HOME_DELETE_HOME = "rmplugin.message.home.delete_home";
+
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -668,6 +689,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_PERMISSIONS, "Von der Gruppe '?' konnten die Permissions nicht ausgelesen werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_ECONOMY_NO_STANDARD_BALANCE, "Leider konnte dir das Begrüßungs-Geld nicht überwiesen werden. Bitte wende dich an einen Administrator.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_SET_HOME, "Leider konnte dein Home-Punkt '?' nicht erstellt werden.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_DELETE_HOME, "Leider konnte dein Home-Punkt '?' nicht gelöscht werden.");
 
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE, "Die Gruppe '?' wurde erfolgreichreich erzeugt.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnte nicht erzeugt werden.");
@@ -687,6 +709,8 @@ public final class Config {
 
     _plugin.getConfig().addDefault(MESSAGE_HOME_SET_HOME, "Dein Home-Punkt '?' wurde erstellt.");
     _plugin.getConfig().addDefault(MESSAGE_HOME_HOME_EXISTS, "Es existiert schon ein Home-Punkt mit dem Namen '?'. Wähle einen anderen Namen oder löscht ihn.");
+    _plugin.getConfig().addDefault(MESSAGE_HOME_NOT_HOME, "Der Home-Punkt '?' existiert nicht. Bitte lege den Home-Punkt vorher an.");
+    _plugin.getConfig().addDefault(MESSAGE_HOME_DELETE_HOME, "Der Home-Punkt '?' wurde gelöscht");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
