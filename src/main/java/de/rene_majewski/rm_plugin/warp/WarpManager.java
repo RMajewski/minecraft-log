@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.Unity;
 import de.rene_majewski.rm_plugin.config.Config;
+import de.rene_majewski.rm_plugin.warp.listeners.WarpSignListener;
 
 /**
  * Organisiert die einzelnen Warps.
@@ -37,7 +38,7 @@ public class WarpManager extends Unity {
    * @since 0.2
    */
   protected void registerListeners() {
-
+    new WarpSignListener(this._plugin);
   }
 
   /**
@@ -50,6 +51,11 @@ public class WarpManager extends Unity {
    * @since 0.2
    */
   public void setWarp(Player player, String name) {
+    if ((name == null) || name.isEmpty()) {
+      this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SET_WARP_NO_NAME));
+      return;
+    }
+
     if (!hasWarp(player, name)) {
       PreparedStatement ps = null;
       

@@ -343,6 +343,13 @@ public final class Config {
   public static final String MESSAGE_WARP_SET_WARP_NOT = "rmplugin.warp.set_warp_no";
 
   /**
+   * Gibt den PFad zu Nachricht "Namen angeben" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_SET_WARP_NO_NAME = "rmplugin.warp.set_warp_no_name";
+
+  /**
    * Gibt den Pfad zur Nachricht "Warp-Punkt gelöscht" an.
    * 
    * @since 0.2
@@ -845,6 +852,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_WARP_NOT_WARP, "Der Warp-Punkt '?' existiert nicht. Bitte überprüfe die Schreibweise.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP, "Der Warp-Punkt '?' wurde erstellt.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP_NOT, "Der Warp-Punkt '?' konnte nicht erstellt werden.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP_NO_NAME, "Du musst einen Namen für den Warp-Punkt angeben.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_DEL_WARP, "Der Warp-Punkt '?' wurde gelöscht.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_DEL_WARP_NOT, "Der Warp-Punkt '?' konnte nicht gelöscht werden.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_TELEPORT, "Du wurdest zum Warp-Punkt '?' teleportiert.");
