@@ -322,6 +322,13 @@ public final class Config {
   public static final String MESSAGE_WARP_SET_WARP_EXISTS = "rmplugin.warp.set_warp_exists";
 
   /**
+   * Gibt den Pfad zur Nachrich "Warp-Punkt existiert nicht" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_NOT_WARP = "rmplugin.warp.not_warp";
+
+  /**
    * Gibt den Pfad zur Nachricht "Warp-Punkt wurde erstellt" an.
    * 
    * @since 0.2
@@ -334,6 +341,20 @@ public final class Config {
    * @since 0.2
    */
   public static final String MESSAGE_WARP_SET_WARP_NOT = "rmplugin.warp.set_warp_no";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Warp-Punkt gelöscht" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_DEL_WARP = "rmplugin.warp.del_warp";
+
+  /**
+   * Gibt den Pfad zur Nachrciht "Warp-Punkt konnte nicht gelöscht werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_DEL_WARP_NOT = "rmplugin.warp.del_warp_not";
 
 
   /**
@@ -793,8 +814,11 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_HOME_LIST, "Du hast folgende Home-Punkte: ?");
 
     _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP_EXISTS, "Der Warp-Punkt '?' existiert bereits. Wähle einen anderen Namen oder lösche den Warp-Punkt.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_NOT_WARP, "Der Warp-Punkt '?' existiert nicht. Bitte überprüfe die Schreibweise.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP, "Der Warp-Punkt '?' wurde erstellt.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP_NOT, "Der Warp-Punkt '?' konnte nicht erstellt werden.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_DEL_WARP, "Der Warp-Punkt '?' wurde gelöscht.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_DEL_WARP_NOT, "Der Warp-Punkt '?' konnte nicht gelöscht werden.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);

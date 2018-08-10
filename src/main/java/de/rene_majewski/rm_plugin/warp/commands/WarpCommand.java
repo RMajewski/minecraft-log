@@ -101,7 +101,7 @@ public class WarpCommand extends CommandClass {
 
   private void delWarp(Player player, String name) {
     if (player.hasPermission(Config.PERMISSION_WARP_DEL_WARP)) {
-
+      this._plugin.getWarpManager().delWarp(player, name);
     } else {
       this.sendNoPermission(player);
     }

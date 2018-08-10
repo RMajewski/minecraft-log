@@ -94,6 +94,54 @@ public class WarpManager extends Unity {
   }
 
   /**
+   * Legt einen Warp-Punkt an.
+   * 
+   * @param player Spieler-Objekt, dass den Warp-Punkt anlegt.
+   * 
+   * @param name Name des Warp-Punktes.
+   * 
+   * @since 0.2
+   */
+  public void delWarp(Player player, String name) {
+    if (hasWarp(player, name)) {
+      PreparedStatement ps = null;
+      
+      try {
+        int pid = this._plugin.getMySql().getPlayerId(player);
+        if (pid == -1) {
+          String tmp = this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_PLAYER);
+          tmp = tmp.replace("?", player.getDisplayName());
+          this._plugin.sendMessage(player, tmp);
+        }
+  
+        int wid = this._plugin.getMySql().getWorldId(player.getWorld());
+        if (wid == -1) {
+          String tmp = this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_WORLD);
+          tmp = tmp.replace("?", player.getWorld().getName());
+          this._plugin.sendMessage(player, tmp);
+        }
+
+        ps = this._plugin.getMySql().getConnection().prepareStatement(
+          "DELETE FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_WARP) +
+          " WHERE name = ?");
+        ps.setString(1, name);
+
+        if (ps.executeUpdate() > 0) {
+          this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_DEL_WARP).replace("?", name));
+        } else {
+          this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_DEL_WARP_NOT).replace("?", name));
+        }
+      } catch (SQLException e) {
+        this._plugin.sendErrorMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+      } finally {
+        this._plugin.getMySql().closeRessources(null, ps);
+      }
+    } else {
+      this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SET_WARP_EXISTS).replace("?", name));
+    }
+  }
+
+  /**
    * Überprüft, ob der angegebene Warp-Punkt schon existiert.
    * 
    * @param name Name des Warp-Punktes, der auf seine Existenz überprüft werden
