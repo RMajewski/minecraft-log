@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -39,7 +41,7 @@ public class HomeCommand extends CommandClass {
    * @since 0.2
    */
   public boolean homeCommand(CommandSender sender, Command command, java.lang.String label, java.lang.String[] args) {
-    if (args.length == 3) {
+    if (args.length >= 2) {
       if (args[0].equalsIgnoreCase("home")) {
         if (args[2].length() > 0) {
           Player player = null;
@@ -181,7 +183,41 @@ public class HomeCommand extends CommandClass {
    * @since 0.2
    */
   private void tpHome(Player player, String name) {
+    if (!isHomeCreated(name, player)) {
+      this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_HOME_NOT_HOME).replace("?", name));
+      return;
+    }
 
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement(
+        "SELECT h.x, h.y, h.z, h.yaw, h.pitch, w.name AS world FROM " +
+        this._plugin.getMySql().getTableName(Config.DB_TABLE_HOME) + " AS h INNER JOIN " +
+        this._plugin.getMySql().getTableName(Config.DB_TABLE_WORLD) + " AS w ON (w.id = h.world_id) WHERE h.name = ? AND h.player_id = ?");
+      ps.setString(1, name);
+      ps.setInt(2, this._plugin.getMySql().getPlayerId(player));
+
+      rs = ps.executeQuery();
+      
+      if (rs.next()) {
+        Location loc = new Location(
+          Bukkit.getWorld(rs.getString("world")),
+          rs.getInt("x"),
+          rs.getInt("y"),
+          rs.getInt("z"),
+          rs.getFloat("yaw"),
+          rs.getFloat("pitch"));
+        player.teleport(loc);
+        this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_HOME_TELEPORT).replace("?", name));
+      } else {
+        this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_HOME_NOT_HOME));
+      }
+    } catch (SQLException e) {
+      this._plugin.sendErrorMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+    } finally {
+      this._plugin.getMySql().closeRessources(null, ps);
+    }    
   }
 
   /**

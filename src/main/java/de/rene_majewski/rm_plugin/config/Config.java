@@ -300,6 +300,13 @@ public final class Config {
    */
   public static final String MESSAGE_HOME_DELETE_HOME = "rmplugin.message.home.delete_home";
 
+  /**
+   * Gibt den Pfad zur Nachricht "Du hast dich zu Home teleportiert" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_HOME_TELEPORT = "rmplugin.message.home.teleport";
+
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -711,6 +718,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_HOME_HOME_EXISTS, "Es existiert schon ein Home-Punkt mit dem Namen '?'. Wähle einen anderen Namen oder löscht ihn.");
     _plugin.getConfig().addDefault(MESSAGE_HOME_NOT_HOME, "Der Home-Punkt '?' existiert nicht. Bitte lege den Home-Punkt vorher an.");
     _plugin.getConfig().addDefault(MESSAGE_HOME_DELETE_HOME, "Der Home-Punkt '?' wurde gelöscht");
+    _plugin.getConfig().addDefault(MESSAGE_HOME_TELEPORT, "Du hast dich zu '?' teleportiert.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
