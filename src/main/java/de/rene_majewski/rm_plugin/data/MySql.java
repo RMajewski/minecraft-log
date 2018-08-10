@@ -100,7 +100,8 @@ public class MySql {
     "/sql/group_permissions.sql",
     "/sql/permission.sql",
     "/sql/balance.sql",
-    "/sql/balance_statement.sql"
+    "/sql/balance_statement.sql",
+    "/sql/home.sql"
   };
 
   /**

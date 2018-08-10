@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS `&home` (
+  `id` BIGINT(20) AUTO_INCREMENT,
+  `player_id` BIGINT(20) NOT NULL DEFAULT -1,
+  `world_id` BIGINT(20) NOT NULL DEFAULT -1,
+  `name` VARCHAR(50),
+  `x` INT(11) NOT NULL,
+  `y` INT(11) NOT NULL,
+  `z` INT(11) NOT NULL,
+  `yaw` FLOAT NOT NULL,
+  `pitch` FLOAT NOT NULL,
+  `create_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_use` TIMESTAMP NULL,
+  PRIMARY KEY(`id`),
+  UNIQUE KEY(`player_id`, `name`)
+) CHARACTER SET utf8 COLLATE utf8_unicode_ci;

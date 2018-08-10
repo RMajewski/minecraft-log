@@ -40,6 +40,13 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
   private EconomyCommand _economyCommand;
 
   /**
+   * Speichert das Objekt für {@link HomeCommand}.
+   * 
+   * @since 0.2
+   */
+  private HomeCommand _homeCommand;
+
+  /**
    * Initialisiert die Klasse.
    * 
    * @param config Konfiguration-Klasse des Plugins.
@@ -52,6 +59,7 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
     this._configCommand = new ConfigCommand(this._plugin);
     this._permissionCommand = new PermissionCommand(this._plugin);
     this._economyCommand = new EconomyCommand(this._plugin);
+    this._homeCommand = new HomeCommand(this._plugin);
   }
 
   /**
@@ -87,6 +95,8 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
           return this._permissionCommand.permission(sender, command, label, args);
         } else if (args[0].equalsIgnoreCase("balance")) {
           return this._economyCommand.economyCommand(sender, command, label, args);
+        } else if (args[0].equalsIgnoreCase("home")) {
+          return this._homeCommand.homeCommand(sender, command, label, args);
         }
       } else {
         sendHelpMessage(sender);

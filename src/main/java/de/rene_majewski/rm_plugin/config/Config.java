@@ -27,6 +27,14 @@ public final class Config {
   public static final String MESSAGE_NO_PERMISSION = "rmplugin.messages.error.no_permission";
 
   /**
+   * Gibt den Pfad zur Nachricht für "Kommando kann nicht in der Konsole
+   * ausgeführt werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_NO_CONSOLE = "rmplugin.messages.error.no_console";
+
+  /**
    * Gibt den Pfad zur Nachricht für "Konfiguration neu geladen" an.
    * 
    * @since 0.1
@@ -230,6 +238,20 @@ public final class Config {
   public static final String MESSAGE_ERROR_NO_PLAYER = "rmplugin.messages.errors.no_player";
 
   /**
+   * Gibt den Pfad zur Nachricht "Welt existiert nicht" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_NO_WORLD = "rmplugin.messages.errors.no_world";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Home nicht gesetzt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_ERROR_SET_HOME = "rmplugin.messages.errors.set_home";
+
+  /**
    * Gibt den Pfad zur Nachricht "Spieler hat für 1. Login 10 € bekommen."
    * 
    * @since 0.2
@@ -242,6 +264,21 @@ public final class Config {
    * @since 0.2
    */
   public static final String MESSAGE_ECONOMY_OWN_MONEY = "rmplugin.messages.economy.own_money";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Home gesetzt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_HOME_SET_HOME = "rmplugin.messages.home.set_home";
+
+  /**
+   * Gibt den Pfad zur Nachrcit "Home existiert bereits" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_HOME_HOME_EXISTS = "rmplugin.messages.home.home_exiists";
+  
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -386,6 +423,13 @@ public final class Config {
    * @since 0.2
    */
   public static final String DB_TABLE_BALANCE_STATEMENT = "rmplugin.db.tables.balance_statement";
+
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die Home-Punkte an.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_HOME = "rmplugin.db.tables.home";
 
 
   /**
@@ -605,6 +649,7 @@ public final class Config {
    */
   private void setDefaults() {
     _plugin.getConfig().addDefault(MESSAGE_NO_PERMISSION, "Du hast keine Berechtigung für diesen Befehl.");
+    _plugin.getConfig().addDefault(MESSAGE_NO_CONSOLE, "Du kannst dieses Kommando nicht von der Konsole ausführen");
     _plugin.getConfig().addDefault(MESSAGE_CONFIG_RELOAD, "Die Konfiguration wurde erfolgreich neu geladen.");
     _plugin.getConfig().addDefault(MESSAGE_CONFIG_SAVE, "Die Konfiguration wurde erfolgreich gespeichert.");
     _plugin.getConfig().addDefault(MESSAGE_HELP_HELP, "Bitte verwende den Befehl wie folgt:");
@@ -612,6 +657,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_ERROR, "Es ist ein Fehler aufgetreten.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_DOUBLE, "Du muss beim ?. Argument einen gültigen Double-Wert angeben.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_PLAYER, "Der Spieler '?' existiert nicht auf diesen Server");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_WORLD, "Die Welt '?' existiert nicht auf diesen Server");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_GROUP, "Du musst einen Gruppen-Namen angegeben.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT, "Falsche Anzahl an Parameter.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_REMOVE_PARENT, "Falsche Anzahl an Parameter.");
@@ -621,6 +667,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_CHILDS, "Von der Gruppe '?' konnten nicht die Kinder-Gruppen ausgelesen werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_PERMISSIONS, "Von der Gruppe '?' konnten die Permissions nicht ausgelesen werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_ECONOMY_NO_STANDARD_BALANCE, "Leider konnte dir das Begrüßungs-Geld nicht überwiesen werden. Bitte wende dich an einen Administrator.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_SET_HOME, "Leider konnte dein Home-Punkt '?' nicht erstellt werden.");
 
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE, "Die Gruppe '?' wurde erfolgreichreich erzeugt.");
     _plugin.getConfig().addDefault(MESSAGE_PERMISSION_GROUP_CREATE_NO, "Die Gruppe '?' konnte nicht erzeugt werden.");
@@ -638,6 +685,8 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_ECONOMY_START, "Du hast zur Begrüßung ? ? bekommen.");
     _plugin.getConfig().addDefault(MESSAGE_ECONOMY_OWN_MONEY, "Du besitzt aktuell §l?§r ?.");
 
+    _plugin.getConfig().addDefault(MESSAGE_HOME_SET_HOME, "Dein Home-Punkt '?' wurde erstellt.");
+    _plugin.getConfig().addDefault(MESSAGE_HOME_HOME_EXISTS, "Es existiert schon ein Home-Punkt mit dem Namen '?'. Wähle einen anderen Namen oder löscht ihn.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
@@ -660,6 +709,7 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_PERMISSION_ALLOCATE, "permission_allocate");
     _plugin.getConfig().addDefault(DB_TABLE_BALANCE, "balance");
     _plugin.getConfig().addDefault(DB_TABLE_BALANCE_STATEMENT, "balance_statement");
+    _plugin.getConfig().addDefault(DB_TABLE_HOME, "home");
 
     _plugin.getConfig().addDefault(COLOR_HELP_TEXT, "§7");
     _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, "§6");
