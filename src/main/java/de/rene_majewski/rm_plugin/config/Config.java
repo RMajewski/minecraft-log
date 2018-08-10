@@ -356,6 +356,13 @@ public final class Config {
    */
   public static final String MESSAGE_WARP_DEL_WARP_NOT = "rmplugin.warp.del_warp_not";
 
+  /**
+   * Gibt den Pfad zur Nachricht "Du wurdest zum Warp-Punkt teleportiert an".
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_TELEPORT = "rmplugin.warp.teleport";
+
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -819,6 +826,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP_NOT, "Der Warp-Punkt '?' konnte nicht erstellt werden.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_DEL_WARP, "Der Warp-Punkt '?' wurde gelöscht.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_DEL_WARP_NOT, "Der Warp-Punkt '?' konnte nicht gelöscht werden.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_TELEPORT, "Du wurdest zum Warp-Punkt '?' teleportiert.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);

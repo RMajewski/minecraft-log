@@ -109,7 +109,7 @@ public class WarpCommand extends CommandClass {
 
   private void warp(Player player, String name) {
     if (player.hasPermission(Config.PERMISSION_WARP_WARP)) {
-
+      this._plugin.getWarpManager().warp(player, name);
     } else {
       this.sendNoPermission(player);
     }

@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.rene_majewski.rm_plugin.RMPlugin;
@@ -94,11 +96,11 @@ public class WarpManager extends Unity {
   }
 
   /**
-   * Legt einen Warp-Punkt an.
+   * Löscht den Warp-Punkt.
    * 
-   * @param player Spieler-Objekt, dass den Warp-Punkt anlegt.
+   * @param player Spieler-Objekt, dass den Warp-Punkt löscht.
    * 
-   * @param name Name des Warp-Punktes.
+   * @param name Name des Warp-Punktes, der gelöscht werden soll.
    * 
    * @since 0.2
    */
@@ -107,20 +109,6 @@ public class WarpManager extends Unity {
       PreparedStatement ps = null;
       
       try {
-        int pid = this._plugin.getMySql().getPlayerId(player);
-        if (pid == -1) {
-          String tmp = this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_PLAYER);
-          tmp = tmp.replace("?", player.getDisplayName());
-          this._plugin.sendMessage(player, tmp);
-        }
-  
-        int wid = this._plugin.getMySql().getWorldId(player.getWorld());
-        if (wid == -1) {
-          String tmp = this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_WORLD);
-          tmp = tmp.replace("?", player.getWorld().getName());
-          this._plugin.sendMessage(player, tmp);
-        }
-
         ps = this._plugin.getMySql().getConnection().prepareStatement(
           "DELETE FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_WARP) +
           " WHERE name = ?");
@@ -135,6 +123,54 @@ public class WarpManager extends Unity {
         this._plugin.sendErrorMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
       } finally {
         this._plugin.getMySql().closeRessources(null, ps);
+      }
+    } else {
+      this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SET_WARP_EXISTS).replace("?", name));
+    }
+  }
+
+  /**
+   * Teleportiert den Spieler zum angegeben Warp-Punkt.
+   * 
+   * @param player Spieler-Objekt, dass zum Warp-Punkt teleportiert werden
+   * soll.
+   * 
+   * @param name Name des Warp-Punktes.
+   * 
+   * @since 0.2
+   */
+  public void warp(Player player, String name) {
+    if (hasWarp(player, name)) {
+      PreparedStatement ps = null;
+      ResultSet rs = null;
+      
+      try {
+        ps = this._plugin.getMySql().getConnection().prepareStatement(
+          "SELECT h.x, h.y, h.z, h.yaw, h.pitch, w.name AS world FROM " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_WARP) + " AS h INNER JOIN " +
+          this._plugin.getMySql().getTableName(Config.DB_TABLE_WORLD) + " AS w ON (w.id = h.world_id) WHERE h.name = ?");
+        ps.setString(1, name);
+
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+          Location loc = new Location(
+            Bukkit.getWorld(rs.getString("world")),
+            rs.getInt("x"),
+            rs.getInt("y"),
+            rs.getInt("z"),
+            rs.getFloat("yaw"),
+            rs.getFloat("pitch")
+          );
+          player.teleport(loc);
+          this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_TELEPORT).replace("?", name));
+        } else {
+          this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SET_WARP_NOT));
+        }  
+      } catch (SQLException e) {
+        this._plugin.sendErrorMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+      } finally {
+        this._plugin.getMySql().closeRessources(rs, ps);
       }
     } else {
       this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_SET_WARP_EXISTS).replace("?", name));
