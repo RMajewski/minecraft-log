@@ -43,16 +43,21 @@ public class HomeCommand extends CommandClass {
   public boolean homeCommand(CommandSender sender, Command command, java.lang.String label, java.lang.String[] args) {
     if (args.length >= 2) {
       if (args[0].equalsIgnoreCase("home")) {
+        Player player = null;
+
+        if (sender instanceof Player) {
+          player = (Player)sender;
+        } else {
+          sender.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_NO_CONSOLE));
+          return true;
+        }
+
+        if (args[1].equalsIgnoreCase("list")) {
+          listHomes(player);
+          return true;
+        }
+
         if (args[2].length() > 0) {
-          Player player = null;
-
-          if (sender instanceof Player) {
-            player = (Player)sender;
-          } else {
-            sender.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_NO_CONSOLE));
-            return true;
-          }
-
           if (args[1].equalsIgnoreCase("tp")) {
             tpHome(player, args[2]);
             return true;
@@ -218,6 +223,39 @@ public class HomeCommand extends CommandClass {
     } finally {
       this._plugin.getMySql().closeRessources(null, ps);
     }    
+  }
+
+  /**
+   * Gibt eine Liste mit allen Homes eines Spielers aus.
+   * 
+   * @param player Spieler, dessen Homes ausgegeben werden sollen.
+   * 
+   * @since 0.2
+   */
+  private void listHomes(Player player) {
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement("SELECT name FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_HOME) + " WHERE player_id = ?");
+      ps.setInt(1, this._plugin.getMySql().getPlayerId(player));
+
+      rs = ps.executeQuery();
+      
+      String tmp = "";
+
+      while(rs.next()) {
+        if (rs.getRow() > 1) {
+          tmp += ", ";
+        }
+        tmp += "'" + rs.getString("name") + "'";
+      }
+
+      this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_HOME_LIST).replace("?", tmp));
+    } catch (SQLException e) {
+      this._plugin.sendErrorMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+    } finally {
+      this._plugin.getMySql().closeRessources(null, ps);
+    }
   }
 
   /**

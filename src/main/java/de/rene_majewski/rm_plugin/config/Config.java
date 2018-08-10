@@ -291,21 +291,28 @@ public final class Config {
    * 
    * @since 0.2
    */
-  public static final String MESSAGE_HOME_NOT_HOME = "rmplugin.message.home.not_home";
+  public static final String MESSAGE_HOME_NOT_HOME = "rmplugin.messages.home.not_home";
 
   /**
    * Gibt den Pfad zur Nachricht "Home wurde gelöscht" an.
    * 
    * @since 0.2
    */
-  public static final String MESSAGE_HOME_DELETE_HOME = "rmplugin.message.home.delete_home";
+  public static final String MESSAGE_HOME_DELETE_HOME = "rmplugin.messages.home.delete_home";
 
   /**
    * Gibt den Pfad zur Nachricht "Du hast dich zu Home teleportiert" an.
    * 
    * @since 0.2
    */
-  public static final String MESSAGE_HOME_TELEPORT = "rmplugin.message.home.teleport";
+  public static final String MESSAGE_HOME_TELEPORT = "rmplugin.messages.home.teleport";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Du besitzt folgende Homes" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_HOME_LIST = "rmplugin.messages.home.list";
 
 
   /**
@@ -719,6 +726,7 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_HOME_NOT_HOME, "Der Home-Punkt '?' existiert nicht. Bitte lege den Home-Punkt vorher an.");
     _plugin.getConfig().addDefault(MESSAGE_HOME_DELETE_HOME, "Der Home-Punkt '?' wurde gelöscht");
     _plugin.getConfig().addDefault(MESSAGE_HOME_TELEPORT, "Du hast dich zu '?' teleportiert.");
+    _plugin.getConfig().addDefault(MESSAGE_HOME_LIST, "Du hast folgende Home-Punkte: ?");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
