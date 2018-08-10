@@ -152,7 +152,7 @@ public class WarpCommand extends CommandClass {
    */
   private void list(Player player) {
     if (player.hasPermission(Config.PERMISSION_WARP_LIST)) {
-
+      this._plugin.getWarpManager().list(player);
     } else {
       this.sendNoPermission(player);
     }

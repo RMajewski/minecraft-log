@@ -178,6 +178,48 @@ public class WarpManager extends Unity {
   }
 
   /**
+   * Liest alle Warp-Punkte aus der Datenbank und bereitet diese zur Anzeige
+   * auf.
+   * 
+   * @param player Spieler, der die Liste der Warp-Punkte angezeigt bekommen
+   * möchte.
+   * 
+   * @since 0.2
+   */
+  public void list(Player player) {
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement(
+        "SELECT name FROM " +
+        this._plugin.getMySql().getTableName(Config.DB_TABLE_WARP) + " ORDER BY name");
+
+      rs = ps.executeQuery();
+
+      String tmp = "";
+
+      while (rs.next()) {
+        if (rs.getRow() > 1) {
+          tmp += ", ";
+        }
+        tmp += "'" + rs.getString("name") + "'";
+      }
+
+      if (tmp.length() > 0) {
+        this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_LIST).replace("?", tmp));
+      } else {
+        this._plugin.sendMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_WARP_LIST_NOT));
+      }
+
+    } catch (SQLException e) {
+      this._plugin.sendErrorMessage(player, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR), e);
+    } finally {
+      this._plugin.getMySql().closeRessources(rs, ps);
+    }
+  }
+
+  /**
    * Überprüft, ob der angegebene Warp-Punkt schon existiert.
    * 
    * @param name Name des Warp-Punktes, der auf seine Existenz überprüft werden

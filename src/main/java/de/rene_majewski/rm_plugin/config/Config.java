@@ -357,11 +357,25 @@ public final class Config {
   public static final String MESSAGE_WARP_DEL_WARP_NOT = "rmplugin.warp.del_warp_not";
 
   /**
-   * Gibt den Pfad zur Nachricht "Du wurdest zum Warp-Punkt teleportiert an".
+   * Gibt den Pfad zur Nachricht "Du wurdest zum Warp-Punkt teleportiert" an.
    * 
    * @since 0.2
    */
   public static final String MESSAGE_WARP_TELEPORT = "rmplugin.warp.teleport";
+
+  /**
+   * Gibt den Pfad zur Nachricht "List der Warp-Punkte" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_LIST = "rmplugin.warp.list";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Keine Warp-Punkte" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_LIST_NOT = "rmplugin.warp.list_not";
 
 
   /**
@@ -827,6 +841,8 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_WARP_DEL_WARP, "Der Warp-Punkt '?' wurde gelöscht.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_DEL_WARP_NOT, "Der Warp-Punkt '?' konnte nicht gelöscht werden.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_TELEPORT, "Du wurdest zum Warp-Punkt '?' teleportiert.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_LIST, "Es existieren folgende Warp-Punkt: ?");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_LIST_NOT, "Es existieren keine Warp-Punkte.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
