@@ -46,7 +46,7 @@ public class ChestListeners extends EventListener {
     if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
       Chest shop = getShopChest(event);
       if (shop != null) {
-        sell(player);
+        sell(player, shop);
       }
     }
 
@@ -59,18 +59,32 @@ public class ChestListeners extends EventListener {
   /**
    * Wird aufgerufen, wenn der Spieler etwas kauft.
    * 
+   * @param player Spieler, der etwas kaufen möchte.
+   * 
+   * @param chest Shop-Kister, auf die der Spieler geklickt hat.
+   * 
    * @since 0.2
    */
-  private void buy(Player player) {
+  private void buy(Player player, Chest chest) {
     player.sendMessage("Du wolltest etwas kaufen.");
   }
 
   /**
    * Wird aufgerufen, wenn der Spieler etwas verkauft.
    * 
+   * Zuesrt wird überprüft, ob der Spieler genügend in der Hand hat und ob die
+   * Shop-Kiste genügend Platz hat. Danach wird überprüftm ob der Besitzer der
+   * Shop-Kiste genügend Geld hat, damit der Spieler bezahlt werden kann. Wird
+   * alles mit {@code true} bestätigt, wird das Item in die Shop-Kiste gelegt
+   * und der Spieler erhält sein Geld.
+   * 
+   * @param player Spieler, der etwas verkaufen möchte.
+   * 
+   * @param chest Shop-Kiste, auf die der Spieler klickt hat.
+   * 
    * @since 0.2
    */
-  private void sell(Player player) {
+  private void sell(Player player, Chest chest) {
     player.sendMessage("Du wolltest etwas verkaufen.");
   }
 

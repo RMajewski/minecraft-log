@@ -216,7 +216,7 @@ public class MySql {
 
     try {
       if (!this.isBlockExists(material) && this.hasConnection()) {
-        ps = this.getConnection().prepareStatement("INSERT INTO " + this.getTableName(Config.DB_TABLE_BLOCK) + " (name, max_stack_size, is_block, is_edible, is_record, is_solid, is_transparent, is_flammable, is_burnable, is_occluding, has_gravity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        ps = this.getConnection().prepareStatement("INSERT INTO " + this.getTableName(Config.DB_TABLE_BLOCK) + " (name, max_stack_size, is_block, is_edible, is_record, is_solid, is_transparent, is_flammable, is_burnable, is_occluding, has_gravity, minecraft_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         ps.setString(1, material.name().toLowerCase());
         ps.setInt(2, material.getMaxStackSize());
         ps.setBoolean(3, material.isBlock());
@@ -228,6 +228,7 @@ public class MySql {
         ps.setBoolean(9, material.isBurnable());
         ps.setBoolean(10, material.isOccluding());
         ps.setBoolean(11, material.hasGravity());
+        ps.setInt(12, material.getId());
         ps.executeUpdate();
       }
     } catch (SQLException e) {
