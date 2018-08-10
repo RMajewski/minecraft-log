@@ -91,6 +91,15 @@ public class WarpCommand extends CommandClass {
     this.sendMessage(this.createCommandHelpMessage("warp delwarp [Name]", "Löscht den Warp-Punkt mit denen angegebenen Namen. Der Warp-Punkt muss existieren."), sender);
   }
 
+  /**
+   * Legt einen Warp-Punkt mit den angegebenen Namen an.
+   * 
+   * @param player Spieler, der den Warp-Punkt anlegt.
+   * 
+   * @param name Name des Warp-Punktes.
+   * 
+   * @since 0.2
+   */
   private void setWarp(Player player, String name) {
     if (player.hasPermission(Config.PERMISSION_WARP_SET_WARP)) {
       this._plugin.getWarpManager().setWarp(player, name);
@@ -99,6 +108,15 @@ public class WarpCommand extends CommandClass {
     }
   }
 
+  /**
+   * Löscht den Warp-Punkt mit den angegebenen Namen.
+   * 
+   * @param player Spieler, der den Warp-Punkt löscht.
+   * 
+   * @param name Name des Warp-Punktes.
+   * 
+   * @since 0.2
+   */
   private void delWarp(Player player, String name) {
     if (player.hasPermission(Config.PERMISSION_WARP_DEL_WARP)) {
       this._plugin.getWarpManager().delWarp(player, name);
@@ -107,6 +125,15 @@ public class WarpCommand extends CommandClass {
     }
   }
 
+  /**
+   * Teleportiert den Spieler zum angegebenen Warp-Punkt.
+   * 
+   * @param player Spieler, der zum Warp-Punkt teleportiert werden soll.
+   * 
+   * @param name Name des Warp-Punktes.
+   * 
+   * @since 0.2
+   */
   private void warp(Player player, String name) {
     if (player.hasPermission(Config.PERMISSION_WARP_WARP)) {
       this._plugin.getWarpManager().warp(player, name);
@@ -115,6 +142,14 @@ public class WarpCommand extends CommandClass {
     }
   }
 
+  /**
+   * Zeigt eine Liste mit allen Warp-Punkten an.
+   * 
+   * @param player Spieler, der die Liste mit den Warp-Punkten angezeigt
+   * bekommen möchte.
+   * 
+   * @since 0.2
+   */
   private void list(Player player) {
     if (player.hasPermission(Config.PERMISSION_WARP_LIST)) {
 
@@ -123,6 +158,16 @@ public class WarpCommand extends CommandClass {
     }
   }
 
+  /**
+   * Zeigt alle Informationen über einen Warp-Punkt an.
+   * 
+   * @param player Spieler, der die Informationen zum Warp-Punkt angezeigt
+   * bekommen möchte.
+   * 
+   * @param name Name des Warp-Punktes.
+   * 
+   * @since 0.2
+   */
   private void show(Player player, String name) {
     if (player.hasPermission(Config.PERMISSION_WARP_SHOW)) {
 
