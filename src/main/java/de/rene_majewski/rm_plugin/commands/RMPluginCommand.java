@@ -106,7 +106,7 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
           return this._economyCommand.economyCommand(sender, command, label, args);
         } else if (args[0].equalsIgnoreCase("home")) {
           return this._homeCommand.homeCommand(sender, command, label, args);
-        } else if (args[0].equalsIgnoreCase("warm")) {
+        } else if (args[0].equalsIgnoreCase("warp")) {
           return this._warpCommand.warpCommand(sender, command, label, args);
         }
       } else {

@@ -314,6 +314,27 @@ public final class Config {
    */
   public static final String MESSAGE_HOME_LIST = "rmplugin.messages.home.list";
 
+  /**
+   * Gibt den Pfad zur Nachricht "Warp-Punkt existiert bereits" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_SET_WARP_EXISTS = "rmplugin.warp.set_warp_exists";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Warp-Punkt wurde erstellt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_SET_WARP = "rmplugin.warp.set_warp";
+
+  /**
+   * Gibt den Pfad zur Nachrciht "Warp-Punkt konnte nicht erstellt werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_WARP_SET_WARP_NOT = "rmplugin.warp.set_warp_no";
+
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -465,6 +486,13 @@ public final class Config {
    * @since 0.2
    */
   public static final String DB_TABLE_HOME = "rmplugin.db.tables.home";
+
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die Warp-Punkte an.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_WARP = "rmplugin.db.tables.warp";
 
 
   /**
@@ -764,6 +792,10 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_HOME_TELEPORT, "Du hast dich zu '?' teleportiert.");
     _plugin.getConfig().addDefault(MESSAGE_HOME_LIST, "Du hast folgende Home-Punkte: ?");
 
+    _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP_EXISTS, "Der Warp-Punkt '?' existiert bereits. Wähle einen anderen Namen oder lösche den Warp-Punkt.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP, "Der Warp-Punkt '?' wurde erstellt.");
+    _plugin.getConfig().addDefault(MESSAGE_WARP_SET_WARP_NOT, "Der Warp-Punkt '?' konnte nicht erstellt werden.");
+
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
     _plugin.getConfig().addDefault(DB_CONFIG_USER, "user");
@@ -786,6 +818,7 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_BALANCE, "balance");
     _plugin.getConfig().addDefault(DB_TABLE_BALANCE_STATEMENT, "balance_statement");
     _plugin.getConfig().addDefault(DB_TABLE_HOME, "home");
+    _plugin.getConfig().addDefault(DB_TABLE_WARP, "warp");
 
     _plugin.getConfig().addDefault(COLOR_HELP_TEXT, "§7");
     _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, "§6");

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `&world` (
+CREATE TABLE IF NOT EXISTS `&warp` (
   `id` BIGINT(20) AUTO_INCREMENT,
   `player_id` BIGINT(20) NOT NULL,
   `world_id` BIGINT(20) NOT NULL,
@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `&world` (
   `z` INT(11) NOT NULL,
   `yaw` INT(11) NOT NULL,
   `pitch` INT(11) NOT NULL,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(`id`),
   UNIQUE KEY(`name`)
 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci;

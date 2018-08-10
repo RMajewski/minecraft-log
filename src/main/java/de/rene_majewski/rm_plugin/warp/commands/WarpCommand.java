@@ -86,14 +86,14 @@ public class WarpCommand extends CommandClass {
   @Override
   public void sendHelpMessage(CommandSender sender) {
     this.sendMessage(this.createCommandHelpMessage("warp help", "Zeigt den Hilfetext für die Home-Befehle an"), sender);
-    this.sendMessage(this.createCommandHelpMessage("help warp [Name]", "Teleportiert dich zu den mit Name angegebenen Warp-Punkt. Der Warp-Punkt muss existieren"), sender);
-    this.sendMessage(this.createCommandHelpMessage("help setwarp [Name]", "Erstellt den Warp-Punkt mit den angegebenen Namen."), sender);
-    this.sendMessage(this.createCommandHelpMessage("help delwarp [Name]", "Löscht den Warp-Punkt mit denen angegebenen Namen. Der Warp-Punkt muss existieren."), sender);
+    this.sendMessage(this.createCommandHelpMessage("warp warp [Name]", "Teleportiert dich zu den mit Name angegebenen Warp-Punkt. Der Warp-Punkt muss existieren"), sender);
+    this.sendMessage(this.createCommandHelpMessage("warp setwarp [Name]", "Erstellt den Warp-Punkt mit den angegebenen Namen."), sender);
+    this.sendMessage(this.createCommandHelpMessage("warp delwarp [Name]", "Löscht den Warp-Punkt mit denen angegebenen Namen. Der Warp-Punkt muss existieren."), sender);
   }
 
   private void setWarp(Player player, String name) {
     if (player.hasPermission(Config.PERMISSION_WARP_SET_WARP)) {
-
+      this._plugin.getWarpManager().setWarp(player, name);
     } else {
       this.sendNoPermission(player);
     }

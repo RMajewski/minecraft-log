@@ -173,12 +173,23 @@ public final class RMPlugin extends JavaPlugin
   /**
    * Gibt den Zugriff zum Economy-Manager zurück.
    * 
-   * @return Objekt der Klasse {@link Economy-Manager}.
+   * @return Objekt der Klasse {@link EconomyManager}.
    * 
    * @since 0.2
    */
   public EconomyManager getEconomyManager() {
     return this._economy;
+  }
+
+  /**
+   * Gibt den Zugriff zum Warp-Manager zurück.
+   * 
+   * @return Objekt der Klasse {@link WarpManager}.
+   * 
+   * @since 0.2
+   */
+  public WarpManager getWarpManager() {
+    return this._warp;
   }
 
   /**
