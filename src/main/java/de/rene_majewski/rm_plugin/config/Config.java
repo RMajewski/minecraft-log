@@ -526,6 +526,42 @@ public final class Config {
    */
   public static final String ECONOMY_COMMAND_BALANCE_REMOVE = "rmplugin.economy.balance.remove";
 
+  /**
+   * Gibt den Namen der Permission zum setzen einen neuen Warp-Punktes an.
+   * 
+   * @since 0.2
+   */
+  public static final String PERMISSION_WARP_SET_WARP = "rmplugin.warp.set";
+
+  /**
+   * Gibt den Namen der Permission zum löschen eines Warp-Punktes an.
+   * 
+   * @since 0.2
+   */
+  public static final String PERMISSION_WARP_DEL_WARP = "rmplugin.warp.del";
+
+  /**
+   * Gibt den Namen der Permission zum benutzes des Warp-Befehles an.
+   * 
+   * @since 0.2
+   */
+  public static final String PERMISSION_WARP_WARP = "rmplugin.warp.warp";
+
+  /**
+   * Gibt den Namen der Permission zum auflisten aller Warp-Punkte an.
+   * 
+   * @since 0.2
+   */
+  public static final String PERMISSION_WARP_LIST = "rmplugin.warp.list";
+
+  /**
+   * Gibt den Namen der Permission zum anzeigen der Informationen eines
+   * bestimmten Warp-Punktes an.
+   * 
+   * @since 0.2
+   */
+  public static final String PERMISSION_WARP_SHOW = "rmplugin.warp.show";
+
 
   /**
    * Gibt den Namen zur Einstellung der Farbe zum hervorben einen Befehls in

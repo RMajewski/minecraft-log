@@ -10,6 +10,7 @@ import de.rene_majewski.rm_plugin.RMPlugin;
 import de.rene_majewski.rm_plugin.config.Config;
 import de.rene_majewski.rm_plugin.economy.commands.EconomyCommand;
 import de.rene_majewski.rm_plugin.permissions.commands.PermissionCommand;
+import de.rene_majewski.rm_plugin.warp.commands.WarpCommand;
 
 /**
  * Liest die Konfiguration für das Plugin neu ein.
@@ -47,6 +48,13 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
   private HomeCommand _homeCommand;
 
   /**
+   * Speichert das Objekt für {@link WarpCommand}.
+   * 
+   * @since 0.2
+   */
+  private WarpCommand _warpCommand;
+
+  /**
    * Initialisiert die Klasse.
    * 
    * @param config Konfiguration-Klasse des Plugins.
@@ -60,6 +68,7 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
     this._permissionCommand = new PermissionCommand(this._plugin);
     this._economyCommand = new EconomyCommand(this._plugin);
     this._homeCommand = new HomeCommand(this._plugin);
+    this._warpCommand = new WarpCommand(this._plugin);
   }
 
   /**
@@ -97,6 +106,8 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
           return this._economyCommand.economyCommand(sender, command, label, args);
         } else if (args[0].equalsIgnoreCase("home")) {
           return this._homeCommand.homeCommand(sender, command, label, args);
+        } else if (args[0].equalsIgnoreCase("warm")) {
+          return this._warpCommand.warpCommand(sender, command, label, args);
         }
       } else {
         sendHelpMessage(sender);
@@ -122,7 +133,9 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
 
       this.sendMessage(this.createCommandHelpMessage("help", this._plugin.getMyConfig().getString(Config.MESSAGE_HELP_HELP)), sender);
 
+      this._homeCommand.sendHelpMessage(sender);
       this._permissionCommand.sendHelpMessage(sender);
+      this._warpCommand.sendHelpMessage(sender);
     } else {
       this.sendNoPermission(sender);
     }

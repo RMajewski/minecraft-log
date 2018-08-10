@@ -20,6 +20,7 @@ import de.rene_majewski.rm_plugin.listener.BlockListener;
 import de.rene_majewski.rm_plugin.listener.CommandListener;
 import de.rene_majewski.rm_plugin.listener.PlayerListener;
 import de.rene_majewski.rm_plugin.permissions.PermissionManager;
+import de.rene_majewski.rm_plugin.warp.WarpManager;
 
 /**
  * Die Hauptklasse des RM-Plugins.
@@ -65,6 +66,13 @@ public final class RMPlugin extends JavaPlugin
   private EconomyManager _economy;
 
   /**
+   * Speichert das Sub-Plugin Warps.
+   * 
+   * @since 0.2
+   */
+  private WarpManager _warp;
+
+  /**
    * Wird aufgerufen, wenn das Plugin initialisiert wird.
    * 
    * @since 0.1
@@ -80,6 +88,7 @@ public final class RMPlugin extends JavaPlugin
     this._mysql = new MySql(_config);
     this._permissions = new PermissionManager(this);
     this._economy = new EconomyManager(this);
+    this._warp = new WarpManager(this);
 
     this.registerCommands();
     this.registerEvents();
@@ -268,5 +277,27 @@ public final class RMPlugin extends JavaPlugin
    */
   public Player getPlayerFromUuid(String uuid) {
     return this.getServer().getPlayer(UUID.fromString(uuid));
+  }
+
+  /**
+   * Sendet die Nachricht "Keine Berechtigung" zum angegebenen Spieler.
+   * 
+   * @param to Spieler, zu dem die Nachricht gesendet werden soll.
+   * 
+   * @since 0.2
+   */
+  public void sendNoPermission(Player to) {
+    this.sendMessage(to, this._config.getString(Config.MESSAGE_NO_PERMISSION));
+  }
+
+  /**
+   * Sendet die Nachricht "Keine Berechtigung" zum angegebenen Spieler.
+   * 
+   * @param uuid UUID des Spieler, zu dem die Nachricht gesendet werden soll.
+   * 
+   * @since 0.2
+   */
+  public void sendNoPermission(String uuid) {
+    this.sendNoPermission(this.getServer().getPlayer(UUID.fromString(uuid)));
   }
 }
