@@ -391,6 +391,20 @@ public final class Config {
    */
   public static final String MESSAGE_WARP_SHOW = "rmplugin.warp.show";
 
+  /**
+   * Gibt den Pfad zur Nachrciht "Spieler wurde gebannt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_BAN_BAN = "rmplugin.ban.ban";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Spieler konnte nicht gebannt werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_BAN_NO_BAN = "rmplugin.ban.no_ban";
+
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -549,6 +563,13 @@ public final class Config {
    * @since 0.2
    */
   public static final String DB_TABLE_WARP = "rmplugin.db.tables.warp";
+
+  /**
+   * Gibt den Pfad zur Einstellung der Tabelle für die gebannten Spieler an.
+   * 
+   * @since 0.2
+   */
+  public static final String DB_TABLE_BAN = "rmplugin.db.tables.ban";
 
 
   /**
@@ -860,6 +881,9 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_WARP_LIST_NOT, "Es existieren keine Warp-Punkte.");
     _plugin.getConfig().addDefault(MESSAGE_WARP_SHOW, "Zum Warp-Punkt '?' sind folgende Informationen gespeichert:\nErzeugt durch: ?\nWelt: ?\nKoordinaten (X, Y, Z, Yaw, Pitch): ?, ?, ?, ?, ?\nErzeugt am: ?");
 
+    _plugin.getConfig().addDefault(MESSAGE_BAN_BAN, "Der Spieler '?' wurde gebannt.");
+    _plugin.getConfig().addDefault(MESSAGE_BAN_NO_BAN, "Der Spieler '?' konnte nicht gebannt werden.");
+
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);
     _plugin.getConfig().addDefault(DB_CONFIG_USER, "user");
@@ -883,6 +907,7 @@ public final class Config {
     _plugin.getConfig().addDefault(DB_TABLE_BALANCE_STATEMENT, "balance_statement");
     _plugin.getConfig().addDefault(DB_TABLE_HOME, "home");
     _plugin.getConfig().addDefault(DB_TABLE_WARP, "warp");
+    _plugin.getConfig().addDefault(DB_TABLE_BAN, "ban");
 
     _plugin.getConfig().addDefault(COLOR_HELP_TEXT, "§7");
     _plugin.getConfig().addDefault(COLOR_HELP_COMMAND, "§6");

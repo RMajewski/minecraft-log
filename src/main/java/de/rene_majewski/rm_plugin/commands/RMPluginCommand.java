@@ -139,6 +139,7 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
     if (sender.hasPermission(Config.PERMISSION_COMMAND_HELP)) {
       this.sendMessage(ChatColor.RED + this._plugin.getMyConfig().getString(Config.MESSAGE_HELP_HELP), sender);
 
+      this._banCommand.sendHelpMessage(sender);
       this._configCommand.sendHelpMessage(sender);
 
       this.sendMessage(this.createCommandHelpMessage("help", this._plugin.getMyConfig().getString(Config.MESSAGE_HELP_HELP)), sender);

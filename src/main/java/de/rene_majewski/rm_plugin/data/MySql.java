@@ -398,6 +398,36 @@ public class MySql {
   }
 
   /**
+   * Ermittelt die Datensatz-ID des übergeben Spielers.
+   * 
+   * @param uuid UUID des Spielers dessen Datensatz-ID ermittelt werden soll.
+   * 
+   * @return Die Datensatz-ID des Spielers.
+   * 
+   * @since 0.2
+   */
+  public int getPlayerId(String uuid) {
+    int result = -1;
+
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try {
+      ps = this.getConnection().prepareStatement("SELECT id FROM " + this.getTableName(Config.DB_TABLE_PLAYER) + " WHERE uuid = ?");
+      ps.setString(1, uuid);
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt("id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeRessources(rs, ps);
+    }
+
+    return result;
+  }
+
+  /**
    * Ermittelt ob ein Datensatz für den Spieler existiert oder nicht.
    * 
    * @param player Spieler, bei dem geschaut werden soll ob schon ein Datensatz

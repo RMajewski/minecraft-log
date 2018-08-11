@@ -185,4 +185,29 @@ public abstract class CommandClass {
 
     return result;
   }
+
+  /**
+   * Erstellt aus dem übergebenen Array eine Zeichenkette.
+   * 
+   * @param args Array, aus dem eine Zeichenkette erstellt werden soll.
+   * 
+   * @param start Element, ab dem aus dem Array eine Zeichenkette erstellt
+   * werden soll.
+   * 
+   * @return Erstellt Zeichenkette.
+   * 
+   * @since 0.2
+   */
+  protected String getStringFromArray(String[] args, int start) {
+    StringBuffer sb = new StringBuffer();
+
+    for (int i = start; i < args.length; i++) {
+      if (i > start) {
+        sb.append(" ");
+      }
+      sb.append(args[i]);
+    }
+
+    return sb.toString();
+  }
 }

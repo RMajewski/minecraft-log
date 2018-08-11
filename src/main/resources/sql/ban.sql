@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS `&ban` (
   `player_id` INT(20) DEFAULT -1,
   `from_id` INT(20) DEFAULT -1,
   `description` TEXT,
+  `created` DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(`id`)
 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci;

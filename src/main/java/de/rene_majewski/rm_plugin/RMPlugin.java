@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -288,6 +289,29 @@ public final class RMPlugin extends JavaPlugin
    */
   public Player getPlayerFromUuid(String uuid) {
     return this.getServer().getPlayer(UUID.fromString(uuid));
+  }
+
+  /**
+   * Ermittelt die UUID des Spielers aus dem Display-Namen.
+   * 
+   * @param name Name des Spielers, dessen UUID ermittelt werden soll.
+   * 
+   * @return UUID des Spielers. Konnte der Spieler nicht gefunden werden, so
+   * wird {@code null} zurück gegeben.
+   * 
+   * @since 0.2
+   */
+  public String getPlayerFromDisplayName(String name) {
+    String result = "";
+
+    OfflinePlayer[] players = getServer().getOfflinePlayers();
+    for (int i = 0; i < players.length; i++ ) {
+      if (players[i].getName().equals(name)) {
+        result = players[i].getUniqueId().toString();
+        break;
+      }
+    }
+    return result;
   }
 
   /**
