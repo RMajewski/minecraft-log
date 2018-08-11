@@ -39,15 +39,18 @@ public class BanCommand extends CommandClass {
 
 
         if (args[2].length() > 0) {
-          int pid = this._plugin.getMySql().getPlayerId(this._plugin.getPlayerFromDisplayName(args[2]));
+          String uuid = this._plugin.getPlayerFromDisplayName(args[2]);
+          int pid = this._plugin.getMySql().getPlayerId(uuid);
           if (pid == -1) {
             this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_PLAYER).replace("?", args[2]), sender);
             return true;
           }
 
           if (args[1].equalsIgnoreCase("ban")) {
-            this.ban(sender, pid, args[2], this.getStringFromArray(args, 3));
-            return true;
+            if (args.length > 3) {
+              this.ban(sender, pid, args[2], this.getStringFromArray(args, 3), uuid);
+              return true;
+            }
           }
 
           if (args[1].equalsIgnoreCase("unban")) {
@@ -88,9 +91,11 @@ public class BanCommand extends CommandClass {
    * 
    * @param description Begründung, warum der Spieler gebannt werden soll.
    * 
+   * @param uuid UUID ds Spielers, der gebannt werden soll.
+   * 
    * @since 0.2
    */
-  private void ban(CommandSender sender, int playerId, String playerName, String description) {
+  private void ban(CommandSender sender, int playerId, String playerName, String description, String uuid) {
     int fid = getSenderId(sender);
 
     if (playerId == -1) {
@@ -108,6 +113,11 @@ public class BanCommand extends CommandClass {
       ps.setString(3, description);
       if (ps.executeUpdate() > 0) {
         this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_BAN).replace("?", playerName), sender);
+
+        Player player = this._plugin.getPlayerFromUuid(uuid);
+        if (player != null) {
+          player.kickPlayer(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_KICK).replace("?", description));
+        }
       } else {
         this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_NO_BAN).replace("?", playerName), sender);
       }

@@ -406,6 +406,13 @@ public final class Config {
   public static final String MESSAGE_BAN_NO_BAN = "rmplugin.ban.no_ban";
 
   /**
+   * Gibt den Pfad zur Nachricht "Du wurdest gebannt" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_BAN_KICK = "rmplugin.ban.kick";
+
+  /**
    * Gibt den Pfad zur Nachricht "Bannung des Spielers aufgehoben" an.
    * 
    * @since 0.2
@@ -847,12 +854,12 @@ public final class Config {
     _plugin.getConfig().addDefault(MESSAGE_HELP_COMMAND, "Zeigt diesen Hilfetext an.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR, "Es ist ein Fehler aufgetreten.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_DOUBLE, "Du muss beim ?. Argument einen gültigen Double-Wert angeben.");
-    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_PLAYER, "Der Spieler '?' existiert nicht auf diesen Server");
-    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_WORLD, "Die Welt '?' existiert nicht auf diesen Server");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_PLAYER, "Der Spieler '?' existiert nicht auf diesenMESSAGE_BAN_KICKServer");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_WORLD, "Die Welt '?' existiert nicht auf diesen SerMESSAGE_BAN_KICKer");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_GROUP, "Du musst einen Gruppen-Namen angegeben.");
-    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT, "Falsche Anzahl an Parameter.");
-    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_REMOVE_PARENT, "Falsche Anzahl an Parameter.");
-    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND, "Die Gruppe '?' konnte nicht gefunden werden.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_ADD_PARENT, "Falsche Anzahl an ParameMESSAGE_BAN_KICKer.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_GROUP_REMOVE_PARENT, "Falsche Anzahl an ParMESSAGE_BAN_KICKmeter.");
+    _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_NO_GROUP_FOUND, "Die Gruppe '?' konnte nichMESSAGE_BAN_KICK gefunden werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_NO_PERMISSION_FOUND, "Die Permission '?' konnte nicht gefunden werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_PARENTS, "Von der Gruppe '?' konnten nicht die Vater-Gruppen ausgelesen werden.");
     _plugin.getConfig().addDefault(MESSAGE_ERROR_PERMISSION_SHOW_CHILDS, "Von der Gruppe '?' konnten nicht die Kinder-Gruppen ausgelesen werden.");
@@ -898,6 +905,7 @@ public final class Config {
 
     _plugin.getConfig().addDefault(MESSAGE_BAN_BAN, "Der Spieler '?' wurde gebannt.");
     _plugin.getConfig().addDefault(MESSAGE_BAN_NO_BAN, "Der Spieler '?' konnte nicht gebannt werden.");
+    _plugin.getConfig().addDefault(MESSAGE_BAN_KICK, "Du wurdest gebannt. Grund: ?");
     _plugin.getConfig().addDefault(MESSAGE_BAN_UNBAN, "Die Bannung des Spielers '?' wurde aufgehoben.");
     _plugin.getConfig().addDefault(MESSAGE_BAN_NO_UNBAN, "Die Bannung des Spielers '?' konnte nicht aufgehoben werden.");
 
