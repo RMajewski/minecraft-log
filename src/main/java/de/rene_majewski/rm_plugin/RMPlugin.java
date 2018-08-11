@@ -17,6 +17,7 @@ import de.rene_majewski.rm_plugin.commands.RMPluginCommand;
 import de.rene_majewski.rm_plugin.config.Config;
 import de.rene_majewski.rm_plugin.data.MySql;
 import de.rene_majewski.rm_plugin.economy.EconomyManager;
+import de.rene_majewski.rm_plugin.listener.BanListener;
 import de.rene_majewski.rm_plugin.listener.BlockListener;
 import de.rene_majewski.rm_plugin.listener.CommandListener;
 import de.rene_majewski.rm_plugin.listener.PlayerListener;
@@ -101,6 +102,7 @@ public final class RMPlugin extends JavaPlugin
    * @since 0.1
    */
   private void registerEvents() {
+    new BanListener(this);
     new BlockListener(this);
     new PlayerListener(this);
     new CommandListener(this);
