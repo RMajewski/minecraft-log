@@ -405,6 +405,21 @@ public final class Config {
    */
   public static final String MESSAGE_BAN_NO_BAN = "rmplugin.ban.no_ban";
 
+  /**
+   * Gibt den Pfad zur Nachricht "Bannung des Spielers aufgehoben" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_BAN_UNBAN = "rmplugin.ban.unban";
+
+  /**
+   * Gibt den Pfad zur Nachricht "Bannung des Spielers konnte nicht aufgehoben
+   * werden" an.
+   * 
+   * @since 0.2
+   */
+  public static final String MESSAGE_BAN_NO_UNBAN = "rmplugin.ban.no_unban";
+
 
   /**
    * Gibt den Pfad zur Einstellung für den Datenbank-Server an.
@@ -883,6 +898,8 @@ public final class Config {
 
     _plugin.getConfig().addDefault(MESSAGE_BAN_BAN, "Der Spieler '?' wurde gebannt.");
     _plugin.getConfig().addDefault(MESSAGE_BAN_NO_BAN, "Der Spieler '?' konnte nicht gebannt werden.");
+    _plugin.getConfig().addDefault(MESSAGE_BAN_UNBAN, "Die Bannung des Spielers '?' wurde aufgehoben.");
+    _plugin.getConfig().addDefault(MESSAGE_BAN_NO_UNBAN, "Die Bannung des Spielers '?' konnte nicht aufgehoben werden.");
 
     _plugin.getConfig().addDefault(DB_CONFIG_HOST, "localhost");
     _plugin.getConfig().addDefault(DB_CONFIG_PORT, 3306);

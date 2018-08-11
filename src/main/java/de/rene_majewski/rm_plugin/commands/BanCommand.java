@@ -49,6 +49,11 @@ public class BanCommand extends CommandClass {
             this.ban(sender, pid, args[2], this.getStringFromArray(args, 3));
             return true;
           }
+
+          if (args[1].equalsIgnoreCase("unban")) {
+            this.unban(sender, pid, args[2]);
+            return true;
+          }
         }
       }
     }
@@ -104,7 +109,46 @@ public class BanCommand extends CommandClass {
       if (ps.executeUpdate() > 0) {
         this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_BAN).replace("?", playerName), sender);
       } else {
-        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_NO_BAN), sender);
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_NO_BAN).replace("?", playerName), sender);
+      }
+    } catch (SQLException e) {
+      this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR));
+    } finally {
+      this._plugin.getMySql().closeRessources(null, ps);
+    }
+  }
+
+  /**
+   * Macht die Bannung eines Spielers rückgängig.
+   * 
+   * @param sender Objekt, das die Spieler-Bannung rückgängig macht.
+   * 
+   * @param playerId ID des Spielers, dessen Bannung rückgängig gemacht werden
+   * soll.
+   * 
+   * @param playerName Name des Spielers, dessen Bannung rückgängig gemacht
+   * werden soll.
+   * 
+   * @since 0.2
+   */
+  private void unban(CommandSender sender, int playerId, String playerName) {
+    int fid = getSenderId(sender);
+
+    if (playerId == -1) {
+      this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR_NO_PLAYER), sender);
+      return;
+    }
+
+    PreparedStatement ps = null;
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement(
+        "DELETE FROM " + this._plugin.getMySql().getTableName(Config.DB_TABLE_BAN) +
+        " WHERE player_id = ?");
+      ps.setInt(1, playerId);
+      if (ps.executeUpdate() > 0) {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_UNBAN).replace("?", playerName), sender);
+      } else {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_NO_UNBAN).replace("?", playerName), sender);
       }
     } catch (SQLException e) {
       this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR));
