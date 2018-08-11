@@ -1,6 +1,7 @@
 package de.rene_majewski.rm_plugin.commands;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.bukkit.command.Command;
@@ -37,6 +38,10 @@ public class BanCommand extends CommandClass {
     if (args.length >= 2) {
       if (args[0].equalsIgnoreCase("ban")) {
 
+        if (args[1].equalsIgnoreCase("list")) {
+          this.list(sender);
+          return true;
+        }
 
         if (args[2].length() > 0) {
           String uuid = this._plugin.getPlayerFromDisplayName(args[2]);
@@ -168,7 +173,47 @@ public class BanCommand extends CommandClass {
   }
 
   /**
+   * Listet die gebannten Spieler auf.
+   * 
+   * @since 0.2
+   */
+  private void list(CommandSender sender) {
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+      ps = this._plugin.getMySql().getConnection().prepareStatement(
+        "SELECT p.name FROM " +
+        this._plugin.getMySql().getTableName(Config.DB_TABLE_BAN) +
+        " AS b INNER JOIN " +
+        this._plugin.getMySql().getTableName(Config.DB_TABLE_PLAYER) +
+        " AS p ON (p.id = b.player_id) ORDER BY p.name"
+      );
+      rs = ps.executeQuery();
+
+      StringBuffer sb = new StringBuffer();
+      while(rs.next()) {
+        if (rs.getRow() > 1) {
+          sb.append("\n");
+        }
+        sb.append(rs.getString("name"));
+      }
+
+      if (sb.length() > 0) {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_LIST).replace("?", sb.toString()), sender);
+      } else {
+        this.sendMessage(this._plugin.getMyConfig().getString(Config.MESSAGE_BAN_LIST_NO), sender);
+      }
+    } catch (SQLException e) {
+      this.sendErrorMessage(sender, e, this._plugin.getMyConfig().getString(Config.MESSAGE_ERROR));
+    } finally {
+      this._plugin.getMySql().closeRessources(rs, ps);
+    }
+  }
+
+  /**
    * Ermittelt die ID des Spielers, der den Bann-Befehl gesendet hat.
+   * anotherString.
    * 
    * @param sender Objekt, dass den Befehl gesendet hat.
    * 
