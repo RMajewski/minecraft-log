@@ -102,7 +102,8 @@ public class MySql {
     "/sql/balance.sql",
     "/sql/balance_statement.sql",
     "/sql/home.sql",
-    "/sql/warp.sql"
+    "/sql/warp.sql",
+    "/sql/ban.sql"
   };
 
   /**

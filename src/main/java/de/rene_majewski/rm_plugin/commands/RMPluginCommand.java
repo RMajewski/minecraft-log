@@ -55,6 +55,13 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
   private WarpCommand _warpCommand;
 
   /**
+   * Speichert das Objekt für {@link BanCommand}.
+   * 
+   * @since 0.2
+   */
+  private BanCommand _banCommand;
+
+  /**
    * Initialisiert die Klasse.
    * 
    * @param config Konfiguration-Klasse des Plugins.
@@ -69,6 +76,7 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
     this._economyCommand = new EconomyCommand(this._plugin);
     this._homeCommand = new HomeCommand(this._plugin);
     this._warpCommand = new WarpCommand(this._plugin);
+    this._banCommand = new BanCommand(this._plugin);
   }
 
   /**
@@ -108,6 +116,8 @@ public class RMPluginCommand extends CommandClass  implements CommandExecutor {
           return this._homeCommand.homeCommand(sender, command, label, args);
         } else if (args[0].equalsIgnoreCase("warp")) {
           return this._warpCommand.warpCommand(sender, command, label, args);
+        } else if (args[0].equalsIgnoreCase("ban")) {
+          return this._banCommand.banCommand(sender, command, label, args);
         }
       } else {
         sendHelpMessage(sender);
